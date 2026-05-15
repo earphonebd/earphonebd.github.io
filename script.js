@@ -3,32 +3,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const products = {
     'p1_white': {
       title: 'AirPods Pro 2nd Gen (Dubai) - White',
-      price: '600 TK',
+      price: '599 TK',
       image: 'assets/product_white.png'
     },
     'p1_black': {
       title: 'AirPods Pro 2nd Gen (Dubai) - Black',
-      price: '650 TK',
+      price: '649 TK',
       image: 'assets/product_black.png'
     },
     'p2_white': {
       title: 'AirPods Pro 2nd Gen (China) - White',
-      price: '400 TK',
+      price: '399 TK',
       image: 'assets/product_white.png'
     },
     'p2_black': {
       title: 'AirPods Pro 2nd Gen (China) - Black',
-      price: '450 TK',
+      price: '449 TK',
       image: 'assets/product_black.png'
     },
     'p3': {
       title: 'AirPods Pro 2nd Gen ANC (Dubai) - Black',
-      price: '1200 TK',
+      price: '1,190 TK',
       image: 'assets/product_black.png'
     },
     'p4': {
       title: 'AirPods Pro 3rd Gen ANC (Dubai) - White',
-      price: '2000 TK',
+      price: '1,990 TK',
       image: 'assets/product_white.png'
     }
   };
