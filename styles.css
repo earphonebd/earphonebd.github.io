@@ -484,6 +484,47 @@ footer {
   }
 }
 
+@media (max-width: 500px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .product-card {
+    padding: 12px;
+  }
+  .product-image {
+    height: 120px;
+    margin-bottom: 10px;
+  }
+  .product-title {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .product-features {
+    font-size: 0.75rem;
+    margin-bottom: 10px;
+  }
+  .product-features li {
+    margin-bottom: 4px;
+    gap: 4px;
+  }
+  .product-price-box {
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  .single-price {
+    font-size: 0.9rem !important;
+  }
+  .product-price-box div:first-child {
+    font-size: 0.7rem !important;
+  }
+  .single-price span {
+    font-size: 0.6rem !important;
+    padding: 2px 4px !important;
+  }
+}
+
 
 /* Sales Notification */
 .sales-notification {
@@ -525,8 +566,17 @@ footer {
 @media (max-width: 768px) {
   .sales-notification {
     left: 10px;
-    right: 10px;
-    bottom: 80px; /* Above floating CTA */
-    max-width: calc(100% - 20px);
+    right: auto;
+    bottom: 20px; 
+    max-width: calc(100% - 90px); /* Leaves space for the 60px Messenger icon + padding */
+    padding: 10px 15px;
+    gap: 10px;
+  }
+  .sales-notification img {
+    width: 35px;
+    height: 35px;
+  }
+  .sales-notification p, .sales-notification small {
+    font-size: 0.75rem;
   }
 }

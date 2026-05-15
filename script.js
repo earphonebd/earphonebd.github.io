@@ -2,55 +2,116 @@ document.addEventListener('DOMContentLoaded', () => {
   // Product Database
   const products = {
     'p1_white': {
-      title: 'AirPods Pro 2nd Gen (Dubai) - White',
+      title: 'AirPods Pro 2nd Gen',
       price: '599 TK',
-      image: 'assets/product_white.png'
+      regularPrice: '1,200 TK',
+      discount: '50% OFF',
+      stock: '🔥 মাত্র ৪ টি বাকি!',
+      image: 'assets/product_white.png',
+      features: ['এডিশন: দুবাই', 'কালার: ক্লাসিক হোয়াইট', 'দারুণ সাউন্ড কোয়ালিটি', 'ক্লিয়ার মাইক ও প্রিমিয়াম লুক', 'ব্যাটারি: ৩.৫-৪ ঘণ্টা', 'কেস চার্জ: ৩ বার']
     },
     'p1_black': {
-      title: 'AirPods Pro 2nd Gen (Dubai) - Black',
+      title: 'AirPods Pro 2nd Gen',
       price: '649 TK',
-      image: 'assets/product_black.png'
+      regularPrice: '1,300 TK',
+      discount: '50% OFF',
+      stock: '🔥 মাত্র ৩ টি বাকি!',
+      image: 'assets/product_black.png',
+      features: ['এডিশন: দুবাই', 'কালার: ম্যাট ব্ল্যাক', 'দারুণ সাউন্ড কোয়ালিটি', 'ক্লিয়ার মাইক ও প্রিমিয়াম লুক', 'ব্যাটারি: ৩.৫-৪ ঘণ্টা', 'কেস চার্জ: ৩ বার']
     },
     'p2_white': {
-      title: 'AirPods Pro 2nd Gen (China) - White',
+      title: 'AirPods Pro 2nd Gen',
       price: '399 TK',
-      image: 'assets/product_white.png'
+      regularPrice: '800 TK',
+      discount: '50% OFF',
+      stock: '🔥 মাত্র ৭ টি বাকি!',
+      image: 'assets/product_white.png',
+      features: ['এডিশন: চায়না', 'কালার: ক্লাসিক হোয়াইট', 'ভালো সাউন্ড ও স্টাইলিশ লুক', 'বাজেট ফ্রেন্ডলি', 'ব্যাটারি: ২.৫-৩ ঘণ্টা', 'কেস চার্জ: ২-৩ বার']
     },
     'p2_black': {
-      title: 'AirPods Pro 2nd Gen (China) - Black',
+      title: 'AirPods Pro 2nd Gen',
       price: '449 TK',
-      image: 'assets/product_black.png'
+      regularPrice: '900 TK',
+      discount: '50% OFF',
+      stock: '🔥 মাত্র ৫ টি বাকি!',
+      image: 'assets/product_black.png',
+      features: ['এডিশন: চায়না', 'কালার: ম্যাট ব্ল্যাক', 'ভালো সাউন্ড ও স্টাইলিশ লুক', 'বাজেট ফ্রেন্ডলি', 'ব্যাটারি: ২.৫-৩ ঘণ্টা', 'কেস চার্জ: ২-৩ বার']
     },
     'p3': {
-      title: 'AirPods Pro 2nd Gen ANC (Dubai) - White',
+      title: 'AirPods Pro 2nd Gen ANC',
       price: '1,190 TK',
-      image: 'assets/product_white.png'
+      regularPrice: '2,500 TK',
+      discount: '52% OFF',
+      stock: '🔥 মাত্র ২ টি বাকি!',
+      image: 'assets/product_white.png',
+      features: ['এডিশন: দুবাই', 'কালার: ক্লাসিক হোয়াইট', 'নয়েজ ক্যান্সেলেশন (ANC)', 'বেটার মাইক ও ডিপ বেস', 'ব্যাটারি: ৪-৫ ঘণ্টা', 'কেস চার্জ: ৩-৪ বার']
     },
     'p4': {
-      title: 'AirPods Pro 3rd Gen ANC (Dubai) - White',
+      title: 'AirPods Pro 3rd Gen ANC',
       price: '1,990 TK',
-      image: 'assets/product_white.png'
+      regularPrice: '4,000 TK',
+      discount: '50% OFF',
+      stock: '🔥 স্টক প্রায় শেষ!',
+      image: 'assets/product_white.png',
+      features: ['এডিশন: দুবাই', 'কালার: ক্লাসিক হোয়াইট', 'নয়েজ ক্যান্সেলেশন (ANC)', 'বেস্ট কল কোয়ালিটি ও ডিপ বেস', 'ব্যাটারি: ৫-৬ ঘণ্টা', 'কেস চার্জ: ৪ বার পর্যন্ত']
     }
   };
 
-  // URL Parameter parsing for Order Page
+  // URL Parameter parsing for Product/Order Page
   const urlParams = new URLSearchParams(window.location.search);
   const productId = urlParams.get('product');
 
   if (productId && products[productId]) {
-    // Auto select product in dropdown
-    const productSelect = document.getElementById('productSelect');
-    if (productSelect) {
-      productSelect.value = productId;
+    const product = products[productId];
+
+    // --- Product Details Page Injection ---
+    const pTitle = document.getElementById('product-title');
+    if (pTitle) {
+      pTitle.textContent = product.title;
+      document.getElementById('product-img').src = product.image;
+      document.getElementById('product-price').textContent = product.price;
+      
+      const regularPriceEl = document.getElementById('product-regular-price');
+      if (regularPriceEl && product.regularPrice) {
+        regularPriceEl.textContent = `Regular: ${product.regularPrice}`;
+      }
+      
+      const discountEl = document.getElementById('product-discount');
+      if (discountEl && product.discount) {
+        discountEl.textContent = product.discount;
+      }
+      
+      const stockEl = document.getElementById('product-stock');
+      if (stockEl && product.stock) {
+        stockEl.textContent = product.stock;
+      }
+      
+      const featuresList = document.getElementById('product-features');
+      if (featuresList && product.features) {
+        featuresList.innerHTML = product.features.map(f => `<li>${f}</li>`).join('');
+      }
+
+      // Update Buy Now button link
+      const buyNowBtn = document.getElementById('buy-now-btn');
+      if (buyNowBtn) {
+        buyNowBtn.href = `order.html?product=${productId}`;
+      }
+
+      // Populate summary on the same page (if order form is present)
+      const summaryImg = document.getElementById('summary-img');
+      if (summaryImg) {
+        summaryImg.src = product.image;
+        document.getElementById('summary-title').textContent = product.title;
+        document.getElementById('summary-price').textContent = product.price;
+      }
     }
 
-    // Show Visual Order Summary
-    const orderSummary = document.getElementById('orderSummary');
-    if (orderSummary) {
-      orderSummary.style.display = 'block';
-      document.getElementById('summaryImage').src = products[productId].image;
-      document.getElementById('summaryTitle').textContent = products[productId].title;
-      document.getElementById('summaryPrice').textContent = products[productId].price;
+    // --- Legacy Order Page Injection (if still exists) ---
+    const summaryTitle = document.getElementById('summaryTitle');
+    if (summaryTitle) {
+      document.getElementById('summaryImage').src = product.image;
+      summaryTitle.textContent = product.title;
+      document.getElementById('summaryPrice').textContent = product.price;
     }
   }
 
