@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Now | Earphone BD</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-content">
+      <a href="index.html" class="logo">Earphone<span>BD</span></a>
+      <a href="index.html" class="btn btn-primary" style="background-color: transparent; border: 1px solid var(--accent-color); color: var(--accent-color);">Back to Home</a>
+    </div>
+  </header>
+
+  <!-- Order Section -->
+  <section class="section container" style="margin-top: 80px;">
+    <h2 class="section-title">Place Your Order</h2>
+    <p class="section-subtitle">দ্রুত অর্ডার কনফার্ম করতে নিচের ফর্মটি পূরণ করুন</p>
+
+    <div class="order-layout">
+      <!-- Order Summary -->
+      <div class="order-summary" id="orderSummary" style="display: none;">
+        <h3 style="margin-bottom: 20px;">Order Summary</h3>
+        <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 20px;">
+          <img id="summaryImage" src="" alt="Product" style="width: 100px; height: 100px; object-fit: contain; background: var(--surface-hover); border-radius: 12px; padding: 10px;">
+          <div>
+            <h4 id="summaryTitle" style="font-size: 1.1rem; margin-bottom: 5px;"></h4>
+            <p id="summaryPrice" style="color: var(--accent-color); font-weight: bold; font-size: 1.2rem;"></p>
+          </div>
+        </div>
+        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-color); border-radius: 12px; padding: 15px;">
+          <p style="font-size: 0.95rem; color: var(--text-primary);"><strong style="color: var(--accent-color);">✓ Product Selected</strong><br>Please fill out the form to confirm your order.</p>
+        </div>
+      </div>
+
+      <!-- Order Form -->
+      <div class="order-form-container" id="orderFormContainer" style="margin: 0;">
+        <form id="orderForm">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-control" placeholder="আপনার নাম লিখুন" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" placeholder="01XXX-XXXXXX" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Full Address</label>
+            <textarea class="form-control" rows="3" placeholder="জেলা, থানা, এলাকা ও বাসার ঠিকানা বিস্তারিত লিখুন"
+              required></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Select Product</label>
+            <select class="form-control" id="productSelect" required>
+              <option value="" disabled selected>প্রোডাক্ট সিলেক্ট করুন</option>
+              <option value="p1_white">AirPods Pro 2nd Gen (Dubai) - White</option>
+              <option value="p1_black">AirPods Pro 2nd Gen (Dubai) - Black</option>
+              <option value="p2_white">AirPods Pro 2nd Gen (China) - White</option>
+              <option value="p2_black">AirPods Pro 2nd Gen (China) - Black</option>
+              <option value="p3">AirPods Pro 2nd Gen ANC (Dubai) - Black</option>
+              <option value="p4">AirPods Pro 3rd Gen ANC (Dubai) - White</option>
+            </select>
+          </div>
+
+          <div class="cod-notice">
+            <strong>✓ 100% Secure:</strong> You will pay only after receiving the product in your hand. No hidden charges!
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block"
+            style="margin-top: 20px; font-size: 1.1rem; padding: 16px;">Confirm Order</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Earphone BD. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
