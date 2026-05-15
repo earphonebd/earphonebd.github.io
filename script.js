@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
       image: 'assets/product_black.png'
     },
     'p3': {
-      title: 'AirPods Pro 2nd Gen ANC (Dubai) - Black',
+      title: 'AirPods Pro 2nd Gen ANC (Dubai) - White',
       price: '1,190 TK',
-      image: 'assets/product_black.png'
+      image: 'assets/product_white.png'
     },
     'p4': {
       title: 'AirPods Pro 3rd Gen ANC (Dubai) - White',
@@ -94,4 +94,37 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // --- FOMO Sales Notifications ---
+  const notification = document.getElementById('sales-notification');
+  if (notification) {
+    const names = ["Abir from Dhaka", "Sajib from Chittagong", "Mitu from Sylhet", "Kamal from Rajshahi", "Sumon from Khulna", "Rifat from Barisal", "Nasir from Gazipur", "Tania from Comilla"];
+    const salesProducts = [
+      { title: "AirPods Pro 2nd Gen", img: "assets/product_white.png" },
+      { title: "AirPods Pro 2nd Gen", img: "assets/product_black.png" },
+      { title: "AirPods Pro 3rd Gen", img: "assets/product_white.png" }
+    ];
+
+    function showNotification() {
+      const randomName = names[Math.floor(Math.random() * names.length)];
+      const randomProduct = salesProducts[Math.floor(Math.random() * salesProducts.length)];
+
+      document.getElementById('sales-name').innerText = randomName;
+      document.getElementById('sales-desc').innerText = `Just bought ${randomProduct.title}`;
+      document.getElementById('sales-img').src = randomProduct.img;
+
+      notification.classList.add('active');
+
+      setTimeout(() => {
+        notification.classList.remove('active');
+      }, 5000); // Show for 5 seconds
+    }
+
+    // Show first notification after 5 seconds
+    setTimeout(() => {
+      showNotification();
+      // Then repeat every 20-40 seconds
+      setInterval(showNotification, Math.floor(Math.random() * 20000) + 20000);
+    }, 5000);
+  }
 });

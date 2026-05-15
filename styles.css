@@ -56,10 +56,25 @@ body {
   font-size: 1.1rem;
 }
 
+/* Announcement Bar */
+.announcement-bar {
+  background-color: var(--accent-color);
+  color: #fff;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1001;
+}
+
 /* Header */
 header {
   position: fixed;
-  top: 0;
+  top: 36px; /* Below announcement bar */
   left: 0;
   width: 100%;
   padding: 20px 0;
@@ -483,3 +498,48 @@ footer {
 }
 
 
+/* Sales Notification */
+.sales-notification {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 1000;
+  transform: translateY(150%);
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid var(--border-color);
+  max-width: 300px;
+}
+.sales-notification.active {
+  transform: translateY(0);
+}
+.sales-notification img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.sales-notification p {
+  font-size: 0.85rem;
+  margin: 0;
+  color: var(--text-secondary);
+}
+.sales-notification strong {
+  color: var(--text-primary);
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .sales-notification {
+    left: 10px;
+    right: 10px;
+    bottom: 80px; /* Above floating CTA */
+    max-width: calc(100% - 20px);
+  }
+}
