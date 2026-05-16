@@ -12,72 +12,105 @@
 
   <!-- Header -->
   <header>
-    <div class="container header-content">
+    <div class="container header-content" style="justify-content: center;">
       <a href="index.html" class="logo">
         <img src="assets/logo.png" alt="Earphone BD Logo" class="logo-img">
         Earphone<span>BD</span>
       </a>
-      <a href="index.html" class="btn btn-primary" style="background-color: transparent; border: 1px solid var(--accent-color); color: var(--accent-color);">Back to Home</a>
     </div>
   </header>
 
   <!-- Order Section -->
   <section class="section container" style="margin-top: 80px;">
-    <h2 class="section-title">Place Your Order</h2>
-    <p class="section-subtitle">দ্রুত অর্ডার কনফার্ম করতে নিচের ফর্মটি পূরণ করুন</p>
-
     <div class="order-layout">
-      <!-- Order Summary -->
-      <div class="order-summary" id="orderSummary" style="display: none;">
-        <h3 style="margin-bottom: 20px;">Order Summary</h3>
-        <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 20px;">
-          <img id="summaryImage" src="" alt="Product" style="width: 100px; height: 100px; object-fit: contain; background: var(--surface-hover); border-radius: 12px; padding: 10px;">
-          <div>
-            <h4 id="summaryTitle" style="font-size: 1.1rem; margin-bottom: 5px;"></h4>
-            <p id="summaryPrice" style="color: var(--accent-color); font-weight: bold; font-size: 1.2rem;"></p>
+      <!-- Order Form (Left) -->
+      <div class="order-form-container">
+        <h2 style="margin-bottom: 25px; font-size: 1.5rem; font-weight: 800;">অর্ডার করতে নিচের ফর্মটি পূরণ করুন</h2>
+        <form id="orderForm">
+          <div class="order-input-group">
+            <div class="order-input-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <input type="text" class="order-input-field" placeholder="আপনার পুরো নাম লিখুন" required>
           </div>
-        </div>
-        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-color); border-radius: 12px; padding: 15px;">
-          <p style="font-size: 0.95rem; color: var(--text-primary);"><strong style="color: var(--accent-color);">✓ Product Selected</strong><br>Please fill out the form to confirm your order.</p>
-        </div>
+
+          <div class="order-input-group">
+            <div class="order-input-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </div>
+            <input type="tel" class="order-input-field" placeholder="আপনার মোবাইল নাম্বার লিখুন" required>
+          </div>
+
+          <div class="order-input-group">
+            <div class="order-input-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <input type="text" class="order-input-field" placeholder="আপনার বিস্তারিত ঠিকানা লিখুন" required>
+          </div>
+
+          <div class="order-input-group">
+            <div class="order-input-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z"/></svg>
+            </div>
+            <input type="text" class="order-input-field" placeholder="কোনো মন্তব্য থাকলে লিখুন (অপশনাল)">
+          </div>
+
+          <h3 style="margin: 25px 0 15px; font-size: 1.2rem; font-weight: 800;">এলাকা নির্বাচন করুন</h3>
+          <div class="shipping-options">
+            <div class="shipping-option selected" onclick="updateShipping('inside')">
+              <div class="shipping-info">
+                <div class="radio-circle"></div>
+                <span>Inside Dhaka City Rate</span>
+              </div>
+              <strong>৳70</strong>
+            </div>
+            <div class="shipping-option" onclick="updateShipping('outside')">
+              <div class="shipping-info">
+                <div class="radio-circle"></div>
+                <span>Outside Dhaka City Rate</span>
+              </div>
+              <strong>৳130</strong>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top: 10px; padding: 18px; font-size: 1.2rem;">
+            অর্ডার কনফার্ম করুন (<span id="btn-total">৳0</span>)
+          </button>
+        </form>
       </div>
 
-      <!-- Order Form -->
-      <div class="order-form-container" id="orderFormContainer" style="margin: 0;">
-        <form id="orderForm">
-          <div class="form-group">
-            <label class="form-label">Full Name</label>
-            <input type="text" class="form-control" placeholder="আপনার নাম লিখুন" required>
+      <!-- Order Summary (Right) -->
+      <div class="order-summary">
+        <h3 style="margin-bottom: 20px; font-size: 1.3rem; font-weight: 800; text-align: center;">আপনার অর্ডার</h3>
+        <div id="cart-content">
+          <div class="cart-item">
+            <img src="" alt="Product" class="cart-item-img" id="summary-img">
+            <div class="cart-item-details">
+              <h4 id="summary-title" style="margin-bottom: 5px;">Product Title</h4>
+              <p style="color: var(--text-secondary); font-size: 0.9rem;" id="summary-price">৳0</p>
+              <div class="quantity-selector">
+                <div class="qty-btn" onclick="updateQty(-1)">-</div>
+                <span id="summary-qty" style="font-weight: 800;">1</span>
+                <div class="qty-btn" onclick="updateQty(1)">+</div>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label class="form-label">Phone Number</label>
-            <input type="tel" class="form-control" placeholder="01XXX-XXXXXX" required>
+          
+          <div style="margin-top: 20px;">
+            <div class="summary-row">
+              <span>Sub-Total</span>
+              <strong id="summary-subtotal">৳0</strong>
+            </div>
+            <div class="summary-row">
+              <span id="shipping-label">Inside Dhaka City</span>
+              <strong id="summary-shipping">৳70</strong>
+            </div>
+            <div class="summary-total summary-row">
+              <span>Total</span>
+              <span id="summary-total">৳0</span>
+            </div>
           </div>
-          <div class="form-group">
-            <label class="form-label">Full Address</label>
-            <textarea class="form-control" rows="3" placeholder="জেলা, থানা, এলাকা ও বাসার ঠিকানা বিস্তারিত লিখুন"
-              required></textarea>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Select Product</label>
-            <select class="form-control" id="productSelect" required>
-              <option value="" disabled selected>প্রোডাক্ট সিলেক্ট করুন</option>
-              <option value="p1_white">AirPods Pro 2nd Gen (Dubai) - White</option>
-              <option value="p1_black">AirPods Pro 2nd Gen (Dubai) - Black</option>
-              <option value="p2_white">AirPods Pro 2nd Gen (China) - White</option>
-              <option value="p2_black">AirPods Pro 2nd Gen (China) - Black</option>
-              <option value="p3">AirPods Pro 2nd Gen ANC (Dubai) - Black</option>
-              <option value="p4">AirPods Pro 3rd Gen ANC (Dubai) - White</option>
-            </select>
-          </div>
-
-          <div class="cod-notice">
-            <strong>✓ 100% Secure:</strong> You will pay only after receiving the product in your hand. No hidden charges!
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-block"
-            style="margin-top: 20px; font-size: 1.1rem; padding: 16px;">Confirm Order</button>
-        </form>
+        </div>
       </div>
     </div>
   </section>

@@ -65,7 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // URL Parameter parsing for Product/Order Page
   const urlParams = new URLSearchParams(window.location.search);
-  const productId = urlParams.get('product');
+  let productId = urlParams.get('product');
+  
+  // Fallback to first product if none specified (prevents empty "Product Title" issue)
+  if (!productId && (document.getElementById('product-title') || document.getElementById('orderForm'))) {
+    productId = 'p1_white';
+  }
 
   if (productId && products[productId]) {
     const product = products[productId];
@@ -112,22 +117,63 @@ document.addEventListener('DOMContentLoaded', () => {
           warrantyBadge.style.display = 'none';
         }
       }
-
-      // Populate summary on the same page (if order form is present)
-      const summaryImg = document.getElementById('summary-img');
-      if (summaryImg) {
-        summaryImg.src = product.image;
-        document.getElementById('summary-title').textContent = product.title;
-        document.getElementById('summary-price').textContent = product.price;
-      }
     }
+  }
 
-    // --- Legacy Order Page Injection (if still exists) ---
-    const summaryTitle = document.getElementById('summaryTitle');
-    if (summaryTitle) {
-      document.getElementById('summaryImage').src = product.image;
-      summaryTitle.textContent = product.title;
-      document.getElementById('summaryPrice').textContent = product.price;
+  // --- Order Page Logic ---
+  let currentProductPrice = 0;
+  let currentQty = 1;
+  let currentShipping = 70;
+
+  window.updateQty = (change) => {
+    currentQty = Math.max(1, currentQty + change);
+    const qtyEl = document.getElementById('summary-qty');
+    if (qtyEl) qtyEl.innerText = currentQty;
+    calculateTotals();
+  };
+
+  window.updateShipping = (area) => {
+    const options = document.querySelectorAll('.shipping-option');
+    if (options.length === 0) return;
+    
+    options.forEach(opt => opt.classList.remove('selected'));
+    
+    if (area === 'inside') {
+      options[0].classList.add('selected');
+      currentShipping = 70;
+      document.getElementById('shipping-label').innerText = 'Inside Dhaka City';
+    } else {
+      options[1].classList.add('selected');
+      currentShipping = 130;
+      document.getElementById('shipping-label').innerText = 'Outside Dhaka City';
+    }
+    document.getElementById('summary-shipping').innerText = `৳${currentShipping}`;
+    calculateTotals();
+  };
+
+  function calculateTotals() {
+    const subtotal = currentProductPrice * currentQty;
+    const total = subtotal + currentShipping;
+    
+    const subtotalEl = document.getElementById('summary-subtotal');
+    const totalEl = document.getElementById('summary-total');
+    const btnTotalEl = document.getElementById('btn-total');
+    
+    if (subtotalEl) subtotalEl.innerText = `৳${subtotal.toLocaleString()}`;
+    if (totalEl) totalEl.innerText = `৳${total.toLocaleString()}`;
+    if (btnTotalEl) btnTotalEl.innerText = `৳${total.toLocaleString()}`;
+  }
+
+  if (productId && products[productId]) {
+    const product = products[productId];
+    currentProductPrice = parseInt(product.price.replace(/[^0-9]/g, ''));
+    
+    const summaryImg = document.getElementById('summary-img');
+    if (summaryImg) {
+      summaryImg.src = product.image;
+      document.getElementById('summary-title').textContent = product.title;
+      document.getElementById('summary-price').textContent = `৳${currentProductPrice.toLocaleString()}`;
+      calculateTotals();
     }
   }
 
@@ -136,16 +182,18 @@ document.addEventListener('DOMContentLoaded', () => {
   
   faqItems.forEach(item => {
     const question = item.querySelector('.faq-question');
-    question.addEventListener('click', () => {
-      // Close other items
-      faqItems.forEach(otherItem => {
-        if (otherItem !== item) {
-          otherItem.classList.remove('active');
-        }
+    if (question) {
+      question.addEventListener('click', () => {
+        // Close other items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+          }
+        });
+        // Toggle current item
+        item.classList.toggle('active');
       });
-      // Toggle current item
-      item.classList.toggle('active');
-    });
+    }
   });
 
   // Order Form Submit
@@ -153,10 +201,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (orderForm) {
     orderForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      alert('Thanks for your order! Our team will contact you shortly to confirm the delivery.');
-      orderForm.reset();
+      alert('ধন্যবাদ! আপনার অর্ডারটি গ্রহণ করা হয়েছে। আমাদের প্রতিনিধি শীঘ্রই আপনার সাথে যোগাযোগ করবেন।');
+      window.location.href = 'index.html';
     });
   }
+
 
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
