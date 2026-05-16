@@ -31,28 +31,28 @@
             <div class="order-input-icon">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
             </div>
-            <input type="text" class="order-input-field" placeholder="আপনার পুরো নাম লিখুন" required>
+            <input type="text" id="name" class="order-input-field" placeholder="আপনার পুরো নাম লিখুন" required>
           </div>
 
           <div class="order-input-group">
             <div class="order-input-icon">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </div>
-            <input type="tel" class="order-input-field" placeholder="আপনার মোবাইল নাম্বার লিখুন" required>
+            <input type="tel" id="phone" class="order-input-field" placeholder="আপনার মোবাইল নাম্বার লিখুন" required>
           </div>
 
           <div class="order-input-group">
             <div class="order-input-icon">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
             </div>
-            <input type="text" class="order-input-field" placeholder="আপনার বিস্তারিত ঠিকানা লিখুন" required>
+            <input type="text" id="address" class="order-input-field" placeholder="আপনার বিস্তারিত ঠিকানা লিখুন" required>
           </div>
 
           <div class="order-input-group">
             <div class="order-input-icon">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z"/></svg>
             </div>
-            <input type="text" class="order-input-field" placeholder="কোনো মন্তব্য থাকলে লিখুন (অপশনাল)">
+            <input type="text" id="order-note" class="order-input-field" placeholder="কোনো মন্তব্য থাকলে লিখুন (অপশনাল)">
           </div>
 
           <h3 style="margin: 25px 0 15px; font-size: 1.2rem; font-weight: 800;">এলাকা নির্বাচন করুন</h3>
@@ -118,7 +118,7 @@
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p>&copy; 2026 Earphone BD. All rights reserved.</p>
+      <p>&copy; <a href="admin.html" style="color: inherit; text-decoration: none; cursor: pointer;">2026</a> Earphone BD. All rights reserved.</p>
     </div>
   </footer>
 
@@ -146,72 +146,93 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app, firebaseConfig.databaseURL);
+    const db = getDatabase(app);
 
-    // Submission Logic
-    document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Order Handling
+    const initOrder = () => {
       const orderForm = document.getElementById('orderForm');
-      if (!orderForm) return;
+      if (!orderForm) {
+        console.error("Order form not found!");
+        return;
+      }
 
-      orderForm.onsubmit = async (e) => {
+      orderForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        console.log("Order form submitted...");
         
         const submitBtn = orderForm.querySelector('button[type="submit"]');
-        const originalBtnText = submitBtn.innerText;
+        const originalBtnText = submitBtn.innerHTML;
         submitBtn.innerText = 'অর্ডার প্রসেসিং হচ্ছে...';
         submitBtn.disabled = true;
 
         try {
-          // Get values
-          const name = document.getElementById('customer-name').value;
-          const phone = document.getElementById('customer-phone').value;
-          const address = document.getElementById('customer-address').value;
-          const shipping = document.querySelector('input[name="shipping"]:checked').value;
-          const productName = document.getElementById('product-name').innerText;
-          const qty = document.getElementById('qty').innerText;
-          const total = document.getElementById('total-price').innerText;
-
-          const orderData = {
-            name: name,
-            phone: phone,
-            address: address,
-            shipping_area: shipping,
-            product: productName,
-            quantity: qty,
-            total_price: total,
-            date: new Date().toLocaleString('bn-BD'),
-            timestamp: Date.now(),
-            status: 'New Order'
+          // Robust data collection
+          const getValue = (id) => {
+            const el = document.getElementById(id);
+            return el ? (el.value || el.innerText || "").trim() : "";
           };
 
-          // Save to Database
-          const ordersRef = ref(db, 'orders');
-          const newOrderRef = push(ordersRef);
-          await set(newOrderRef, orderData);
+          // Detect Variation from Title or Price (Robust Logic)
+          const productTitle = getValue('summary-title');
+          const subtotalText = getValue('summary-subtotal');
+          const price = parseInt(subtotalText.replace(/[^\d]/g, '')) || 0;
+          
+          let variation = "Not Specified";
+          
+          // Logic based on Shop's Product Data
+          if (price >= 500 || productTitle.toLowerCase().includes('dubai') || productTitle.includes('ANC')) {
+            variation = "Dubai Edition";
+          } else if (price > 0 && price < 500 || productTitle.toLowerCase().includes('china')) {
+            variation = "China Edition";
+          }
 
-          // Success
+          const orderData = {
+            customer: {
+              name: getValue('name'),
+              phone: getValue('phone'),
+              address: getValue('address'),
+              note: getValue('order-note')
+            },
+            order: {
+              product: productTitle,
+              variation: variation,
+              quantity: getValue('summary-qty'),
+              subtotal: getValue('summary-subtotal'),
+              shipping_cost: getValue('summary-shipping'),
+              shipping_area: getValue('shipping-label'),
+              total_price: getValue('summary-total')
+            },
+            metadata: {
+              date: new Date().toLocaleString('bn-BD'),
+              timestamp: Date.now(),
+              status: 'New Order'
+            }
+          };
+
+          const ordersRef = ref(db, 'orders');
+          await set(push(ordersRef), orderData);
+
           if (window.showToast) {
-            window.showToast('✅ ধন্যবাদ! আপনার অর্ডারটি সফলভাবে ডাটাবেসে সেভ হয়েছে।');
+            window.showToast('✅ অর্ডার সফল হয়েছে!');
           } else {
-            alert('অর্ডার সফলভাবে সেভ হয়েছে!');
+            alert('অর্ডার সফল হয়েছে!');
           }
 
           setTimeout(() => {
             window.location.href = 'index.html';
-          }, 2500);
+          }, 2000);
 
         } catch (error) {
           console.error("Firebase Error:", error);
-          if (window.showToast) {
-            window.showToast('❌ Error: ' + error.message);
-          } else {
-            alert('Error: ' + error.message);
-          }
-          submitBtn.innerText = originalBtnText;
+          alert('Error: ' + error.message);
+          submitBtn.innerHTML = originalBtnText;
           submitBtn.disabled = false;
         }
-      };
-    });
+      });
+    };
+
+    // Run once
+    initOrder();
   </script>
 
   <script src="script.js"></script>
