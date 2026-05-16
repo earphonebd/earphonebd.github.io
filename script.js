@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Product Database
   const products = {
     'p1_white': {
-      title: 'AirPods Pro 2nd Gen',
+      title: 'AirPods Pro 2nd',
       price: '599 TK',
       regularPrice: '1,200 TK',
       discount: '50% OFF',
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
       features: ['এডিশন: দুবাই', 'কালার: ক্লাসিক হোয়াইট', 'টাচ কন্ট্রোল ও প্রিমিয়াম লুক', 'দারুণ সাউন্ড কোয়ালিটি', 'ক্লিয়ার মাইক ও হাই বেস', 'ব্যাটারি: 3.5-4 ঘণ্টা', 'কেস চার্জ: 4 বার']
     },
     'p1_black': {
-      title: 'AirPods Pro 2nd Gen',
+      title: 'AirPods Pro 2nd',
       price: '649 TK',
       regularPrice: '1,300 TK',
       discount: '50% OFF',
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
       features: ['এডিশন: দুবাই', 'কালার: ম্যাট ব্ল্যাক', 'টাচ কন্ট্রোল ও প্রিমিয়াম লুক', 'দারুণ সাউন্ড কোয়ালিটি', 'ক্লিয়ার মাইক ও হাই বেস', 'ব্যাটারি: 3.5-4 ঘণ্টা', 'কেস চার্জ: 4 বার']
     },
     'p2_white': {
-      title: 'AirPods Pro 2nd Gen',
+      title: 'AirPods Pro 2nd',
       price: '399 TK',
       regularPrice: '800 TK',
       discount: '50% OFF',
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
       features: ['এডিশন: চায়না', 'কালার: ক্লাসিক হোয়াইট', 'টাচ কন্ট্রোল ও স্টাইলিশ লুক', 'ভালো সাউন্ড ও বাজেট ফ্রেন্ডলি', 'ব্যাটারি: 2.5-3 ঘণ্টা', 'কেস চার্জ: 4 বার']
     },
     'p2_black': {
-      title: 'AirPods Pro 2nd Gen',
+      title: 'AirPods Pro 2nd',
       price: '449 TK',
       regularPrice: '900 TK',
       discount: '50% OFF',
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
       features: ['এডিশন: চায়না', 'কালার: ম্যাট ব্ল্যাক', 'টাচ কন্ট্রোল ও স্টাইলিশ লুক', 'ভালো সাউন্ড ও বাজেট ফ্রেন্ডলি', 'ব্যাটারি: 2.5-3 ঘণ্টা', 'কেস চার্জ: 4 বার']
     },
     'p3': {
-      title: 'AirPods Pro 2nd Gen ANC',
+      title: 'AirPods Pro 2nd ANC',
       price: '1,190 TK',
       regularPrice: '2,500 TK',
       discount: '52% OFF',
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
       features: ['এডিশন: দুবাই', 'কালার: ক্লাসিক হোয়াইট', 'নয়েজ ক্যান্সেলেশন (ANC)', 'টাচ কন্ট্রোল ও হাই বেস', 'বেটার মাইক ও ডিপ বেস', 'ব্যাটারি: 4-5 ঘণ্টা', 'কেস চার্জ: 4 বার', '1 বছরের সার্ভিস ওয়ারেন্টি']
     },
     'p4': {
-      title: 'AirPods Pro 3rd Gen ANC',
+      title: 'AirPods Pro 3rd ANC',
       price: '1,990 TK',
       regularPrice: '4,000 TK',
       discount: '50% OFF',
@@ -177,9 +177,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (notification) {
     const names = ["ঢাকা থেকে আবির", "চট্টগ্রাম থেকে সজীব", "সিলেট থেকে মিতু", "রাজশাহী থেকে কামাল", "খুলনা থেকে সুমন", "বরিশাল থেকে রিফাত", "গাজীপুর থেকে নাসির", "কুমিল্লা থেকে তানিয়া"];
     const salesProducts = [
-      { title: "AirPods Pro 2nd Gen", img: "assets/airpod_pro_2nd_generation_dubai_white.png" },
-      { title: "AirPods Pro 2nd Gen", img: "assets/airpod_pro_2nd_generation_dubai_black.png" },
-      { title: "AirPods Pro 3rd Gen", img: "assets/airpod_pro_3rd_generation_premium_anc.png" }
+      { title: "AirPods Pro 2nd", img: "assets/airpod_pro_2nd_generation_dubai_white.png" },
+      { title: "AirPods Pro 2nd", img: "assets/airpod_pro_2nd_generation_dubai_black.png" },
+      { title: "AirPods Pro 3rd", img: "assets/airpod_pro_3rd_generation_premium_anc.png" }
     ];
 
     function showNotification() {
