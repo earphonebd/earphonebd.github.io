@@ -129,6 +129,33 @@
     </svg>
   </a>
 
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
+    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyAdE8jMo0ZNqkK-JSERuY88i0cxAOlkA3w",
+      authDomain: "earphone-bd.firebaseapp.com",
+      projectId: "earphone-bd",
+      storageBucket: "earphone-bd.firebasestorage.app",
+      messagingSenderId: "561559779888",
+      appId: "1:561559779888:web:e135f613c914ad4ac4cbf5",
+      measurementId: "G-C5CG6HCKWG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getDatabase(app);
+
+    // Expose database functions to window for script.js
+    window.db = db;
+    window.dbRef = ref;
+    window.dbPush = push;
+    window.dbSet = set;
+  </script>
+
   <script src="script.js"></script>
 </body>
 
