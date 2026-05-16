@@ -255,4 +255,70 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3000);
   }
 
+  // --- Dynamic Reviews ---
+  const reviews = [
+    { name: "Sajid Hasan", text: "প্রোডাক্ট অনেক ভালো হয়েছে। Sound quality is amazing! 💯", color: "#6b7280" },
+    { name: "Arifur Rahman", text: "চার্জ অনেক ভালো টিকে। Delivery ও খুব ফাস্ট ছিল।", color: "#3b82f6" },
+    { name: "Tanim Islam", text: "Mic quality অনেক clear. এই price এ honestly best!", color: "#8b5cf6" },
+    { name: "Mahbub Alom", text: "অরিজিনাল প্রোডাক্ট পেয়েছি। ধন্যবাদ ইয়ারফোন বিডি!", color: "#10b981" },
+    { name: "Tanvir Ahmed", text: "একদম হুবহু অরিজিনাল এর মত। বেস খুব জোস!", color: "#f59e0b" },
+    { name: "Samiul Islam", text: "ডেলিভারি ম্যান অনেক হেল্পফুল ছিল। পপ-আপ অ্যানিমেশন কাজ করে।", color: "#ef4444" },
+    { name: "Rakib Hasan", text: "দাম অনুযায়ী অনেক প্রিমিয়াম। ৫ দিন হলো চালাচ্ছি, কোনো সমস্যা পাইনি।", color: "#ec4899" },
+    { name: "Farhan Ahmed", text: "প্যাকিং খুব ভালো ছিল। প্রিমিয়াম একটা ফিল আছে।", color: "#6366f1" },
+    { name: "Imran Khan", text: "অবিশ্বাস্য সাউন্ড এই দামে! অনেক ভালো সার্ভিস। ⭐⭐⭐⭐⭐", color: "#4f46e5" },
+    { name: "Sadia Afrin", text: "আমার দেখা সেরা অনলাইন শপ। ৩ দিনে ডেলিভারি পেয়েছি।", color: "#db2777" },
+    { name: "Hasan Mahamud", text: "সাউন্ড কোয়ালিটি খুব জোস, প্রিমিয়াম প্যাকিং।", color: "#059669" },
+    { name: "Jahidul Islam", text: "সব থেকে বড় কথা হলো পপ-আপ অ্যানিমেশন টা একদম আসল এর মত।", color: "#2563eb" },
+    { name: "Rumana Akter", text: "অনেক ভয় পেয়েছিলাম যে ফেক প্রোডাক্ট পাবো কি না, কিন্তু হাতে পাওয়ার পর সব ভয় দূর হয়েছে।", color: "#7c3aed" },
+    { name: "Sazzad Hossain", text: "ক্লিয়ার সাউন্ড আর ব্যাটারি ব্যাকআপ অসাধারণ। recommended!", color: "#ea580c" },
+    { name: "Anisur Rahman", text: "পণ্যটি সত্যিই দারুণ। ক্যাশ অন ডেলিভারিতে চেক করে নিতে পেরেছি।", color: "#16a34a" },
+    { name: "Maimuna Khatun", text: "অনেক সুন্দর লুকিং। আমি আমার ফ্রেন্ডদের ও সাজেস্ট করবো। 😍", color: "#be185d" },
+    { name: "Fahim Faisal", text: "অল্প বাজেটে সেরা চয়েস হতে পারে এটি। ব্যাটারি ৩-৪ ঘণ্টা অনায়াসেই যায়।", color: "#475569" },
+    { name: "Tarek Aziz", text: "সাউন্ড এর বেইজ টা অনেক ক্লিন। ধন্যবাদ Earphone BD!", color: "#0891b2" },
+    { name: "Shariful Islam", text: "১ বছর ওয়ারেন্টি থাকায় নিশ্চিন্তে কেনা যায়। সার্ভিস খুব ভালো।", color: "#4338ca" },
+    { name: "Shumon Rezwan", text: "ডেলিভারি খুব ফাস্ট ছিল। ২ দিনেই হাতে পেয়েছি। ধন্যবাদ!", color: "#15803d" }
+  ];
+
+  const reviewContainer = document.getElementById('reviews-container');
+  if (reviewContainer) {
+    function updateReviews() {
+      const shuffled = [...reviews].sort(() => 0.5 - Math.random());
+      const selected = shuffled.slice(0, 3);
+      
+      const brandReplies = [
+        "ফিডব্যাক এর জন্য ধন্যবাদ! আমরা সবসময় সেরা কোয়ালিটি দেওয়ার চেষ্টা করি। 😊",
+        "আপনার মূল্যবান মতামতের জন্য ধন্যবাদ। আমাদের সাথেই থাকুন। ❤️",
+        "আমরা খুশি যে আপনি প্রোডাক্টটি পছন্দ করেছেন! সেরা সার্ভিস দেওয়াই আমাদের লক্ষ্য। 🙌",
+        "ধন্যবাদ! আমরা এভাবেই সারা বাংলাদেশে কোয়ালিটি নিশ্চিত করে আসছি। 🚚",
+        "আপনাদের এই ভালোবাসাই আমাদের এগিয়ে যাওয়ার প্রেরণা। ধন্যবাদ! ✨"
+      ];
+      const randomReply = brandReplies[Math.floor(Math.random() * brandReplies.length)];
+      
+      let html = '';
+      selected.forEach((rev, index) => {
+        html += `
+          <div class="message-bubble message-received" style="animation: fadeInUp 0.5s ease forwards; animation-delay: ${index * 0.2}s; opacity: 0;">
+            <div class="message-header">
+              <div class="avatar" style="background-color: ${rev.color}">${rev.name.charAt(0)}</div>
+              <strong style="font-size: 0.9rem;">${rev.name}</strong>
+            </div>
+            ${rev.text}
+          </div>
+        `;
+        if (index === 0) {
+          html += `
+            <div class="message-bubble message-sent" style="animation: fadeInUp 0.5s ease forwards; animation-delay: 0.4s; opacity: 0;">
+              <strong style="font-size: 0.8rem; display: block; margin-bottom: 5px; color: rgba(255,255,255,0.9);">Earphone BD</strong>
+              ${randomReply}
+            </div>
+          `;
+        }
+      });
+      reviewContainer.innerHTML = html;
+    }
+
+    updateReviews();
+    setInterval(updateReviews, 8000);
+  }
+
 });
