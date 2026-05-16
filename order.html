@@ -129,10 +129,9 @@
     </svg>
   </a>
 
-  <!-- Firebase SDK -->
+  <!-- Firebase SDK & Order Logic -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
     import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
     
     const firebaseConfig = {
@@ -143,18 +142,76 @@
       messagingSenderId: "561559779888",
       appId: "1:561559779888:web:e135f613c914ad4ac4cbf5",
       measurementId: "G-C5CG6HCKWG",
-      databaseURL: "https://earphone-bd-default-rtdb.asia-southeast1.firebasedatabase.app/"
+      databaseURL: "https://earphone-bd-default-rtdb.asia-southeast1.firebasedatabase.app"
     };
 
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const db = getDatabase(app);
+    const db = getDatabase(app, firebaseConfig.databaseURL);
 
-    // Expose database functions to window for script.js
-    window.db = db;
-    window.dbRef = ref;
-    window.dbPush = push;
-    window.dbSet = set;
+    // Submission Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const orderForm = document.getElementById('orderForm');
+      if (!orderForm) return;
+
+      orderForm.onsubmit = async (e) => {
+        e.preventDefault();
+        
+        const submitBtn = orderForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerText;
+        submitBtn.innerText = 'অর্ডার প্রসেসিং হচ্ছে...';
+        submitBtn.disabled = true;
+
+        try {
+          // Get values
+          const name = document.getElementById('customer-name').value;
+          const phone = document.getElementById('customer-phone').value;
+          const address = document.getElementById('customer-address').value;
+          const shipping = document.querySelector('input[name="shipping"]:checked').value;
+          const productName = document.getElementById('product-name').innerText;
+          const qty = document.getElementById('qty').innerText;
+          const total = document.getElementById('total-price').innerText;
+
+          const orderData = {
+            name: name,
+            phone: phone,
+            address: address,
+            shipping_area: shipping,
+            product: productName,
+            quantity: qty,
+            total_price: total,
+            date: new Date().toLocaleString('bn-BD'),
+            timestamp: Date.now(),
+            status: 'New Order'
+          };
+
+          // Save to Database
+          const ordersRef = ref(db, 'orders');
+          const newOrderRef = push(ordersRef);
+          await set(newOrderRef, orderData);
+
+          // Success
+          if (window.showToast) {
+            window.showToast('✅ ধন্যবাদ! আপনার অর্ডারটি সফলভাবে ডাটাবেসে সেভ হয়েছে।');
+          } else {
+            alert('অর্ডার সফলভাবে সেভ হয়েছে!');
+          }
+
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 2500);
+
+        } catch (error) {
+          console.error("Firebase Error:", error);
+          if (window.showToast) {
+            window.showToast('❌ Error: ' + error.message);
+          } else {
+            alert('Error: ' + error.message);
+          }
+          submitBtn.innerText = originalBtnText;
+          submitBtn.disabled = false;
+        }
+      };
+    });
   </script>
 
   <script src="script.js"></script>

@@ -306,64 +306,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Order Form Submit
-  const orderForm = document.getElementById('orderForm');
-  if (orderForm) {
-    orderForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      const submitBtn = orderForm.querySelector('button[type="submit"]');
-      const originalBtnText = submitBtn.innerText;
-      submitBtn.innerText = 'অর্ডার প্রসেসিং হচ্ছে...';
-      submitBtn.disabled = true;
-
-      const orderData = {
-        customerName: document.getElementById('customer-name').value,
-        phone: document.getElementById('customer-phone').value,
-        address: document.getElementById('customer-address').value,
-        area: document.querySelector('input[name="shipping"]:checked').value,
-        productName: document.getElementById('product-name').innerText,
-        quantity: document.getElementById('qty').innerText,
-        totalAmount: document.getElementById('total-price').innerText,
-        timestamp: new Date().toISOString(),
-        status: 'pending'
-      };
-
-      // Save to Firebase with Timeout
-      if (window.db && window.dbRef && window.dbPush) {
-        const ordersRef = window.dbRef(window.db, 'orders');
-        const newOrderRef = window.dbPush(ordersRef);
-        
-        // Timeout logic
-        const timeout = setTimeout(() => {
-          showToast('কানেকশন স্লো, আবার চেষ্টা করুন।');
-          submitBtn.innerText = originalBtnText;
-          submitBtn.disabled = false;
-        }, 10000);
-
-        window.dbSet(newOrderRef, orderData)
-          .then(() => {
-            clearTimeout(timeout);
-            showToast('ধন্যবাদ! আপনার অর্ডারটি গ্রহণ করা হয়েছে।');
-            setTimeout(() => {
-              window.location.href = 'index.html';
-            }, 2000);
-          })
-          .catch((error) => {
-            clearTimeout(timeout);
-            console.error("Firebase Error:", error);
-            showToast('এরর: ডাটাবেস পারমিশন চেক করুন।');
-            submitBtn.innerText = originalBtnText;
-            submitBtn.disabled = false;
-          });
-      } else {
-        console.warn("Firebase DB not initialized yet.");
-        showToast('ডাটাবেস কানেক্ট হচ্ছে, দয়া করে ৫ সেকেন্ড পর আবার ট্রাই করুন।');
-        submitBtn.innerText = originalBtnText;
-        submitBtn.disabled = false;
-      }
-    });
-  }
-
+  // Global Error Catcher for Debugging
+  window.onerror = function(msg, url, line) {
+    if (typeof showToast === 'function') showToast("Error: " + msg);
+    return false;
+  };
 
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
