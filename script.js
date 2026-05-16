@@ -1,4 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // --- Global Toast Logic ---
+  window.showToast = (msg) => {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+      <span>${msg}</span>
+    `;
+    container.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(50px)';
+      toast.style.transition = 'all 0.5s';
+      setTimeout(() => toast.remove(), 500);
+    }, 4000);
+  };
+
   // Product Database
   const products = {
     'p1_white': {
@@ -7,7 +26,19 @@ document.addEventListener('DOMContentLoaded', () => {
       regularPrice: '1,200 TK',
       discount: '50% OFF',
       image: 'assets/airpod_pro_2nd_generation_dubai_white.png',
-      features: ['এডিশন: দুবাই', 'কালার: ক্লাসিক হোয়াইট', 'টাচ কন্ট্রোল ও প্রিমিয়াম লুক', 'দারুণ সাউন্ড কোয়ালিটি', 'ক্লিয়ার মাইক ও হাই বেস', 'ব্যাটারি: 3.5-4 ঘণ্টা', 'কেস চার্জ: 4 বার']
+      features: ['এডিশন: দুবাই', 'কালার: ক্লাসিক হোয়াইট', 'টাচ কন্ট্রোল ও প্রিমিয়াম লুক', 'দারুণ সাউন্ড কোয়ালিটি', 'ক্লিয়ার মাইক ও হাই বেস', 'ব্যাটারি: 3.5-4 ঘণ্টা', 'কেস চার্জ: 4 বার'],
+      reviews: [
+        { name: "Sajid Hasan", text: "প্রোডাক্ট অনেক ভালো হয়েছে। Sound quality is amazing! 💯" },
+        { name: "Arifur Rahman", text: "চার্জ অনেক ভালো টিকে। Delivery ও খুব ফাস্ট ছিল।" },
+        { name: "Muna Ahmed", text: "খুব সুন্দর এবং ক্লিয়ার সাউন্ড। রিকমেন্ডেড!" },
+        { name: "Joy Kumar", text: "প্যাকেজিং টা দারুণ ছিল। একদম প্রিমিয়াম ফিল।" },
+        { name: "Nazmul Haque", text: "দাম অনুযায়ী সেরা কোয়ালিটি। ৫ দিন হলো চালাচ্ছি।" },
+        { name: "Sifat Ullah", text: "পপ-আপ অ্যানিমেশন একদম আসলটার মতো। সাউন্ড অনেক ক্লিয়ার।" },
+        { name: "Mitu Akter", text: "অনেক ভয় পেয়েছিলাম, কিন্তু হাতে পাওয়ার পর সব ভয় দূর হয়েছে।" },
+        { name: "Hridoy Khan", text: "২ দিনেই হাতে পেয়েছি। ফাস্ট ডেলিভারি আর ভালো প্রোডাক্ট।" },
+        { name: "Sultana Razia", text: "সাদা রং টা দেখতে খুব সুন্দর। ক্লিয়ার সাউন্ড।" },
+        { name: "Anwar Hossain", text: "ভালোই সার্ভিস দিচ্ছে। বাসের মাঝেও গান শোনা যায়।" }
+      ]
     },
     'p1_black': {
       title: 'AirPods Pro 2nd',
@@ -15,7 +46,19 @@ document.addEventListener('DOMContentLoaded', () => {
       regularPrice: '1,300 TK',
       discount: '50% OFF',
       image: 'assets/airpod_pro_2nd_generation_dubai_black.png',
-      features: ['এডিশন: দুবাই', 'কালার: ম্যাট ব্ল্যাক', 'টাচ কন্ট্রোল ও প্রিমিয়াম লুক', 'দারুণ সাউন্ড কোয়ালিটি', 'ক্লিয়ার মাইক ও হাই বেস', 'ব্যাটারি: 3.5-4 ঘণ্টা', 'কেস চার্জ: 4 বার']
+      features: ['এডিশন: দুবাই', 'কালার: ম্যাট ব্ল্যাক', 'টাচ কন্ট্রোল ও প্রিমিয়াম লুক', 'দারুণ সাউন্ড কোয়ালিটি', 'ক্লিয়ার মাইক ও হাই বেস', 'ব্যাটারি: 3.5-4 ঘণ্টা', 'কেস চার্জ: 4 বার'],
+      reviews: [
+        { name: "Mahbub Alom", text: "ম্যাট ব্ল্যাক কালারটা জাস্ট অসাধারণ! প্রিমিয়াম ফিল দেয়।" },
+        { name: "Tanvir Ahmed", text: "একদম হুবহু অরিজিনাল এর মত। বেস খুব জোস!" },
+        { name: "Imran Hossain", text: "কালো রং টা অনেক গর্জিয়াস। কানে খুব ভালো ফিট হয়।" },
+        { name: "Srabonti Akter", text: "উপহার দেওয়ার জন্য কিনেছিলাম, সে খুব পছন্দ করেছে।" },
+        { name: "Rifat Hasan", text: "অরিজিনাল এর সাথে কোনো পার্থক্য নেই বললেই চলে।" },
+        { name: "Sumon Das", text: "বেস কোয়ালিটি অনেক জোস। যারা গান শুনতে ভালোবাসেন তাদের জন্য বেস্ট।" },
+        { name: "Farhana Islam", text: "অনেকদিন পর ভালো একটা জিনিস পেলাম। ধন্যবাদ।" },
+        { name: "Jasim Uddin", text: "প্যাকিং টা খুব ভালো ছিল। কালারটা খুব সুন্দর।" },
+        { name: "Rina Begum", text: "সাউন্ড কোয়ালিটি নিয়ে কোনো অভিযোগ নেই।" },
+        { name: "Tariqul Islam", text: "৫-৬ ঘণ্টা ব্যাকআপ পাচ্ছি অনায়াসে।" }
+      ]
     },
     'p2_white': {
       title: 'AirPods Pro 2nd',
@@ -23,7 +66,19 @@ document.addEventListener('DOMContentLoaded', () => {
       regularPrice: '800 TK',
       discount: '50% OFF',
       image: 'assets/airpod_pro_2nd_generation_china_white.png',
-      features: ['এডিশন: চায়না', 'কালার: ক্লাসিক হোয়াইট', 'টাচ কন্ট্রোল ও স্টাইলিশ লুক', 'ভালো সাউন্ড ও বাজেট ফ্রেন্ডলি', 'ব্যাটারি: 2.5-3 ঘণ্টা', 'কেস চার্জ: 4 বার']
+      features: ['এডিশন: চায়না', 'কালার: ক্লাসিক হোয়াইট', 'টাচ কন্ট্রোল ও স্টাইলিশ লুক', 'ভালো সাউন্ড ও বাজেট ফ্রেন্ডলি', 'ব্যাটারি: 2.5-3 ঘণ্টা', 'কেস চার্জ: 4 বার'],
+      reviews: [
+        { name: "Samiul Islam", text: "বাজেট অনুযায়ী অনেক ভালো। পপ-আপ অ্যানিমেশন কাজ করে।" },
+        { name: "Rakib Hasan", text: "কম দামে এর থেকে ভালো আর কিছু হয় না। ডেলিভারি ফাস্ট ছিল।" },
+        { name: "Priya Ghosh", text: "বেশি টাকা খরচ করতে না চাইলে এটা বেস্ট অপশন।" },
+        { name: "Ashikur Rahman", text: "১ সপ্তাহ হলো ব্যবহার করছি, কোনো সমস্যা নেই।" },
+        { name: "Niloy Das", text: "লুকিং টা একদম অরিজিনাল এর মত।" },
+        { name: "Sonia Akter", text: "সস্তায় ভালো জিনিস। সাউন্ড কোয়ালিটি ও মোটামুটি ভালো।" },
+        { name: "Fahim Ahmed", text: "বাজেট ফ্রেন্ডলি প্রোডক্ট। গিফট দেওয়ার জন্য দারুণ।" },
+        { name: "Ayesha Khatun", text: "১ দিনেই ডেলিভারি পেয়েছি। ধন্যবাদ ইয়ারফোন বিডি।" },
+        { name: "Zubair Hossain", text: "টাচ কন্ট্রোল গুলো ভালো কাজ করে।" },
+        { name: "Nasrin Sultana", text: "দাম অনুযায়ী এটা অনেক প্রিমিয়াম।" }
+      ]
     },
     'p2_black': {
       title: 'AirPods Pro 2nd',
@@ -31,7 +86,19 @@ document.addEventListener('DOMContentLoaded', () => {
       regularPrice: '900 TK',
       discount: '50% OFF',
       image: 'assets/airpod_pro_2nd_generation_china_black.png',
-      features: ['এডিশন: চায়না', 'কালার: ম্যাট ব্ল্যাক', 'টাচ কন্ট্রোল ও স্টাইলিশ লুক', 'ভালো সাউন্ড ও বাজেট ফ্রেন্ডলি', 'ব্যাটারি: 2.5-3 ঘণ্টা', 'কেস চার্জ: 4 বার']
+      features: ['এডিশন: চায়না', 'কালার: ম্যাট ব্ল্যাক', 'টাচ কন্ট্রোল ও স্টাইলিশ লুক', 'ভালো সাউন্ড ও বাজেট ফ্রেন্ডলি', 'ব্যাটারি: 2.5-3 ঘণ্টা', 'কেস চার্জ: 4 বার'],
+      reviews: [
+        { name: "Farhan Ahmed", text: "প্যাকিং খুব ভালো ছিল। কালারটা খুব সুন্দর।" },
+        { name: "Imran Khan", text: "অবিশ্বাস্য সাউন্ড এই দামে! অনেক ভালো সার্ভিস।" },
+        { name: "Sayed Ali", text: "খুব দ্রুত হাতে পেয়েছি। কোয়ালিটি ও অনেক ভালো।" },
+        { name: "Mitu Akter", text: "অল্প দামে ভালো একটা জিনিস পেলাম।" },
+        { name: "Nayeem Islam", text: "ভালোই সার্ভিস দিচ্ছে।" },
+        { name: "Shamim Reza", text: "কালো রং টা ম্যাট ফিনিশ, দেখতে খুব সুন্দর লাগে।" },
+        { name: "Lata Mondal", text: "চার্জ ভালোই থাকে। সাউন্ড একদম ক্লিয়ার।" },
+        { name: "Kamrul Hasan", text: "কম বাজেটে সেরা চয়েস।" },
+        { name: "Rehana Parvin", text: "পণ্যটি সত্যিই দারুণ। চেক করে নিতে পেরেছি।" },
+        { name: "Saiful Bari", text: "ধন্যবাদ Earphone BD!" }
+      ]
     },
     'p3': {
       title: 'AirPods Pro 2nd ANC',
@@ -39,7 +106,19 @@ document.addEventListener('DOMContentLoaded', () => {
       regularPrice: '2,500 TK',
       discount: '52% OFF',
       image: 'assets/airpod_pro_2nd_generation_premium_anc.png',
-      features: ['এডিশন: দুবাই', 'কালার: ক্লাসিক হোয়াইট', 'নয়েজ ক্যান্সেলেশন (ANC)', 'টাচ কন্ট্রোল ও হাই বেস', 'বেটার মাইক ও ডিপ বেস', 'ব্যাটারি: 4-5 ঘণ্টা', 'কেস চার্জ: 4 বার', '1 বছরের সার্ভিস ওয়ারেন্টি']
+      features: ['এডিশন: দুবাই', 'কালার: ক্লাসিক হোয়াইট', 'নয়েজ ক্যান্সেলেশন (ANC)', 'টাচ কন্ট্রোল ও হাই বেস', 'বেটার মাইক ও ডিপ বেস', 'ব্যাটারি: 4-5 ঘণ্টা', 'কেস চার্জ: 4 বার', '1 বছরের সার্ভিস ওয়ারেন্টি'],
+      reviews: [
+        { name: "Sadia Afrin", text: "ANC ফিচারটা দারুণ কাজ করে। বাসের শব্দের মধ্যেও গান ক্লিয়ার শোনা যায়।" },
+        { name: "Hasan Mahamud", text: "প্রিমিয়াম কোয়ালিটি। সাউন্ড এর বেইজ টা অনেক ক্লিন।" },
+        { name: "Rubel Ahmed", text: "নয়েজ ক্যান্সেলেশন টা অসাধারণ। একদম শান্তিতে গান শোনা যায়।" },
+        { name: "Faria Islam", text: "মাইক অনেক ক্লিয়ার, কথা বলতে কোনো সমস্যা হয় না।" },
+        { name: "Kamal Uddin", text: "সরাসরি বলতে গেলে পয়সা উসুল প্রোডাক্ট।" },
+        { name: "Tanvir Hossain", text: "১ বছরের ওয়ারেন্টি থাকায় নিশ্চিন্তে কেনা যায়। সার্ভিস খুব ভালো।" },
+        { name: "Moushumi Akter", text: "অরিজিনাল এর সাথে কোনো পার্থক্য পাইনি। বেস্ট।" },
+        { name: "Saidur Rahman", text: "খুব প্রিমিয়াম লুক। কানে দিয়ে বসে থাকলে বাইরের শব্দ আসে না বললেই চলে।" },
+        { name: "Nitu Das", text: "সাউন্ড কোয়ালিটি এবং বিল্ড কোয়ালিটি দুটোই দারুণ।" },
+        { name: "Abir Hasan", text: "এটাই খুঁজছিলাম অনেকদিন। অনেক ধন্যবাদ।" }
+      ]
     },
     'p4': {
       title: 'AirPods Pro 3rd ANC',
@@ -47,9 +126,23 @@ document.addEventListener('DOMContentLoaded', () => {
       regularPrice: '4,000 TK',
       discount: '50% OFF',
       image: 'assets/airpod_pro_3rd_generation_premium_anc.png',
-      features: ['এডিশন: দুবাই', 'কালার: ক্লাসিক হোয়াইট', 'নয়েজ ক্যান্সেলেশন (ANC)', 'টাচ কন্ট্রোল ও হাই বেস', 'বেস্ট কল কোয়ালিটি ও ডিপ বেস', 'ব্যাটারি: 5-6 ঘণ্টা', 'কেস চার্জ: 4 বার', '1 বছরের সার্ভিস ওয়ারেন্টি']
+      features: ['এডিশন: দুবাই', 'কালার: ক্লাসিক হোয়াইট', 'নয়েজ ক্যান্সেলেশন (ANC)', 'টাচ কন্ট্রোল ও হাই বেস', 'বেস্ট কল কোয়ালিটি ও ডিপ বেস', 'ব্যাটারি: 5-6 ঘণ্টা', 'কেস চার্জ: 4 বার', '1 বছরের সার্ভিস ওয়ারেন্টি'],
+      reviews: [
+        { name: "Jahidul Islam", text: "এখন পর্যন্ত আমার কেনা সেরা ইয়ারফোন। একদম অরিজিনাল এর মত ফিল।" },
+        { name: "Rumana Akter", text: "সাউন্ড এবং কল কোয়ালিটি দুটোই টপ লেভেল। ধন্যবাদ Earphone BD!" },
+        { name: "Mustakim Billah", text: "হাই-এন্ড কোয়ালিটি। যারা বেস্ট টা চান তারা এটা নিতে পারেন।" },
+        { name: "Sumaiya Jahan", text: "ব্যাটারি ব্যাকআপ অনেক ভালো, ৫-৬ ঘণ্টা অনায়াসে চলে।" },
+        { name: "Niaz Mahmud", text: "অসাধারণ এক্সপেরিয়েন্স। ANC টা নেক্সট লেভেল।" },
+        { name: "Fahim Faisal", text: "কল কোয়ালিটি খুব ভালো। বাইক চালানোর সময় ও ক্লিয়ার কথা বলা যায়।" },
+        { name: "Sharmin Shila", text: "প্রোডাক্ট টি হাতে পাওয়ার পর আমি অবাক হয়ে গেছি। জাস্ট অসাম!" },
+        { name: "Rafiqul Islam", text: "দুবাই ভেরিয়েন্ট টা আসলেও প্রিমিয়াম। ওয়ারেন্টি ও আছে।" },
+        { name: "Tisha Akter", text: "সেরা সাউন্ড বেইজ। গান শোনার মজাটাই আলাদা।" },
+        { name: "Imran Chowdhury", text: "সবাইকে রিকমেন্ড করছি এটা নেওয়ার জন্য।" }
+      ]
     }
+
   };
+
 
   // Dynamic Stock Counter Logic
   const getStockCount = (id) => {
@@ -108,6 +201,22 @@ document.addEventListener('DOMContentLoaded', () => {
         buyNowBtn.href = `order.html?product=${productId}`;
       }
 
+      // Update reviews
+      const reviewList = document.getElementById('review-list');
+      if (reviewList && product.reviews) {
+        reviewList.innerHTML = product.reviews.map(rev => `
+          <div class="review-item">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+              <strong style="display: block; font-size: 1.1rem;">${rev.name}</strong>
+              <div class="verified-badge">
+                ভেরিফাইড কাস্টমার <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              </div>
+            </div>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.5;">${rev.text}</p>
+          </div>
+        `).join('');
+      }
+
       // Show warranty badge for specific models (ANC models)
       const warrantyBadge = document.getElementById('warranty-badge');
       if (warrantyBadge) {
@@ -123,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Order Page Logic ---
   let currentProductPrice = 0;
   let currentQty = 1;
-  let currentShipping = 70;
+  let currentShipping = 29;
 
   window.updateQty = (change) => {
     currentQty = Math.max(1, currentQty + change);
@@ -140,12 +249,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (area === 'inside') {
       options[0].classList.add('selected');
-      currentShipping = 70;
-      document.getElementById('shipping-label').innerText = 'Inside Dhaka City';
+      currentShipping = 29;
+      document.getElementById('shipping-label').innerText = 'ঢাকার ভেতরে';
     } else {
       options[1].classList.add('selected');
-      currentShipping = 130;
-      document.getElementById('shipping-label').innerText = 'Outside Dhaka City';
+      currentShipping = 49;
+      document.getElementById('shipping-label').innerText = 'ঢাকার বাইরে';
     }
     document.getElementById('summary-shipping').innerText = `৳${currentShipping}`;
     calculateTotals();
@@ -201,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (orderForm) {
     orderForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      alert('ধন্যবাদ! আপনার অর্ডারটি গ্রহণ করা হয়েছে। আমাদের প্রতিনিধি শীঘ্রই আপনার সাথে যোগাযোগ করবেন।');
+      showToast('ধন্যবাদ! আপনার অর্ডারটি গ্রহণ করা হয়েছে। আমাদের প্রতিনিধি শীঘ্রই আপনার সাথে যোগাযোগ করবেন।');
       window.location.href = 'index.html';
     });
   }
@@ -287,6 +396,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const trustSection = document.querySelector('.trust-badges');
   if (trustSection) observer.observe(trustSection);
+
+  // --- Product Page Tabs & Reviews ---
+  window.switchTab = (tabName) => {
+    // Buttons
+    const btns = document.querySelectorAll('.tab-btn');
+    btns.forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.innerText.includes(tabName === 'features' ? 'বিশেষত্ব্য' : 'রিভিউ')) {
+        btn.classList.add('active');
+      }
+    });
+
+    // Content
+    const tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    document.getElementById(`${tabName}-tab`).classList.add('active');
+  };
+
+  window.addReview = () => {
+    const name = document.getElementById('rev-name').value;
+    const text = document.getElementById('rev-text').value;
+
+    if (!name || !text) {
+      showToast('দয়া করে আপনার নাম এবং মতামত লিখুন।');
+      return;
+    }
+
+    const reviewList = document.getElementById('review-list');
+    const newReview = document.createElement('div');
+    newReview.className = 'review-item';
+    newReview.innerHTML = `
+      <strong style="display: block; margin-bottom: 5px;">${name}</strong>
+      <p style="font-size: 0.95rem; color: var(--text-secondary);">${text}</p>
+    `;
+    
+    reviewList.prepend(newReview);
+    document.getElementById('rev-name').value = '';
+    document.getElementById('rev-text').value = '';
+    showToast('ধন্যবাদ! আপনার রিভিউটি যুক্ত হয়েছে।');
+  };
 
   // --- Hero Text Rotation ---
   const heroTexts = ["প্রিমিয়াম সাউন্ড", "সেরা কোয়ালিটি", "বাজেট ফ্রেন্ডলি", "স্মার্ট ফিচার"];
