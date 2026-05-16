@@ -239,4 +239,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const trustSection = document.querySelector('.trust-badges');
   if (trustSection) observer.observe(trustSection);
 
+  // --- Hero Text Rotation ---
+  const heroTexts = ["প্রিমিয়াম সাউন্ড", "সেরা কোয়ালিটি", "বাজেট ফ্রেন্ডলি", "স্মার্ট ফিচার"];
+  let heroIndex = 0;
+  const heroEl = document.getElementById('dynamic-hero-text');
+  
+  if (heroEl) {
+    setInterval(() => {
+      heroEl.style.opacity = 0;
+      setTimeout(() => {
+        heroIndex = (heroIndex + 1) % heroTexts.length;
+        heroEl.innerText = heroTexts[heroIndex];
+        heroEl.style.opacity = 1;
+      }, 300);
+    }, 3000);
+  }
+
 });
