@@ -14,34 +14,206 @@
 
   <!-- Header -->
   <header>
-    <div class="container header-content" style="justify-content: center;">
+    <div class="container header-content">
       <a href="#" class="logo">
         <img src="assets/logo.png" alt="Earphone BD Logo" class="logo-img">
         Earphone<span>BD</span>
       </a>
+      <div class="header-actions">
+        <a href="#" class="header-action-item" title="My Account">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </a>
+        <a href="#" class="header-action-item cart-btn" title="Shopping Cart">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          <span class="cart-badge">0</span>
+        </a>
+      </div>
     </div>
   </header>
 
   <!-- Hero Section -->
-  <section class="hero">
+  <section class="hero" style="padding-top: 80px; padding-bottom: 30px;">
     <div class="container text-center">
-      <div class="hero-text">
-
-        <h1>সাশ্রয়ী দামে <span id="dynamic-hero-text" class="accent-text">প্রিমিয়াম সাউন্ড</span></h1>
-        <p>সাউন্ড, মাইক আর ব্যাটারি — সবকিছুতেই সেরা experience</p>
-        <div class="hero-cta">
-          <a href="#products" class="btn btn-primary">প্রোডাক্টগুলো দেখুন</a>
-          <p class="cod-tag">✓ ক্যাশ অন ডেলিভারি সুবিধা</p>
+      <!-- Hero Slider -->
+      <div class="hero-slider-wrapper">
+        <div class="hero-slider" id="hero-slider">
+          <div class="hero-slide active">
+            <img src="assets/hero.png" alt="Premium Wireless Earbuds">
+          </div>
+          <div class="hero-slide">
+            <img src="assets/hero 2.png" alt="Best Deals on Earbuds">
+          </div>
+          <div class="hero-slide">
+            <img src="assets/hero 3.png" alt="Premium Experience">
+          </div>
+        </div>
+        <div class="slider-dots" id="slider-dots">
+          <span class="dot active" onclick="currentSlide(0)"></span>
+          <span class="dot" onclick="currentSlide(1)"></span>
+          <span class="dot" onclick="currentSlide(2)"></span>
         </div>
       </div>
-      <div class="hero-banner-wrapper" style="width: 100%; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08); border: 1px solid var(--border-color);">
-        <img src="assets/hero.png" alt="Premium Wireless Earbuds" style="width: 100%; height: auto; display: block; object-fit: cover; max-height: 450px;">
+    </div>
+  </section>
+
+
+
+  <!-- Featured Products -->
+  <section id="products" class="section container">
+    <h2 class="section-title">সেরা প্রোডাক্টসমূহ</h2>
+    <p class="section-subtitle">বাজেটের মধ্যে প্রিমিয়াম এক্সপেরিয়েন্স</p>
+
+    <div class="products-grid">
+      <!-- Product 1: Dubai White -->
+      <div class="product-card">
+        <a href="product.html?product=p1_white" class="product-image-wrapper">
+          <span class="product-discount-badge">৩৫% ছাড়</span>
+          <img src="assets/airpod_pro_2nd_generation_dubai_white.png" alt="AirPods Pro 2nd Gen" class="product-image">
+        </a>
+        <h3 class="product-title">AirPods Pro 2nd</h3>
+        <div class="product-price-row">
+          <span class="current-price">৳599</span>
+          <del class="regular-price">৳950</del>
+          <span class="save-badge">Save ৳351</span>
+        </div>
+        <div class="card-buttons">
+          <a href="order.html?product=p1_white" class="btn-order-now">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            অর্ডার করুন
+          </a>
+          <a href="javascript:void(0)" onclick="addToCart('p1_white')" class="btn-add-cart">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            কার্টে যোগ করুন
+          </a>
+        </div>
+      </div>
+
+      <!-- Product 2: Dubai Black -->
+      <div class="product-card">
+        <a href="product.html?product=p1_black" class="product-image-wrapper">
+          <span class="product-discount-badge">৩৮% ছাড়</span>
+          <img src="assets/airpod_pro_2nd_generation_dubai_black.png" alt="AirPods Pro 2nd" class="product-image">
+        </a>
+        <h3 class="product-title">AirPods Pro 2nd</h3>
+        <div class="product-price-row">
+          <span class="current-price">৳649</span>
+          <del class="regular-price">৳1,050</del>
+          <span class="save-badge">Save ৳401</span>
+        </div>
+        <div class="card-buttons">
+          <a href="order.html?product=p1_black" class="btn-order-now">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            অর্ডার করুন
+          </a>
+          <a href="javascript:void(0)" onclick="addToCart('p1_black')" class="btn-add-cart">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            কার্টে যোগ করুন
+          </a>
+        </div>
+      </div>
+
+      <!-- Product 3: China White -->
+      <div class="product-card">
+        <a href="product.html?product=p2_white" class="product-image-wrapper">
+          <span class="product-discount-badge">৩৯% ছাড়</span>
+          <img src="assets/airpod_pro_2nd_generation_china_white.png" alt="AirPods Pro 2nd" class="product-image">
+        </a>
+        <h3 class="product-title">AirPods Pro 2nd</h3>
+        <div class="product-price-row">
+          <span class="current-price">৳399</span>
+          <del class="regular-price">৳650</del>
+          <span class="save-badge">Save ৳251</span>
+        </div>
+        <div class="card-buttons">
+          <a href="order.html?product=p2_white" class="btn-order-now">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            অর্ডার করুন
+          </a>
+          <a href="javascript:void(0)" onclick="addToCart('p2_white')" class="btn-add-cart">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            কার্টে যোগ করুন
+          </a>
+        </div>
+      </div>
+
+      <!-- Product 4: China Black -->
+      <div class="product-card">
+        <a href="product.html?product=p2_black" class="product-image-wrapper">
+          <span class="product-discount-badge">৪০% ছাড়</span>
+          <img src="assets/airpod_pro_2nd_generation_china_black.png" alt="AirPods Pro 2nd" class="product-image">
+        </a>
+        <h3 class="product-title">AirPods Pro 2nd</h3>
+        <div class="product-price-row">
+          <span class="current-price">৳449</span>
+          <del class="regular-price">৳750</del>
+          <span class="save-badge">Save ৳301</span>
+        </div>
+        <div class="card-buttons">
+          <a href="order.html?product=p2_black" class="btn-order-now">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            অর্ডার করুন
+          </a>
+          <a href="javascript:void(0)" onclick="addToCart('p2_black')" class="btn-add-cart">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            কার্টে যোগ করুন
+          </a>
+        </div>
+      </div>
+
+      <!-- Product 5: ANC Dubai White -->
+      <div class="product-card premium">
+        <span class="premium-tag">PREMIUM</span>
+        <a href="product.html?product=p3" class="product-image-wrapper">
+          <span class="product-discount-badge">৩৫% ছাড়</span>
+          <img src="assets/airpod_pro_2nd_generation_premium_anc.png" alt="AirPods Pro 2nd" class="product-image">
+        </a>
+        <h3 class="product-title">AirPods Pro 2nd</h3>
+        <div class="product-price-row">
+          <span class="current-price">৳1,190</span>
+          <del class="regular-price">৳1,850</del>
+          <span class="save-badge">Save ৳660</span>
+        </div>
+        <div class="card-buttons">
+          <a href="order.html?product=p3" class="btn-order-now">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            অর্ডার করুন
+          </a>
+          <a href="javascript:void(0)" onclick="addToCart('p3')" class="btn-add-cart">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            কার্টে যোগ করুন
+          </a>
+        </div>
+      </div>
+
+      <!-- Product 6: ANC Dubai White 3rd Gen -->
+      <div class="product-card premium">
+        <span class="premium-tag">PREMIUM</span>
+        <a href="product.html?product=p4" class="product-image-wrapper">
+          <span class="product-discount-badge">৩২% ছাড়</span>
+          <img src="assets/airpod_pro_3rd_generation_premium_anc.png" alt="AirPods Pro 3rd" class="product-image" style="transform: scale(0.9);">
+        </a>
+        <h3 class="product-title">AirPods Pro 3rd</h3>
+        <div class="product-price-row">
+          <span class="current-price">৳1,990</span>
+          <del class="regular-price">৳2,950</del>
+          <span class="save-badge">Save ৳960</span>
+        </div>
+        <div class="card-buttons">
+          <a href="order.html?product=p4" class="btn-order-now">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            অর্ডার করুন
+          </a>
+          <a href="javascript:void(0)" onclick="addToCart('p4')" class="btn-add-cart">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            কার্টে যোগ করুন
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Trust Section -->
-  <section class="container">
+  <section class="container" style="margin-top: 40px;">
     <div class="trust-badges">
       <div class="trust-item">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -72,126 +244,38 @@
     </div>
   </section>
 
-  <!-- Featured Products -->
-  <section id="products" class="section container">
-    <h2 class="section-title">সেরা প্রোডাক্টসমূহ</h2>
-    <p class="section-subtitle">বাজেটের মধ্যে প্রিমিয়াম এক্সপেরিয়েন্স</p>
-
-    <div class="products-grid">
-      <!-- Product 1: Dubai White -->
-      <div class="product-card">
-        <a href="product.html?product=p1_white" class="product-image-wrapper">
-          <span class="product-discount-badge">50% ছাড়</span>
-          <img src="assets/airpod_pro_2nd_generation_dubai_white.png" alt="AirPods Pro 2nd Gen" class="product-image">
-        </a>
-        <h3 class="product-title text-center">AirPods Pro 2nd</h3>
-        <div class="product-price-row text-center">
-          <span class="current-price">৳599</span>
-          <del class="regular-price">৳1,200</del>
-        </div>
-        <div class="card-buttons">
-          <a href="order.html?product=p1_white" class="btn btn-order-now">অর্ডার করুন</a>
-          <a href="product.html?product=p1_white" class="btn btn-add-cart">বিস্তারিত দেখুন</a>
-        </div>
-      </div>
-
-      <!-- Product 2: Dubai Black -->
-      <div class="product-card featured">
-        <span class="best-choice-badge">🔥 বেস্ট সেলার</span>
-        <a href="product.html?product=p1_black" class="product-image-wrapper">
-          <span class="product-discount-badge">50% ছাড়</span>
-          <img src="assets/airpod_pro_2nd_generation_dubai_black.png" alt="AirPods Pro 2nd" class="product-image">
-        </a>
-        <h3 class="product-title text-center">AirPods Pro 2nd</h3>
-        <div class="product-price-row text-center">
-          <span class="current-price">৳649</span>
-          <del class="regular-price">৳1,300</del>
-        </div>
-        <div class="card-buttons">
-          <a href="order.html?product=p1_black" class="btn btn-order-now">অর্ডার করুন</a>
-          <a href="product.html?product=p1_black" class="btn btn-add-cart">বিস্তারিত দেখুন</a>
-        </div>
-      </div>
-
-      <!-- Product 3: China White -->
-      <div class="product-card">
-        <a href="product.html?product=p2_white" class="product-image-wrapper">
-          <span class="product-discount-badge">50% ছাড়</span>
-          <img src="assets/airpod_pro_2nd_generation_china_white.png" alt="AirPods Pro 2nd" class="product-image">
-        </a>
-        <h3 class="product-title text-center">AirPods Pro 2nd</h3>
-        <div class="product-price-row text-center">
-          <span class="current-price">৳399</span>
-          <del class="regular-price">৳800</del>
-        </div>
-        <div class="card-buttons">
-          <a href="order.html?product=p2_white" class="btn btn-order-now">অর্ডার করুন</a>
-          <a href="product.html?product=p2_white" class="btn btn-add-cart">বিস্তারিত দেখুন</a>
-        </div>
-      </div>
-
-      <!-- Product 4: China Black -->
-      <div class="product-card">
-        <a href="product.html?product=p2_black" class="product-image-wrapper">
-          <span class="product-discount-badge">50% ছাড়</span>
-          <img src="assets/airpod_pro_2nd_generation_china_black.png" alt="AirPods Pro 2nd" class="product-image">
-        </a>
-        <h3 class="product-title text-center">AirPods Pro 2nd</h3>
-        <div class="product-price-row text-center">
-          <span class="current-price">৳449</span>
-          <del class="regular-price">৳900</del>
-        </div>
-        <div class="card-buttons">
-          <a href="order.html?product=p2_black" class="btn btn-order-now">অর্ডার করুন</a>
-          <a href="product.html?product=p2_black" class="btn btn-add-cart">বিস্তারিত দেখুন</a>
-        </div>
-      </div>
-
-      <!-- Product 5: ANC Dubai White -->
-      <div class="product-card premium">
-        <span class="premium-tag">PREMIUM</span>
-        <a href="product.html?product=p3" class="product-image-wrapper">
-          <span class="product-discount-badge">52% ছাড়</span>
-          <img src="assets/airpod_pro_2nd_generation_premium_anc.png" alt="AirPods Pro 2nd" class="product-image">
-        </a>
-        <h3 class="product-title text-center">AirPods Pro 2nd</h3>
-        <div class="product-price-row text-center">
-          <span class="current-price">৳1,190</span>
-          <del class="regular-price">৳2,500</del>
-        </div>
-        <div class="card-buttons">
-          <a href="order.html?product=p3" class="btn btn-order-now">অর্ডার করুন</a>
-          <a href="product.html?product=p3" class="btn btn-add-cart">বিস্তারিত দেখুন</a>
-        </div>
-      </div>
-
-      <!-- Product 6: ANC Dubai White 3rd Gen -->
-      <div class="product-card premium">
-        <span class="premium-tag">PREMIUM</span>
-        <a href="product.html?product=p4" class="product-image-wrapper">
-          <span class="product-discount-badge">50% ছাড়</span>
-          <img src="assets/airpod_pro_3rd_generation_premium_anc.png" alt="AirPods Pro 3rd" class="product-image" style="transform: scale(0.9);">
-        </a>
-        <h3 class="product-title text-center">AirPods Pro 3rd</h3>
-        <div class="product-price-row text-center">
-          <span class="current-price">৳1,990</span>
-          <del class="regular-price">৳4,000</del>
-        </div>
-        <div class="card-buttons">
-          <a href="order.html?product=p4" class="btn btn-order-now">অর্ডার করুন</a>
-          <a href="product.html?product=p4" class="btn btn-add-cart">বিস্তারিত দেখুন</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Customer Reviews -->
   <section class="section container">
     <h2 class="section-title">কাস্টমাররা যা বলছেন</h2>
     <p class="section-subtitle">সারা দেশের 500+ কাস্টমারের আস্থার প্রতীক</p>
 
-    <div class="reviews-container" id="reviews-container">
-      <!-- Dynamic reviews will be loaded here -->
+    <div class="reviews-slider-wrapper">
+      <div class="reviews-slider" id="reviews-slider">
+        <div class="review-slide">
+          <img src="assets/review1.jpg" alt="Customer Review 1" class="review-img">
+        </div>
+        <div class="review-slide">
+          <img src="assets/review2.jpg" alt="Customer Review 2" class="review-img">
+        </div>
+        <div class="review-slide">
+          <img src="assets/review3.jpg" alt="Customer Review 3" class="review-img">
+        </div>
+      </div>
+      
+      <!-- Slide navigation buttons -->
+      <button class="review-nav-btn prev-btn" id="review-prev" aria-label="Previous Review">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <button class="review-nav-btn next-btn" id="review-next" aria-label="Next Review">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+
+      <!-- Indicator dots -->
+      <div class="review-slider-dots" id="review-dots">
+        <span class="review-dot active"></span>
+        <span class="review-dot"></span>
+        <span class="review-dot"></span>
+      </div>
     </div>
   </section>
 
@@ -280,6 +364,26 @@
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
   </script>
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer-overlay" id="cart-overlay"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer-header">
+      <h3>SHOPPING CART</h3>
+      <button class="close-cart" id="close-cart">Close &rarr;</button>
+    </div>
+    <div class="cart-items" id="cart-items-container">
+      <!-- Items will be injected by JS -->
+      <div class="empty-cart-msg">আপনার কার্ট খালি আছে।</div>
+    </div>
+    <div class="cart-drawer-footer">
+      <div class="cart-total-row">
+        <span>মোট:</span>
+        <span id="cart-drawer-total">৳0</span>
+      </div>
+      <button class="btn-checkout" onclick="window.location.href='order.html'">অর্ডার করুন</button>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

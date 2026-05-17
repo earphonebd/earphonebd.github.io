@@ -2,14 +2,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Global Toast Logic ---
   window.showToast = (msg) => {
     const container = document.getElementById('toast-container');
-    if (!container) return;
+    if (!container) {
+      // Create toast container if it doesn't exist
+      const newContainer = document.createElement('div');
+      newContainer.id = 'toast-container';
+      newContainer.style.cssText = 'position: fixed; top: 20px; right: 20px; z-index: 3000; display: flex; flex-direction: column; gap: 10px;';
+      document.body.appendChild(newContainer);
+    }
     const toast = document.createElement('div');
     toast.className = 'toast';
     toast.innerHTML = `
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
       <span>${msg}</span>
     `;
-    container.appendChild(toast);
+    document.getElementById('toast-container').appendChild(toast);
     setTimeout(() => {
       toast.style.opacity = '0';
       toast.style.transform = 'translateX(50px)';
@@ -26,6 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
       regularPrice: '1,200 TK',
       discount: '50% OFF',
       image: 'assets/airpod_pro_2nd_generation_dubai_white.png',
+      edition: 'Dubai Edition',
+      color: 'Classic White',
       features: ['এডিশন: দুবাই', 'কালার: ক্লাসিক হোয়াইট', 'টাচ কন্ট্রোল ও প্রিমিয়াম লুক', 'দারুণ সাউন্ড কোয়ালিটি', 'ক্লিয়ার মাইক ও হাই বেস', 'ব্যাটারি: 3.5-4 ঘণ্টা', 'কেস চার্জ: 4 বার'],
       reviews: [
         { name: "Sajid Hasan", text: "প্রোডাক্ট অনেক ভালো হয়েছে। Sound quality is amazing! 💯" },
@@ -46,6 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
       regularPrice: '1,300 TK',
       discount: '50% OFF',
       image: 'assets/airpod_pro_2nd_generation_dubai_black.png',
+      edition: 'Dubai Edition',
+      color: 'Classic Black',
       features: ['এডিশন: দুবাই', 'কালার: ম্যাট ব্ল্যাক', 'টাচ কন্ট্রোল ও প্রিমিয়াম লুক', 'দারুণ সাউন্ড কোয়ালিটি', 'ক্লিয়ার মাইক ও হাই বেস', 'ব্যাটারি: 3.5-4 ঘণ্টা', 'কেস চার্জ: 4 বার'],
       reviews: [
         { name: "Mahbub Alom", text: "ম্যাট ব্ল্যাক কালারটা জাস্ট অসাধারণ! প্রিমিয়াম ফিল দেয়।" },
@@ -66,6 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
       regularPrice: '800 TK',
       discount: '50% OFF',
       image: 'assets/airpod_pro_2nd_generation_china_white.png',
+      edition: 'China Edition',
+      color: 'Classic White',
       features: ['এডিশন: চায়না', 'কালার: ক্লাসিক হোয়াইট', 'টাচ কন্ট্রোল ও স্টাইলিশ লুক', 'ভালো সাউন্ড ও বাজেট ফ্রেন্ডলি', 'ব্যাটারি: 2.5-3 ঘণ্টা', 'কেস চার্জ: 4 বার'],
       reviews: [
         { name: "Samiul Islam", text: "বাজেট অনুযায়ী অনেক ভালো। পপ-আপ অ্যানিমেশন কাজ করে।" },
@@ -86,6 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
       regularPrice: '900 TK',
       discount: '50% OFF',
       image: 'assets/airpod_pro_2nd_generation_china_black.png',
+      edition: 'China Edition',
+      color: 'Classic Black',
       features: ['এডিশন: চায়না', 'কালার: ম্যাট ব্ল্যাক', 'টাচ কন্ট্রোল ও স্টাইলিশ লুক', 'ভালো সাউন্ড ও বাজেট ফ্রেন্ডলি', 'ব্যাটারি: 2.5-3 ঘণ্টা', 'কেস চার্জ: 4 বার'],
       reviews: [
         { name: "Farhan Ahmed", text: "প্যাকিং খুব ভালো ছিল। কালারটা খুব সুন্দর।" },
@@ -106,6 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
       regularPrice: '2,500 TK',
       discount: '52% OFF',
       image: 'assets/airpod_pro_2nd_generation_premium_anc.png',
+      edition: 'Dubai Premium ANC',
+      color: 'Classic White',
       features: ['এডিশন: দুবাই', 'কালার: ক্লাসিক হোয়াইট', 'নয়েজ ক্যান্সেলেশন (ANC)', 'টাচ কন্ট্রোল ও হাই বেস', 'বেটার মাইক ও ডিপ বেস', 'ব্যাটারি: 4-5 ঘণ্টা', 'কেস চার্জ: 4 বার', '1 বছরের সার্ভিস ওয়ারেন্টি'],
       reviews: [
         { name: "Sadia Afrin", text: "ANC ফিচারটা দারুণ কাজ করে। বাসের শব্দের মধ্যেও গান ক্লিয়ার শোনা যায়।" },
@@ -126,6 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
       regularPrice: '4,000 TK',
       discount: '50% OFF',
       image: 'assets/airpod_pro_3rd_generation_premium_anc.png',
+      edition: 'Dubai Premium ANC',
+      color: 'Classic White',
       features: ['এডিশন: দুবাই', 'কালার: ক্লাসিক হোয়াইট', 'নয়েজ ক্যান্সেলেশন (ANC)', 'টাচ কন্ট্রোল ও হাই বেস', 'বেস্ট কল কোয়ালিটি ও ডিপ বেস', 'ব্যাটারি: 5-6 ঘণ্টা', 'কেস চার্জ: 4 বার', '1 বছরের সার্ভিস ওয়ারেন্টি'],
       reviews: [
         { name: "Jahidul Islam", text: "এখন পর্যন্ত আমার কেনা সেরা ইয়ারফোন। একদম অরিজিনাল এর মত ফিল।" },
@@ -140,9 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Imran Chowdhury", text: "সবাইকে রিকমেন্ড করছি এটা নেওয়ার জন্য।" }
       ]
     }
-
   };
-
 
   // Dynamic Stock Counter Logic
   const getStockCount = (id) => {
@@ -207,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
         reviewList.innerHTML = product.reviews.map(rev => `
           <div class="review-item">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
-              <strong style="display: block; font-size: 1.1rem;">${rev.name}</strong>
+              <strong style="font-size: 1.1rem;">${rev.name}</strong>
               <div class="verified-badge">
                 ভেরিফাইড কাস্টমার <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
               </div>
@@ -230,61 +246,788 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Order Page Logic ---
-  let currentProductPrice = 0;
-  let currentQty = 1;
-  let currentShipping = 29;
+  window.orderItems = [];
+  let currentShipping = 49;
 
-  window.updateQty = (change) => {
-    currentQty = Math.max(1, currentQty + change);
-    const qtyEl = document.getElementById('summary-qty');
-    if (qtyEl) qtyEl.innerText = currentQty;
-    calculateTotals();
+  // --- District & Thana Data ---
+  const bdLocations = {
+    "কক্সবাজার": [
+      "উখিয়া",
+      "কক্সবাজার সদর",
+      "কুতুবদিয়া",
+      "চকরিয়া",
+      "টেকনাফ",
+      "পেকুয়া",
+      "মহেশখালী",
+      "রামু"
+    ],
+    "কিশোরগঞ্জ": [
+      "অষ্টগ্রাম",
+      "ইটনা",
+      "কটিয়াদী",
+      "করিমগঞ্জ",
+      "কিশোরগঞ্জ সদর",
+      "কুলিয়ারচর",
+      "তাড়াইল",
+      "নিকলী",
+      "পাকুন্দিয়া",
+      "বাজিতপুর",
+      "ভৈরব",
+      "মিঠামইন",
+      "হোসেনপুর"
+    ],
+    "কুড়িগ্রাম": [
+      "উলিপুর",
+      "কুড়িগ্রাম সদর",
+      "চিলমারী",
+      "নাগেশ্বরী",
+      "ফুলবাড়ী",
+      "ভুরুঙ্গামারী",
+      "রাজারহাট",
+      "রাজিবপুর",
+      "রৌমারী"
+    ],
+    "কুমিল্লা": [
+      "কুমিল্লা সদর",
+      "কুমিল্লা সদর দক্ষিণ",
+      "চান্দিনা",
+      "চৌদ্দগ্রাম",
+      "তিতাস",
+      "দাউদকান্দি",
+      "দেবিদ্বার",
+      "নাঙ্গলকোট",
+      "বরুড়া",
+      "বুড়িচং",
+      "ব্রাহ্মণপাড়া",
+      "মনোহরগঞ্জ",
+      "মনোহরগঞ্জ",
+      "মুরাদনগর",
+      "মেঘনা",
+      "লাকসাম",
+      "হোমনা"
+    ],
+    "কুষ্টিয়া": [
+      "কুমারখালী",
+      "কুষ্টিয়া সদর",
+      "খোকসা",
+      "দৌলতপুর",
+      "ভেড়ামারা",
+      "মিরপুর"
+    ],
+    "খাগড়াছড়ি": [
+      "খাগড়াছড়ি সদর",
+      "দিঘীনালা",
+      "পানছড়ি",
+      "মহালছড়ি",
+      "মাটিরাঙ্গা",
+      "মানিকছড়ি",
+      "রামগড়",
+      "লক্ষ্মীছড়ি"
+    ],
+    "খুলনা": [
+      "কয়রা",
+      "ডুমুরিয়া",
+      "তেরখাদা",
+      "দাকোপ",
+      "দিঘলিয়া",
+      "পাইকগাছা",
+      "ফুলতলা",
+      "বটিয়াঘাটা",
+      "রূপসা"
+    ],
+    "গাইবান্ধা": [
+      "গাইবান্ধা সদর",
+      "গোবিন্দগঞ্জ",
+      "পলাশবাড়ী",
+      "ফুলছড়ি",
+      "সাঘাটা",
+      "সাদুল্লাপুর",
+      "সুন্দরগঞ্জ"
+    ],
+    "গাজীপুর": [
+      "কাপাসিয়া",
+      "কালিয়াকৈর",
+      "কালীগঞ্জ",
+      "গাজীপুর সদর",
+      "টঙ্গী",
+      "শ্রীপুর"
+    ],
+    "গোপালগঞ্জ": [
+      "কাশিয়ানী",
+      "কোটালীপাড়া",
+      "গোপালগঞ্জ সদর",
+      "টুংগীপাড়া",
+      "মুকসুদপুর"
+    ],
+    "চট্টগ্রাম": [
+      "আনোয়ারা",
+      "চন্দনাইশ",
+      "পটিয়া",
+      "ফটিকছড়ি",
+      "বাঁশখালী",
+      "বোয়ালখালী",
+      "মীরসরাই",
+      "রাউজান",
+      "রাঙ্গুনিয়া",
+      "লোহাগড়া",
+      "সন্দ্বীপ",
+      "সাতকানিয়া",
+      "সীতাকুন্ড",
+      "হাটহাজারী"
+    ],
+    "চাঁদপুর": [
+      "কচুয়া",
+      "চাঁদপুর সদর",
+      "ফریدগঞ্জ",
+      "মতলব উত্তর",
+      "মতলব দক্ষিণ",
+      "শাহরাস্তি",
+      "হাইমচর",
+      "হাজীগঞ্জ"
+    ],
+    "চাঁপাইনবাবগঞ্জ": [
+      "গোমস্তাপুর",
+      "নবাবগঞ্জ সদর",
+      "নাচোল",
+      "ভোলাহাট",
+      "শিবগঞ্জ"
+    ],
+    "চুয়াডাঙ্গা": [
+      "আলমডাঙ্গা",
+      "চুয়াডাঙ্গা সদর",
+      "জীবননগর",
+      "দামুড়হুদা"
+    ],
+    "জয়পুরহাট": [
+      "আক্কেলপুর",
+      "কালাই",
+      "ক্ষেতলাল",
+      "জয়পুরহাট সদর",
+      "পাঁচবিবি"
+    ],
+    "জামালপুর": [
+      "ইসলামপুর",
+      "জামালপুর সদর",
+      "দেওয়ানগঞ্জ",
+      "নারুন্দি পুলিশ আইসি",
+      "বকশীগঞ্জ",
+      "মাদারগঞ্জ",
+      "মেলান্দহ",
+      "সরিষাবাড়ী"
+    ],
+    "ঝালকাঠি": [
+      "কাঠালিয়া",
+      "ঝালকাঠি সদর",
+      "নলছিটি",
+      "রাজাপুর"
+    ],
+    "ঝিনাইদহ": [
+      "কালীগঞ্জ",
+      "কোটচাঁদপুর",
+      "ঝিনাইদহ সদর",
+      "মহেশপুর",
+      "শৈলকুপা",
+      "হরিণাকুণ্ড"
+    ],
+    "টাঙ্গাইল": [
+      "কালিহাতী",
+      "গোপালপুর",
+      "ঘাটাইল",
+      "টাঙ্গাইল সদর",
+      "দেলদুয়ার",
+      "ধনবাড়ী",
+      "নাগরপুর",
+      "বাসাইল",
+      "ভুয়াপুর",
+      "মধুপুর",
+      "মির্জাপুর",
+      "সখিপুর"
+    ],
+    "ঠাকুরগাঁও": [
+      "ঠাকুরগাঁও সদর",
+      "পীরগঞ্জ",
+      "বালিয়াডাঙ্গী",
+      "রাণীশংকৈল",
+      "হরিপুর"
+    ],
+    "ঢাকা": [
+      "আদাবর",
+      "উত্তরা",
+      "কেরাণীগঞ্জ",
+      "ক্যান্টনমেন্ট",
+      "খিলগাঁও",
+      "গুলশান",
+      "তেজগাঁও",
+      "দোহার",
+      "ধানমন্ডি",
+      "ধামরাই",
+      "নবাবগঞ্জ",
+      "নিউ মার্কেট",
+      "পল্লবী",
+      "বাড্ডা",
+      "মতিঝিল",
+      "মিরপুর",
+      "মোহাম্মদপুর",
+      "যাত্রাবাড়ী",
+      "রমনা",
+      "শাহবাগ",
+      "সবুজবাগ",
+      "সাভার"
+    ],
+    "দিনাজপুর": [
+      "কাহারোল",
+      "খানসামা",
+      "ঘোড়াঘাট",
+      "চিরিরবন্দর",
+      "দিনাজপুর সদর",
+      "নবাবগঞ্জ",
+      "পার্বতীপুর",
+      "ফুলবাড়ী",
+      "বিরল",
+      "বিরামপুর",
+      "বীরগঞ্জ",
+      "বোচাগঞ্জ",
+      "হাকিমপুর"
+    ],
+    "নওগাঁ": [
+      "আত্রাই",
+      "ধামইরহাট",
+      "নওগাঁ সদর",
+      "নিয়ামতপুর",
+      "পত্নিতলা",
+      "পোরশা",
+      "বদলগাছী",
+      "মহাদেবপুর",
+      "মান্দা",
+      "রাণীনগর",
+      "সাপাহার"
+    ],
+    "নড়াইল": [
+      "কালিয়া",
+      "নড়াইল সদর",
+      "লোহাগড়া"
+    ],
+    "নরসিংদী": [
+      "নরসীংদী সদর",
+      "পলাশ",
+      "বেলাবো",
+      "মনোহরদী",
+      "রায়পুরা",
+      "শিবপুর"
+    ],
+    "নাটোর": [
+      "নাটোর সদর",
+      "বড়াইগ্রাম",
+      "বাগাতিপাড়া",
+      "লালপুর"
+    ],
+    "নারায়ণগঞ্জ": [
+      "আড়াইহাজার",
+      "নারায়ণগঞ্জ সদর",
+      "বন্দর",
+      "রূপগঞ্জ",
+      "সিদ্ধিরগঞ্জ",
+      "সোনারগাঁ"
+    ],
+    "নীলফামারী": [
+      "কিশোরগঞ্জ",
+      "জলঢাকা",
+      "ডিমলা",
+      "ডোমার",
+      "নীলফামারী সদর",
+      "সৈয়দপুর"
+    ],
+    "নেত্রকোণা": [
+      "আটপাড়া",
+      "কলমাকান্দা",
+      "কেন্দুয়া",
+      "খালিয়াজুরী",
+      "দুর্গাপুর",
+      "নেত্রকোণা সদর",
+      "পূর্বধলা",
+      "বারহাট্টা",
+      "মদন",
+      "মোহনগঞ্জ"
+    ],
+    "নোয়াখালী": [
+      "কবিরহাট",
+      "কোম্পানীগঞ্জ",
+      "চাটখিল",
+      "নোয়াখালী সদর",
+      "বেগমগঞ্জ",
+      "সুবর্ণচর",
+      "সেনবাগ",
+      "সোনাইমুড়ী",
+      "হাতিয়া"
+    ],
+    "পঞ্চগড়": [
+      "আটোয়ারী",
+      "তেতুলিয়া",
+      "দেবীগঞ্জ",
+      "পঞ্চগড় সদর",
+      "বোদা"
+    ],
+    "পটুয়াখালী": [
+      "কলাপাড়া",
+      "গলাচিপা",
+      "দশমিনা",
+      "দুমকি",
+      "পটুয়াখালী সদর",
+      "বাউফল",
+      "মির্জাগঞ্জ",
+      "রাঙ্গাবালী"
+    ],
+    "পাবনা": [
+      "আটঘরিয়া",
+      "ঈশ্বরদী",
+      "চাটমোহর",
+      "পাবনা সদর",
+      "ফরিদপুর",
+      "বেড়া",
+      "ভাঙ্গুড়া",
+      "সাঁথিয়া",
+      "সুজানগর"
+    ],
+    "পিরোজপুর": [
+      "কাউখালী",
+      "জিয়ানগর",
+      "নাজিরপুর",
+      "নেছারাবাদ",
+      "পিরোজপুর সদর",
+      "ভান্ডারিয়া",
+      "মঠবাড়ীয়া"
+    ],
+    "ফরিদপুর": [
+      "আলফাডাঙ্গা",
+      "চরভদ্রাসন",
+      "নগরকান্দা",
+      "ফরিদপুর সদর",
+      "বোয়ালমারী",
+      "ভাঙ্গা",
+      "মধুখালী",
+      "সদরপুর",
+      "সালথা"
+    ],
+    "ফেনী": [
+      "ছাগলনাইয়া",
+      "দাগনভূঞা",
+      "পরশুরাম",
+      "ফুলগাজী",
+      "ফেনী সদর",
+      "সোনাগাজী"
+    ],
+    "বগুড়া": [
+      "আদমদিঘি",
+      "কাহালু",
+      "গাবতলী",
+      "দুপচাঁচিয়া",
+      "ধুনট",
+      "নন্দীগ্রাম",
+      "বগুড়া সদর",
+      "শাহজাহানপুর",
+      "শিবগঞ্জ",
+      "শেরপুর",
+      "সারিয়াকান্দি",
+      "সোনাতলা"
+    ],
+    "বরগুনা": [
+      "আমতলী",
+      "তালতলি",
+      "পাথরঘাটা",
+      "বরগুনা সদর",
+      "বামনা",
+      "বেতাগী"
+    ],
+    "বরিশাল": [
+      "আগৈলঝাড়া",
+      "উজিরপুর",
+      "গৌরনদী",
+      "বরিশাল সদর",
+      "বাকেরগঞ্জ",
+      "বানারীপাড়া",
+      "বাবুগঞ্জ",
+      "মুলাদী",
+      "মেহেন্দিগঞ্জ",
+      "হিজলা"
+    ],
+    "বাগেরহাট": [
+      "কচুয়া",
+      "চিতলমারী",
+      "ফকিরহাট",
+      "বাগেরহাট সদর",
+      "মোংলা",
+      "মোড়েলগঞ্জ",
+      "মোল্লাহাট",
+      "রামপাল",
+      "শরণখোলা"
+    ],
+    "বান্দরবান": [
+      "আলীকদম",
+      "থানচি",
+      "নাইক্ষ্যংছড়ি",
+      "বান্দরবান সদর",
+      "রুমা",
+      "রোয়াংছড়ি",
+      "লামা"
+    ],
+    "ব্রাহ্মণবাড়িয়া": [
+      "আখাউড়া",
+      "আশুগঞ্জ",
+      "কসবা",
+      "নবীনগর",
+      "নাসিরনগর",
+      "বাঞ্ছারামপুর",
+      "বিজয়নগর",
+      "ব্রাহ্মণবাড়িয়া সদর",
+      "শাহবাজপুর টাউন",
+      "সরাইল"
+    ],
+    "ভোলা": [
+      "চরফ্যাশন",
+      "তজুমদ্দিন",
+      "দৌলতখান",
+      "বোরহানউদ্দিন",
+      "ভোলা সদর",
+      "মনপুরা",
+      "লালমোহন"
+    ],
+    "ময়মনসিংহ": [
+      "ঈশ্বরগঞ্জ",
+      "গফরগাঁও",
+      "গৌরীপুর",
+      "ত্রিশাল",
+      "ধোবাউড়া",
+      "নান্দাইল",
+      "ফুলপুর",
+      "ফুলবাড়ীয়া",
+      "ভালুকা",
+      "ময়মনসিংহ সদর",
+      "মুক্তাগাছা",
+      "হালুয়াঘাট"
+    ],
+    "মাগুরা": [
+      "মাগুরা সদর",
+      "মোহাম্মদপুর",
+      "শালিখা",
+      "শ্রীপুর"
+    ],
+    "মাদারীপুর": [
+      "কালকিনি",
+      "মাদারীপুর সদর",
+      "রাজৈর",
+      "শিবচর"
+    ],
+    "মানিকগঞ্জ": [
+      "ঘিওর",
+      "দৌলতপুর",
+      "মানিকগঞ্জ সদর",
+      "শিবালয়",
+      "সাটুরিয়া",
+      "সিঙ্গাইর",
+      "হরিরামপুর"
+    ],
+    "মুন্সিগঞ্জ": [
+      "গজারিয়া",
+      "টংগীবাড়ি",
+      "মুন্সীগঞ্জ সদর",
+      "লৌহজং",
+      "শ্রীনগর",
+      "সিরাজদিখান"
+    ],
+    "মেহেরপুর": [
+      "গাংনী",
+      "মুজিবনগর",
+      "মেহেরপুর সদর"
+    ],
+    "মৌলভীবাজার": [
+      "কমলগঞ্জ",
+      "কুলাউড়া",
+      "জুড়ী",
+      "বড়লেখা",
+      "মৌলভীবাজার সদর",
+      "রাজনগর",
+      "শ্রীমঙ্গল"
+    ],
+    "যশোর": [
+      "অভয়নগর",
+      "কেশবপুর",
+      "চৌগাছা",
+      "ঝিকরগাছা",
+      "বাঘারপাড়া",
+      "মণিরামপুর",
+      "যশোর সদর",
+      "শার্শা"
+    ],
+    "রংপুর": [
+      "কাউনিয়া",
+      "গংগাচড়া",
+      "তারাগঞ্জ",
+      "পীরগঞ্জ",
+      "পীরগাছা",
+      "বদরগঞ্জ",
+      "মিঠাপুকুর",
+      "রংপুর সদর"
+    ],
+    "রাঙ্গামাটি": [
+      "কাউখালী",
+      "কাপ্তাই",
+      "জুরাছড়ি",
+      "নানিয়ারচর",
+      "বরকল",
+      "বাঘাইছড়ি",
+      "বিলাইছড়ি",
+      "রাঙ্গামাটি সদর",
+      "রাজস্থলী",
+      "লংগদু"
+    ],
+    "রাজবাড়ী": [
+      "কালুখালী",
+      "গোয়ালন্দ",
+      "পাংশা",
+      "বালিয়াকান্দি",
+      "রাজবাড়ী সদর"
+    ],
+    "রাজশাহী": [
+      "গোদাগাড়ী",
+      "চারঘাট",
+      "তানোর",
+      "দুর্গাপুর",
+      "পবা",
+      "পুঠিয়া",
+      "বাগমারা",
+      "বাঘা",
+      "মোহনপুর"
+    ],
+    "লক্ষ্মীপুর": [
+      "কমলনগর",
+      "রামগঞ্জ",
+      "রামগতি",
+      "রায়পুর",
+      "লক্ষ্মীপুর সদর"
+    ],
+    "লালমনিরহাট": [
+      "আদিতমারী",
+      "কালীগঞ্জ",
+      "পাটগ্রাম",
+      "লালমনিরহাট সদর",
+      "হাতীবান্ধা"
+    ],
+    "শরীয়তপুর": [
+      "গোসাইরহাট",
+      "জাজিরা",
+      "ডামুড্যা",
+      "নড়িয়া",
+      "ভেদরগঞ্জ",
+      "শরীয়তপুর সদর"
+    ],
+    "শেরপুর": [
+      "ঝিনাইগাতী",
+      "নকলা",
+      "নালিতাবাড়ী",
+      "শেরপুর সদর",
+      "শ্রীবরদী"
+    ],
+    "সাতক্ষীরা": [
+      "আশাশুনি",
+      "কলারোয়া",
+      "কালীগঞ্জ",
+      "তালা",
+      "দেবহাটা",
+      "শ্যামনগর",
+      "সাতক্ষীরা সদর"
+    ],
+    "সিরাজগঞ্জ": [
+      "উল্লাপাড়া",
+      "কাজীপুর",
+      "কামারখন্দ",
+      "চৌহালি",
+      "তাড়াশ",
+      "বেলকুচি",
+      "রায়গঞ্জ",
+      "শাহজাদপুর",
+      "সিরাজগঞ্জ সদর"
+    ],
+    "সিলেট": [
+      "কানাইঘাট",
+      "কোম্পানীগঞ্জ",
+      "গোয়াইনঘাট",
+      "গোলাপগঞ্জ",
+      "জকিগঞ্জ",
+      "জৈন্তাপুর",
+      "দক্ষিণ সুরমা",
+      "নবীগঞ্জ",
+      "ফেঞ্চুগঞ্জ",
+      "বালাগঞ্জ",
+      "বিয়ানীবাজার",
+      "বিশ্বনাথ",
+      "সিলেট সদর"
+    ],
+    "সুনামগঞ্জ": [
+      "ছাতক",
+      "জগন্নাথপুর",
+      "জামালগঞ্জ",
+      "তাহিরপুর",
+      "দিরাই",
+      "দোয়ারাবাজার",
+      "ধর্মপাশা",
+      "বিশ্বম্ভরপুর",
+      "শান্তিগঞ্জ",
+      "শাল্লা",
+      "সুনামগঞ্জ সদর"
+    ],
+    "হবিগঞ্জ": [
+      "আজমিরীগঞ্জ",
+      "চুনারুঘাট",
+      "নবীগঞ্জ",
+      "বানিয়াচং",
+      "বাহুবল",
+      "মাধবপুর",
+      "লাখাই",
+      "শায়েস্তাগঞ্জ",
+      "হবিগঞ্জ সদর"
+    ]
   };
 
-  window.updateShipping = (area) => {
-    const options = document.querySelectorAll('.shipping-option');
-    if (options.length === 0) return;
+  const initOrderPage = () => {
+    // Populate Districts
+    const distSelect = document.getElementById('district-select');
+    const thanaSelect = document.getElementById('thana-select');
     
-    options.forEach(opt => opt.classList.remove('selected'));
-    
-    if (area === 'inside') {
-      options[0].classList.add('selected');
-      currentShipping = 29;
-      document.getElementById('shipping-label').innerText = 'ঢাকার ভেতরে';
-    } else {
-      options[1].classList.add('selected');
-      currentShipping = 49;
-      document.getElementById('shipping-label').innerText = 'ঢাকার বাইরে';
+    if (distSelect) {
+      Object.keys(bdLocations).sort().forEach(dist => {
+        const opt = document.createElement('option');
+        opt.value = dist;
+        opt.textContent = dist;
+        distSelect.appendChild(opt);
+      });
+
+      distSelect.addEventListener('change', (e) => {
+        const district = e.target.value;
+        // Update Thanas
+        thanaSelect.innerHTML = '<option value="" disabled selected>উপজেলা নির্বাচন করুন</option>';
+        if (bdLocations[district]) {
+          bdLocations[district].sort().forEach(thana => {
+            const opt = document.createElement('option');
+            opt.value = thana;
+            opt.textContent = thana;
+            thanaSelect.appendChild(opt);
+          });
+        }
+        // Auto-update Shipping
+        if (district === "Dhaka" || district === "ঢাকা") {
+          window.updateShipping('inside');
+        } else {
+          window.updateShipping('outside');
+        }
+      });
     }
-    document.getElementById('summary-shipping').innerText = `৳${currentShipping}`;
-    calculateTotals();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const directProductId = urlParams.get('product') || urlParams.get('id');
+
+    if (directProductId && products[directProductId]) {
+      // Direct Buy Single Product
+      const product = products[directProductId];
+      orderItems = [{
+        id: directProductId,
+        title: product.title,
+        price: parseInt(product.price.replace(/[^0-9]/g, '')),
+        image: product.image,
+        qty: 1,
+        edition: product.edition || "Not Specified",
+        color: product.color || "Not Specified"
+      }];
+    } else {
+      // Load from Cart
+      try {
+        orderItems = JSON.parse(localStorage.getItem('earphone_bd_cart')) || [];
+      } catch (e) { orderItems = []; }
+    }
+    renderOrderReview();
   };
 
-  function calculateTotals() {
-    const subtotal = currentProductPrice * currentQty;
+  window.updateOrderQty = (index, change) => {
+    orderItems[index].qty = Math.max(1, orderItems[index].qty + change);
+    renderOrderReview();
+  };
+
+  window.removeOrderItem = (index) => {
+    orderItems.splice(index, 1);
+    if (orderItems.length === 0) {
+      window.location.href = 'index.html';
+      return;
+    }
+    renderOrderReview();
+  };
+
+  function renderOrderReview() {
+    const container = document.getElementById('order-items-container');
+    if (!container) return;
+
+    let html = '';
+    let subtotal = 0;
+
+    orderItems.forEach((item, index) => {
+      const itemTotal = item.price * item.qty;
+      subtotal += itemTotal;
+      html += `
+        <div class="order-item-card">
+          <img src="${item.image}" alt="${item.title}" class="order-item-img">
+          <div class="order-item-info">
+            <h4>${item.title}</h4>
+            <div class="order-item-controls">
+              <div class="item-qty-selector">
+                <button class="qty-btn" onclick="window.updateOrderQty(${index}, -1)">-</button>
+                <span>${item.qty}</span>
+                <button class="qty-btn" onclick="window.updateOrderQty(${index}, 1)">+</button>
+              </div>
+              <span class="order-item-price">৳${itemTotal.toLocaleString()}</span>
+            </div>
+          </div>
+          <button class="remove-btn" onclick="window.removeOrderItem(${index})">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+          </button>
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+    calculateOrderTotals(subtotal);
+  }
+
+  function calculateOrderTotals(subtotal) {
     const total = subtotal + currentShipping;
     
     const subtotalEl = document.getElementById('summary-subtotal');
     const totalEl = document.getElementById('summary-total');
-    const btnTotalEl = document.getElementById('btn-total');
+    const mobileStickyTotal = document.getElementById('mobile-sticky-total');
     
     if (subtotalEl) subtotalEl.innerText = `৳${subtotal.toLocaleString()}`;
     if (totalEl) totalEl.innerText = `৳${total.toLocaleString()}`;
-    if (btnTotalEl) btnTotalEl.innerText = `৳${total.toLocaleString()}`;
+    if (mobileStickyTotal) mobileStickyTotal.innerText = `৳${total.toLocaleString()}`;
   }
 
-  if (productId && products[productId]) {
-    const product = products[productId];
-    currentProductPrice = parseInt(product.price.replace(/[^0-9]/g, ''));
+  window.updateShipping = (area) => {
+    const options = document.querySelectorAll('.delivery-option');
+    options.forEach(opt => opt.classList.remove('selected'));
     
-    const summaryImg = document.getElementById('summary-img');
-    if (summaryImg) {
-      summaryImg.src = product.image;
-      document.getElementById('summary-title').textContent = product.title;
-      document.getElementById('summary-price').textContent = `৳${currentProductPrice.toLocaleString()}`;
-      calculateTotals();
+    if (area === 'inside') {
+      if (options[0]) options[0].classList.add('selected');
+      currentShipping = 29;
+    } else {
+      if (options[1]) options[1].classList.add('selected');
+      currentShipping = 49;
     }
-  }
+    
+    const summaryShipping = document.getElementById('summary-shipping');
+    if (summaryShipping) summaryShipping.innerText = `৳${currentShipping}`;
+    
+    const subtotal = orderItems.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    calculateOrderTotals(subtotal);
+  };
+
+  // Initial Run
+  initOrderPage();
 
   // FAQ Accordion
   const faqItems = document.querySelectorAll('.faq-item');
@@ -299,18 +1042,10 @@ document.addEventListener('DOMContentLoaded', () => {
             otherItem.classList.remove('active');
           }
         });
-        // Toggle current item
         item.classList.toggle('active');
       });
     }
   });
-
-  // Order Form Submit
-  // Global Error Catcher for Debugging
-  window.onerror = function(msg, url, line) {
-    if (typeof showToast === 'function') showToast("Error: " + msg);
-    return false;
-  };
 
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -415,7 +1150,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const text = document.getElementById('rev-text').value;
 
     if (!name || !text) {
-      showToast('দয়া করে আপনার নাম এবং মতামত লিখুন।');
+      window.showToast('দয়া করে আপনার নাম এবং মতামত লিখুন।');
       return;
     }
 
@@ -430,7 +1165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     reviewList.prepend(newReview);
     document.getElementById('rev-name').value = '';
     document.getElementById('rev-text').value = '';
-    showToast('ধন্যবাদ! আপনার রিভিউটি যুক্ত হয়েছে।');
+    window.showToast('ধন্যবাদ! আপনার রিভিউটি যুক্ত হয়েছে।');
   };
 
   // --- Hero Text Rotation ---
@@ -449,70 +1184,232 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3000);
   }
 
-  // --- Dynamic Reviews ---
-  const reviews = [
-    { name: "Sajid Hasan", text: "প্রোডাক্ট অনেক ভালো হয়েছে। Sound quality is amazing! 💯", color: "#6b7280" },
-    { name: "Arifur Rahman", text: "চার্জ অনেক ভালো টিকে। Delivery ও খুব ফাস্ট ছিল।", color: "#3b82f6" },
-    { name: "Tanim Islam", text: "Mic quality অনেক clear. এই price এ honestly best!", color: "#8b5cf6" },
-    { name: "Mahbub Alom", text: "অরিজিনাল প্রোডাক্ট পেয়েছি। ধন্যবাদ ইয়ারফোন বিডি!", color: "#10b981" },
-    { name: "Tanvir Ahmed", text: "একদম হুবহু অরিজিনাল এর মত। বেস খুব জোস!", color: "#f59e0b" },
-    { name: "Samiul Islam", text: "ডেলিভারি ম্যান অনেক হেল্পফুল ছিল। পপ-আপ অ্যানিমেশন কাজ করে।", color: "#ef4444" },
-    { name: "Rakib Hasan", text: "দাম অনুযায়ী অনেক প্রিমিয়াম। ৫ দিন হলো চালাচ্ছি, কোনো সমস্যা পাইনি।", color: "#ec4899" },
-    { name: "Farhan Ahmed", text: "প্যাকিং খুব ভালো ছিল। প্রিমিয়াম একটা ফিল আছে।", color: "#6366f1" },
-    { name: "Imran Khan", text: "অবিশ্বাস্য সাউন্ড এই দামে! অনেক ভালো সার্ভিস। ⭐⭐⭐⭐⭐", color: "#4f46e5" },
-    { name: "Sadia Afrin", text: "আমার দেখা সেরা অনলাইন শপ। ৩ দিনে ডেলিভারি পেয়েছি।", color: "#db2777" },
-    { name: "Hasan Mahamud", text: "সাউন্ড কোয়ালিটি খুব জোস, প্রিমিয়াম প্যাকিং।", color: "#059669" },
-    { name: "Jahidul Islam", text: "সব থেকে বড় কথা হলো পপ-আপ অ্যানিমেশন টা একদম আসল এর মত।", color: "#2563eb" },
-    { name: "Rumana Akter", text: "অনেক ভয় পেয়েছিলাম যে ফেক প্রোডাক্ট পাবো কি না, কিন্তু হাতে পাওয়ার পর সব ভয় দূর হয়েছে।", color: "#7c3aed" },
-    { name: "Sazzad Hossain", text: "ক্লিয়ার সাউন্ড আর ব্যাটারি ব্যাকআপ অসাধারণ। recommended!", color: "#ea580c" },
-    { name: "Anisur Rahman", text: "পণ্যটি সত্যিই দারুণ। ক্যাশ অন ডেলিভারিতে চেক করে নিতে পেরেছি।", color: "#16a34a" },
-    { name: "Maimuna Khatun", text: "অনেক সুন্দর লুকিং। আমি আমার ফ্রেন্ডদের ও সাজেস্ট করবো। 😍", color: "#be185d" },
-    { name: "Fahim Faisal", text: "অল্প বাজেটে সেরা চয়েস হতে পারে এটি। ব্যাটারি ৩-৪ ঘণ্টা অনায়াসেই যায়।", color: "#475569" },
-    { name: "Tarek Aziz", text: "সাউন্ড এর বেইজ টা অনেক ক্লিন। ধন্যবাদ Earphone BD!", color: "#0891b2" },
-    { name: "Shariful Islam", text: "১ বছর ওয়ারেন্টি থাকায় নিশ্চিন্তে কেনা যায়। সার্ভিস খুব ভালো।", color: "#4338ca" },
-    { name: "Shumon Rezwan", text: "ডেলিভারি খুব ফাস্ট ছিল। ২ দিনেই হাতে পেয়েছি। ধন্যবাদ!", color: "#15803d" }
-  ];
-
-  const reviewContainer = document.getElementById('reviews-container');
-  if (reviewContainer) {
-    function updateReviews() {
-      const shuffled = [...reviews].sort(() => 0.5 - Math.random());
-      const selected = shuffled.slice(0, 3);
+  // --- Customer Reviews Screenshot Slider ---
+  const initReviewsSlider = () => {
+    const slider = document.getElementById('reviews-slider');
+    const dots = document.querySelectorAll('.review-dot');
+    const prevBtn = document.getElementById('review-prev');
+    const nextBtn = document.getElementById('review-next');
+    
+    if (!slider || dots.length === 0) return;
+    
+    let current = 0;
+    const totalSlides = dots.length;
+    let autoSlideInterval;
+    
+    const showSlide = (index) => {
+      dots.forEach(dot => dot.classList.remove('active'));
       
-      const brandReplies = [
-        "ফিডব্যাক এর জন্য ধন্যবাদ! আমরা সবসময় সেরা কোয়ালিটি দেওয়ার চেষ্টা করি। 😊",
-        "আপনার মূল্যবান মতামতের জন্য ধন্যবাদ। আমাদের সাথেই থাকুন। ❤️",
-        "আমরা খুশি যে আপনি প্রোডাক্টটি পছন্দ করেছেন! সেরা সার্ভিস দেওয়াই আমাদের লক্ষ্য। 🙌",
-        "ধন্যবাদ! আমরা এভাবেই সারা বাংলাদেশে কোয়ালিটি নিশ্চিত করে আসছি। 🚚",
-        "আপনাদের এই ভালোবাসাই আমাদের এগিয়ে যাওয়ার প্রেরণা। ধন্যবাদ! ✨"
-      ];
-      const randomReply = brandReplies[Math.floor(Math.random() * brandReplies.length)];
-      
-      let html = '';
-      selected.forEach((rev, index) => {
-        html += `
-          <div class="message-bubble message-received" style="animation: fadeInUp 0.5s ease forwards; animation-delay: ${index * 0.2}s; opacity: 0;">
-            <div class="message-header">
-              <div class="avatar" style="background-color: ${rev.color}">${rev.name.charAt(0)}</div>
-              <strong style="font-size: 0.9rem;">${rev.name}</strong>
-            </div>
-            ${rev.text}
-          </div>
-        `;
-        if (index === 0) {
-          html += `
-            <div class="message-bubble message-sent" style="animation: fadeInUp 0.5s ease forwards; animation-delay: 0.4s; opacity: 0;">
-              <strong style="font-size: 0.8rem; display: block; margin-bottom: 5px; color: rgba(255,255,255,0.9);">Earphone BD</strong>
-              ${randomReply}
-            </div>
-          `;
-        }
+      current = (index + totalSlides) % totalSlides;
+      slider.style.transform = `translateX(-${current * 100}%)`;
+      dots[current].classList.add('active');
+    };
+    
+    const startAutoSlide = () => {
+      stopAutoSlide();
+      autoSlideInterval = setInterval(() => {
+        showSlide(current + 1);
+      }, 4000); // Slide every 4 seconds
+    };
+    
+    const stopAutoSlide = () => {
+      if (autoSlideInterval) {
+        clearInterval(autoSlideInterval);
+      }
+    };
+    
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        showSlide(current - 1);
+        startAutoSlide();
       });
-      reviewContainer.innerHTML = html;
     }
+    
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        showSlide(current + 1);
+        startAutoSlide();
+      });
+    }
+    
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => {
+        showSlide(idx);
+        startAutoSlide();
+      });
+    });
+    
+    startAutoSlide();
+    
+    // Pause auto slide on hover or touch interactions
+    const sliderWrapper = document.querySelector('.reviews-slider-wrapper');
+    if (sliderWrapper) {
+      sliderWrapper.addEventListener('mouseenter', stopAutoSlide);
+      sliderWrapper.addEventListener('mouseleave', startAutoSlide);
+      sliderWrapper.addEventListener('touchstart', stopAutoSlide, { passive: true });
+      sliderWrapper.addEventListener('touchend', startAutoSlide, { passive: true });
+    }
+  };
+  
+  initReviewsSlider();
 
-    updateReviews();
-    setInterval(updateReviews, 8000);
+  // Hero Slider Logic (Horizontal Slide)
+  const initHeroSlider = () => {
+    const slider = document.querySelector('.hero-slider');
+    const dots = document.querySelectorAll('.dot');
+    if (!slider || dots.length === 0) return;
+
+    let current = 0;
+
+    const showSlide = (n) => {
+      dots.forEach(d => d.classList.remove('active'));
+      
+      current = (n + dots.length) % dots.length;
+      slider.style.transform = `translateX(-${current * 100}%)`;
+      dots[current].classList.add('active');
+    };
+
+    // Auto slide every 5 seconds
+    let timer = setInterval(() => showSlide(current + 1), 5000);
+
+    // Manual control
+    window.currentSlide = (n) => {
+      clearInterval(timer);
+      showSlide(n);
+      timer = setInterval(() => showSlide(current + 1), 5000);
+    };
+  };
+
+  initHeroSlider();
+
+  // --- Cart System Logic ---
+  let cart = [];
+  try {
+    cart = JSON.parse(localStorage.getItem('earphone_bd_cart')) || [];
+  } catch (e) {
+    console.error("Cart loading failed:", e);
+    cart = [];
   }
 
+  window.updateCartUI = function() {
+    try {
+      const badge = document.querySelector('.cart-badge');
+      if (badge) {
+        const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+        badge.innerText = totalItems;
+        badge.style.display = totalItems > 0 ? 'flex' : 'none';
+      }
+
+      const container = document.getElementById('cart-items-container');
+      const totalEl = document.getElementById('cart-drawer-total');
+      
+      if (container) {
+        if (cart.length === 0) {
+          container.innerHTML = '<div class="empty-cart-msg">আপনার কার্ট খালি আছে।</div>';
+          if (totalEl) totalEl.innerText = '৳0';
+        } else {
+          let html = '';
+          let total = 0;
+          cart.forEach((item, index) => {
+            const itemTotal = item.price * item.qty;
+            total += itemTotal;
+            html += `
+              <div class="cart-item">
+                <img src="${item.image}" alt="${item.title}">
+                <div class="cart-item-info">
+                  <h4>${item.title}</h4>
+                  <div class="cart-item-controls">
+                    <div class="cart-item-qty">
+                      <button class="qty-btn" onclick="window.updateCartItemQty(${index}, -1)">-</button>
+                      <span class="qty-val">${item.qty}</span>
+                      <button class="qty-btn" onclick="window.updateCartItemQty(${index}, 1)">+</button>
+                    </div>
+                    <div class="cart-item-price-calc">
+                      x ৳${item.price.toLocaleString()} = <b>৳${itemTotal.toLocaleString()}</b>
+                    </div>
+                  </div>
+                </div>
+                <div class="remove-item-icon" onclick="window.removeFromCart(${index})">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </div>
+              </div>
+            `;
+          });
+          container.innerHTML = html;
+          if (totalEl) totalEl.innerText = `৳${total.toLocaleString()}`;
+        }
+      }
+      localStorage.setItem('earphone_bd_cart', JSON.stringify(cart));
+    } catch (e) {
+      console.error("Cart UI update failed:", e);
+    }
+  }
+
+  window.addToCart = (id) => {
+    const product = products[id];
+    if (!product) return;
+
+    const existingItem = cart.find(item => item.id === id);
+    if (existingItem) {
+      existingItem.qty += 1;
+    } else {
+      cart.push({
+        id: id,
+        title: product.title,
+        price: parseInt(product.price.replace(/[^0-9]/g, '')),
+        image: product.image,
+        qty: 1,
+        edition: product.edition || "Not Specified",
+        color: product.color || "Not Specified"
+      });
+    }
+
+    window.updateCartUI();
+    window.showToast('প্রোডাক্টটি সফলভাবে কার্টে যোগ করা হয়েছে।');
+  };
+
+  window.removeFromCart = (index) => {
+    cart.splice(index, 1);
+    updateCartUI();
+  };
+
+  window.updateCartItemQty = (index, change) => {
+    cart[index].qty = Math.max(1, cart[index].qty + change);
+    updateCartUI();
+  };
+
+  window.openCart = function() {
+    const drawer = document.getElementById('cart-drawer');
+    const overlay = document.getElementById('cart-overlay');
+    if (drawer) drawer.classList.add('active');
+    if (overlay) overlay.classList.add('active');
+  };
+
+  window.closeCart = function() {
+    const drawer = document.getElementById('cart-drawer');
+    const overlay = document.getElementById('cart-overlay');
+    if (drawer) drawer.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
+  };
+
+  // Event Listeners for Cart Toggle
+  const cartBtn = document.querySelector('.cart-btn');
+  const closeBtn = document.getElementById('close-cart');
+  const overlay = document.getElementById('cart-overlay');
+
+  if (cartBtn) cartBtn.addEventListener('click', (e) => { e.preventDefault(); window.openCart(); });
+  if (closeBtn) closeBtn.addEventListener('click', window.closeCart);
+  if (overlay) overlay.addEventListener('click', window.closeCart);
+
+  // Account Button Listener
+  const accountBtn = document.querySelector('.header-action-item[title="My Account"]');
+  if (accountBtn) {
+    accountBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.showToast('একাউন্ট ফিচারটি শীঘ্রই আসছে!');
+    });
+  }
+
+  // Initialize UI
+  updateCartUI();
 });
