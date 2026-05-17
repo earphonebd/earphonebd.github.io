@@ -750,7 +750,7 @@ header {
 /* Floating CTA */
 .floating-cta {
   position: fixed;
-  bottom: 20px;
+  bottom: 90px;
   right: 20px;
   width: 60px;
   height: 60px;
@@ -760,21 +760,147 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
   z-index: 1000;
   transition: all 0.3s ease;
 }
 .floating-cta:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+}
+
+.floating-whatsapp {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+.floating-whatsapp:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+}
+
+/* Company Info Section */
+.company-info-section {
+  background-color: var(--surface-color);
+  padding: 30px 0;
+  border-top: 1px solid var(--border-color);
+}
+.company-info-grid {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1.5fr;
+  gap: 24px;
+}
+.company-about h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.company-about h3 span {
+  color: var(--accent-color);
+}
+.company-about p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.company-links h4,
+.company-contact h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+.company-contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.company-contact-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+.company-contact-list li svg {
+  flex-shrink: 0;
+  color: var(--accent-color);
+  margin-top: 3px;
+}
+.company-contact-list a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.company-contact-list a:hover {
+  color: var(--accent-color);
+}
+.phone-highlight {
+  font-size: 1rem !important;
+  font-weight: 700;
+  color: var(--accent-color) !important;
+}
+.whatsapp-highlight {
+  font-size: 1rem !important;
+  font-weight: 700;
+  color: #25d366 !important;
+}
+.company-features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.company-features-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+.company-features-list li::before {
+  content: "✓";
+  color: var(--accent-color);
+  font-weight: 900;
+}
+
+@media (max-width: 768px) {
+  .company-info-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .company-info-section {
+    padding: 24px 0;
+  }
 }
 
 /* Footer */
 footer {
   text-align: center;
-  padding: 40px 0;
+  padding: 20px 0;
   border-top: 1px solid var(--border-color);
   color: var(--text-secondary);
+  font-size: 0.85rem;
 }
 
 /* Animations */
@@ -1882,13 +2008,26 @@ footer {
   box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
 }
 
-/* Ensure Floating bar doesn't hide behind Messenger */
+/* Ensure Floating bars don't hide behind sticky mobile order bar */
 @media (max-width: 768px) {
   .floating-cta {
-    bottom: 90px; /* Moved up to clear space for the floating bar */
-    right: 20px;
+    bottom: 80px;
+    right: 16px;
     width: 50px;
     height: 50px;
+  }
+  .floating-whatsapp {
+    bottom: 20px;
+    right: 16px;
+    width: 50px;
+    height: 50px;
+  }
+  /* Shift up BOTH floating icons ONLY when a sticky mobile bar is present on the page */
+  .sticky-mobile-order ~ .floating-whatsapp {
+    bottom: 90px;
+  }
+  .sticky-mobile-order ~ .floating-cta {
+    bottom: 150px;
   }
 }
 

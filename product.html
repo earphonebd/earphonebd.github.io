@@ -8,236 +8,560 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=2">
   <style>
+    /* CSS Variables & Core Base resets inside scoped page */
+    .main-content {
+      padding-top: 120px !important;
+      padding-bottom: 80px !important;
+    }
+    
+    /* Layout Container */
     .product-page-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.05fr 0.95fr;
       gap: 50px;
-      margin-top: 30px;
+      align-items: start;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Gallery - Sleek, Ambient Backdrop */
+    .product-gallery {
+      position: sticky;
+      top: 100px;
+      background: radial-gradient(circle at center, #ffffff 0%, #f8fafc 100%);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      border-radius: 32px;
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.015);
+      transition: all 0.4s ease;
     }
     .product-gallery img {
       width: 100%;
-      border-radius: 24px;
-      border: 1px solid var(--border-color);
-      background: var(--surface-color);
-      padding: 0;
-      object-fit: cover;
-      transition: transform 0.3s ease;
+      max-width: 380px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.06));
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .product-gallery img:hover {
-      transform: scale(1.02);
+    .product-gallery:hover img {
+      transform: scale(1.04) rotate(1deg);
+    }
+
+    /* Info Column */
+    .product-info-box {
+      padding-left: 10px;
     }
     .product-info-box h1 {
-      font-size: 2.4rem;
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 20px;
-      color: var(--text-primary);
+      font-size: 1.45rem;
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+      margin-bottom: 8px;
+      color: #0f172a;
+    }
+
+    /* Minimal Badges & Labels */
+    .stock-alert-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #ef4444;
+      font-size: 0.82rem;
+      font-weight: 500;
+      margin-bottom: 12px;
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+
+    /* Price Section - Super Clean */
+    .price-container {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
     }
     .price-tag-large {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--accent-color);
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #2563eb;
+      letter-spacing: -0.5px;
     }
+    .regular-price-large {
+      font-size: 1rem;
+      color: #94a3b8;
+      text-decoration: line-through;
+      font-weight: 400;
+      margin-left: 2px;
+    }
+    .discount-pill-large {
+      background: #eff6ff;
+      color: #1e40af;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    /* Elegant Stock/Delivery Notice Card */
+    .minimal-stock-card {
+      display: flex;
+      gap: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      margin-top: 10px;
+      margin-bottom: 18px;
+    }
+    .stock-indicator-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #2563eb;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+      margin-top: 5px;
+      flex-shrink: 0;
+      animation: pulseDot 2s infinite;
+    }
+    @keyframes pulseDot {
+      0% { box-shadow: 0 0 0 0px rgba(37, 99, 235, 0.4); }
+      70% { box-shadow: 0 0 0 4px rgba(37, 99, 235, 0); }
+      100% { box-shadow: 0 0 0 0px rgba(37, 99, 235, 0); }
+    }
+    .minimal-stock-card p {
+      margin: 0;
+      font-size: 0.88rem;
+      line-height: 1.35;
+      color: #334155;
+    }
+    .minimal-stock-card p strong {
+      color: #0f172a;
+      font-weight: 700;
+    }
+    .minimal-stock-card span {
+      color: #64748b;
+      display: block;
+      font-size: 0.78rem;
+      margin-top: 2px;
+    }
+
+    /* Premium Sleek Button */
+    .btn-premium-order {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-decoration: none;
+      padding: 16px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(5, 150, 105, 0.2);
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 30px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+    .btn-premium-order:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(5, 150, 105, 0.3);
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    }
+    .btn-premium-order svg {
+      transition: transform 0.3s ease;
+    }
+    .btn-premium-order:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* Minimal Tabs */
+    .product-tabs {
+      display: flex;
+      gap: 6px;
+      background: #f1f5f9;
+      padding: 5px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      width: fit-content;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      padding: 8px 18px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #64748b;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    .tab-btn.active {
+      background: #fff;
+      color: #0f172a;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Minimal Features List */
     .features-full {
       list-style: none;
-      margin-bottom: 35px;
-      padding-left: 0;
+      padding: 0;
+      margin: 0 0 30px 0;
     }
     .features-full li {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
+      gap: 10px;
       margin-bottom: 12px;
-      font-size: 1.05rem;
-      line-height: 1.4;
-      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.45;
+      color: #334155;
     }
     .features-full li::before {
       content: '✓';
-      color: var(--accent-color);
+      color: #10b981;
       font-weight: 900;
-      font-size: 1.1rem;
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-right: 2px;
     }
-    .stock-badge-container {
-      background: #f0fdf4;
-      padding: 24px;
+
+    /* Elegant Compact Reviews */
+    .review-item {
+      padding: 16px;
+      background: #fff;
+      border: 1px solid #f1f5f9;
+      border-radius: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+    }
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .review-author {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #0f172a;
+    }
+    .verified-badge {
+      color: #059669;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.72rem;
+      background: #ecfdf5;
+      padding: 3px 8px;
+      border-radius: 30px;
+      border: 1px solid #d1fae5;
+    }
+    .review-text {
+      color: #475569;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+    .review-form {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
       border-radius: 20px;
-      margin-bottom: 35px;
-      border: 1px solid #bcf0da;
+    }
+    .review-form h4 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .review-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      background: #fff;
+    }
+    .review-input:focus {
+      border-color: #10b981;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+
+    /* Minimal Horizontal Trust Badges */
+    .trust-badges-minimal {
+      margin-top: 60px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 40px;
+    }
+    .trust-badge-item {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
+      padding: 10px;
     }
-    @media (max-width: 768px) {
+    .trust-badge-icon {
+      font-size: 1.6rem;
+      background: #f8fafc;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      flex-shrink: 0;
+    }
+    .trust-badge-item h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 3px;
+      color: #0f172a;
+    }
+    .trust-badge-item p {
+      font-size: 0.82rem;
+      color: #64748b;
+      margin: 0;
+      line-height: 1.35;
+    }
+
+    /* Toast Styling */
+    #toast-container {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      z-index: 100000;
+    }
+    @media (max-width: 480px) {
+      #toast-container {
+        top: 75px !important;
+        right: 20px;
+        left: 20px;
+        width: calc(100% - 40px);
+      }
+    }
+    .toast {
+      background: #1f2937;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-left: 4px solid #10b981;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
       .product-page-layout {
         grid-template-columns: 1fr;
-        gap: 25px;
-        margin-top: 5px;
+        gap: 30px;
+      }
+      .product-gallery {
+        position: static;
+        padding: 30px;
+        border-radius: 24px;
       }
       .product-info-box {
-        padding: 0 5px;
+        padding-left: 0;
       }
-      .product-info-box h1 {
-        font-size: 1.6rem;
-        margin-bottom: 15px;
-        line-height: 1.25;
+      .trust-badges-minimal {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding-top: 30px;
       }
-      .price-tag-large {
-        font-size: 1.8rem;
-      }
-      .product-gallery img {
-        padding: 0;
-        border-radius: 16px;
-      }
-      .stock-badge-container {
+      .trust-badge-item {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
         padding: 16px;
-        gap: 12px;
-        border-radius: 16px;
-      }
-      .stock-badge-container > div:first-child {
-        width: 36px;
-        height: 36px;
-        font-size: 1rem;
-      }
-      .features-full {
-        padding-left: 5px;
-      }
-      .features-full li {
-        font-size: 0.95rem;
-        margin-bottom: 10px;
-        gap: 10px;
-      }
-      .main-content {
-        padding-top: 70px !important;
-        padding-bottom: 40px !important;
+        border-radius: 20px;
       }
     }
 
-    /* Global Component Styles (Desktop & Mobile) */
+    @media (max-width: 768px) {
+      .main-content {
+        padding-top: 80px !important;
+        padding-bottom: 40px !important;
+      }
+      .product-info-box h1 {
+        font-size: 1.35rem;
+        line-height: 1.35;
+        margin-bottom: 6px;
+      }
+      .price-tag-large {
+        font-size: 1.35rem;
+      }
+    }
+
+    /* 4-Option Order Actions Layout */
+    .order-actions-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
     
-    /* Tab Styling */
-      .product-tabs {
-        display: flex;
-        gap: 20px;
-        border-bottom: 2px solid var(--border-color);
-        margin-bottom: 25px;
-        margin-top: 20px;
-      }
-      .tab-btn {
-        background: none;
-        border: none;
-        padding: 12px 20px;
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: var(--text-secondary);
-        cursor: pointer;
-        position: relative;
-        transition: all 0.3s;
-      }
-      .tab-btn.active {
-        color: var(--accent-color);
-      }
-      .tab-btn.active::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: var(--accent-color);
-      }
-      .tab-content {
-        display: none;
-        animation: fadeIn 0.4s ease;
-      }
-      .tab-content.active {
-        display: block;
-      }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(5px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      
-      .review-item {
-        padding: 18px;
-        background: #fff;
-        border-radius: 16px;
+    .order-actions-row {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      align-items: center;
+    }
+    
+    .order-actions-grid-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px 20px;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    }
+    
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    }
+    
+    .action-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Individual Button Styles */
+    .btn-buy-now-expanded {
+      flex: 1;
+      height: 54px;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: #fff;
+      box-shadow: 0 6px 15px rgba(37, 99, 235, 0.15);
+      border-radius: 14px;
+    }
+    .btn-buy-now-expanded:hover {
+      background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+    }
+
+    .btn-add-to-cart-icon {
+      width: 54px;
+      height: 54px;
+      flex-shrink: 0;
+      background: #0f172a;
+      color: #fff;
+      box-shadow: 0 6px 15px rgba(15, 23, 42, 0.1);
+      border-radius: 14px;
+      padding: 0 !important;
+    }
+    .btn-add-to-cart-icon:hover {
+      background: #1e293b;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+    }
+
+    .btn-whatsapp-order {
+      background: #25d366;
+      color: #fff;
+      box-shadow: 0 6px 15px rgba(37, 211, 102, 0.15);
+    }
+    .btn-whatsapp-order:hover {
+      background: #20ba5a;
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.25);
+    }
+
+    .btn-call-order {
+      background: #fff;
+      color: #2563eb;
+      border: 1.5px solid #2563eb;
+      box-shadow: none;
+    }
+    .btn-call-order:hover {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-color: #1d4ed8;
+      box-shadow: 0 8px 16px rgba(37, 99, 235, 0.08);
+    }
+
+    /* Mobile Responsive Actions */
+    @media (max-width: 480px) {
+      .order-actions-container {
+        gap: 8px;
         margin-bottom: 20px;
-        border: 1px solid rgba(0,0,0,0.05);
-        box-shadow: 0 4px 15px rgba(0,0,0,0.02);
       }
-      .verified-badge {
-        color: #059669;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        font-size: 0.8rem;
-        background: #ecfdf5;
-        padding: 4px 10px;
-        border-radius: 50px;
+      .order-actions-row {
+        gap: 8px;
       }
-      .review-form {
-        margin-top: 40px;
-        padding: 25px;
-        background: #f8fafc;
-        border-radius: 20px;
-        border: 1px solid var(--border-color);
+      .order-actions-grid-bottom {
+        gap: 8px;
       }
-      .review-form h4 {
-        margin-bottom: 20px;
-        font-size: 1.2rem;
-        font-weight: 800;
-        color: var(--text-primary);
+      .action-btn {
+        padding: 12px 10px;
+        font-size: 0.82rem;
+        gap: 6px;
+        border-radius: 10px;
       }
-      .review-input {
-        width: 100%;
-        padding: 15px;
-        border: 2px solid #e2e8f0;
-        border-radius: 12px;
-        margin-bottom: 15px;
-        font-size: 1rem;
-        transition: all 0.3s;
-        background: #fff;
+      .btn-add-to-cart-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
       }
-      .review-input:focus {
-        border-color: var(--accent-color);
-        outline: none;
-        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+      .btn-buy-now-expanded {
+        height: 48px;
+        border-radius: 10px;
+        gap: 6px;
       }
-      /* Toast Styling */
-      #toast-container {
-        position: fixed;
-        top: 30px;
-        right: 30px;
-        z-index: 100000;
+      .action-btn svg {
+        width: 15px;
+        height: 15px;
       }
-      @media (max-width: 480px) {
-        #toast-container {
-          top: 75px !important;
-          right: 20px;
-          left: 20px;
-          width: calc(100% - 40px);
-        }
+      .btn-add-to-cart-icon svg {
+        width: 18px;
+        height: 18px;
       }
-      .toast {
-        background: #1f2937;
-        color: white;
-        padding: 16px 24px;
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        border-left: 4px solid var(--accent-color);
-      }
-      @keyframes slideIn {
-        from { opacity: 0; transform: translateX(50px); }
-        to { opacity: 1; transform: translateX(0); }
-      }
+    }
   </style>
 </head>
 
@@ -253,7 +577,7 @@
     </div>
   </header>
 
-  <main class="container main-content" style="padding-top: 100px; padding-bottom: 60px;">
+  <main class="container main-content">
     <div class="product-page-layout">
       <!-- Image Column -->
       <div class="product-gallery">
@@ -264,24 +588,50 @@
       <div class="product-info-box">
         <h1 id="product-title">Product Title</h1>
         
-        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 5px;">
+        <div class="price-container">
           <div class="price-tag-large" id="product-price">Price TK</div>
-          <span id="product-discount" style="background: var(--danger-color); color: white; padding: 6px 16px; border-radius: 50px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Limited Offer</span>
+          <span class="regular-price-large" id="product-regular-price">Regular: -- TK</span>
+          <span class="discount-pill-large" id="product-discount">Limited Offer</span>
         </div>
-        
-        <div style="font-size: 1.1rem; color: var(--text-secondary); text-decoration: line-through; margin-bottom: 25px;" id="product-regular-price">Regular: -- TK</div>
 
-        <p id="product-stock" style="color: var(--danger-color); font-weight: 800; font-size: 1.1rem; margin-bottom: 20px;">🔥 স্টক লিমিটেড!</p>
+        <div class="stock-alert-pill" id="product-stock">🔥 স্টক লিমিটেড!</div>
 
-        <div class="stock-badge-container">
-           <div style="background: var(--accent-color); color: white; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(5, 150, 105, 0.2);">✓</div>
+        <div class="minimal-stock-card">
+           <div class="stock-indicator-dot"></div>
            <div>
-             <p style="color: #064e3b; font-weight: 800; margin-bottom: 3px; font-size: 1.05rem;">স্টকে আছে - ডেলিভারি হবে 2-3 দিনে</p>
-             <p style="font-size: 0.88rem; color: #047857; line-height: 1.3;">ক্যাশ অন ডেলিভারি সুবিধা (আগে প্রোডাক্ট পাবেন, তারপর টাকা দিবেন)</p>
+             <p><strong>স্টকে আছে</strong> - ডেলিভারি ২-৩ দিনে</p>
+             <span>পণ্য দেখে নেওয়ার সুযোগ</span>
            </div>
         </div>
 
-        <a id="buy-now-btn" href="order.html" class="btn btn-primary btn-block" style="font-size: 1.2rem; padding: 22px; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3); margin-bottom: 30px;">অর্ডার কনফার্ম করুন</a>
+        <div class="order-actions-container">
+          <div class="order-actions-row">
+            <!-- 1. Add to Cart Button (Icon Only) -->
+            <button id="add-to-cart-btn" class="action-btn btn-add-to-cart-icon" title="কার্টে যোগ করুন">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            </button>
+
+            <!-- 2. Order Now Button (Expanded) -->
+            <a id="buy-now-btn" href="order.html" class="action-btn btn-buy-now-expanded">
+              <span>অর্ডার করুন</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+
+          <div class="order-actions-grid-bottom">
+            <!-- 3. Order on WhatsApp Button -->
+            <a id="whatsapp-order-btn" href="https://wa.me/8801788163380" target="_blank" class="action-btn btn-whatsapp-order">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.012 2c-5.506 0-9.988 4.482-9.988 9.988 0 1.76.46 3.473 1.332 4.988L2 22l5.19-1.361c1.47.8 3.125 1.22 4.814 1.22 5.506 0 9.988-4.482 9.988-9.988C22 6.482 17.518 2 12.012 2zm6.012 14.73c-.26.73-1.523 1.353-2.126 1.414-.54.06-1.25.13-3.64-.814-3.056-1.206-5.02-4.32-5.17-4.524-.154-.204-1.266-1.683-1.266-3.21 0-1.527.8-2.28 1.085-2.587.285-.306.618-.382.83-.382.21 0 .42.002.603.01.185.01.436-.07.683.524.254.614.867 2.115.942 2.268.077.153.128.33.025.534-.1.204-.15.33-.3.51-.15.18-.31.36-.44.51-.15.153-.306.32-.13.626.175.306.78 1.286 1.67 2.076.9.79 1.656 1.036 1.96 1.19.306.153.483.128.665-.077.18-.204.78-.905.99-1.21.21-.306.42-.255.706-.153.287.1.1.28 1.83.867.87.433 1.45.65.17.65.26 0 .53-.15 1.155-.724.62-.575 1.035-1.275.603-.997z"/></svg>
+              <span>WhatsApp অর্ডার</span>
+            </a>
+
+            <!-- 4. Call to Order Button -->
+            <a href="tel:+8801788163380" class="action-btn btn-call-order">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <span>ফোনে অর্ডার</span>
+            </a>
+          </div>
+        </div>
 
         <div class="product-tabs">
           <button class="tab-btn active" onclick="switchTab('features')">বিশেষত্ব্য</button>
@@ -305,11 +655,10 @@
             <h4>আপনার মতামত শেয়ার করুন</h4>
             <input type="text" id="rev-name" placeholder="আপনার নাম" class="review-input">
             <textarea id="rev-text" placeholder="আপনার মতামত লিখুন..." class="review-input" rows="3"></textarea>
-            <button class="btn btn-primary btn-block" onclick="addReview()" style="padding: 16px;">রিভিউ পোস্ট করুন</button>
+            <button class="btn btn-primary btn-block" onclick="addReview()" style="padding: 16px; border-radius: 12px; font-weight: 700;">রিভিউ পোস্ট করুন</button>
           </div>
         </div>
 
-        
         <div id="warranty-badge" style="display: none; align-items: center; justify-content: center; gap: 10px; margin-top: 20px;">
           <span style="font-size: 1.2rem;">🛡️</span>
           <p style="font-size: 0.9rem; color: var(--text-secondary); font-weight: 500;">1 বছরের সার্ভিস ওয়ারেন্টি</p>
@@ -318,25 +667,77 @@
     </div>
 
     <!-- Trust Badges Section -->
-    <div style="margin-top: 80px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
-      <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; text-align: center; border: 1px solid var(--border-color);">
-        <div style="font-size: 2rem; margin-bottom: 10px;">🚚</div>
-        <h4 style="margin-bottom: 10px;">সারা দেশে ডেলিভারি</h4>
-        <p style="font-size: 0.85rem; color: var(--text-secondary);">সারা বাংলাদেশে 2-3 দিনে ডেলিভারি</p>
+    <div class="trust-badges-minimal">
+      <div class="trust-badge-item">
+        <div class="trust-badge-icon">🚚</div>
+        <div>
+          <h4>সারা দেশে ডেলিভারি</h4>
+          <p>সারা বাংলাদেশে ২-৩ দিনে ডেলিভারি</p>
+        </div>
       </div>
-      <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; text-align: center; border: 1px solid var(--border-color);">
-        <div style="font-size: 2rem; margin-bottom: 10px;">🛡️</div>
-        <h4 style="margin-bottom: 10px;">100% প্রিমিয়াম কোয়ালিটি</h4>
-        <p style="font-size: 0.85rem; color: var(--text-secondary);">আমরা সব সময় সেরা কোয়ালিটি নিশ্চিত করি</p>
+      <div class="trust-badge-item">
+        <div class="trust-badge-icon">🛡️</div>
+        <div>
+          <h4>১০০% প্রিমিয়াম কোয়ালিটি</h4>
+          <p>আমরা সব সময় সেরা কোয়ালিটি নিশ্চিত করি</p>
+        </div>
       </div>
-      <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; text-align: center; border: 1px solid var(--border-color);">
-        <div style="font-size: 2rem; margin-bottom: 10px;">💬</div>
-        <h4 style="margin-bottom: 10px;">কাস্টমার সাপোর্ট</h4>
-        <p style="font-size: 0.85rem; color: var(--text-secondary);">যেকোনো প্রয়োজনে আমাদের ইনবক্স করুন</p>
+      <div class="trust-badge-item">
+        <div class="trust-badge-icon">💬</div>
+        <div>
+          <h4>কাস্টমার সাপোর্ট</h4>
+          <p>যেকোনো প্রয়োজনে আমাদের ইনবক্স করুন</p>
+        </div>
       </div>
     </div>
     <div id="toast-container"></div>
   </main>
+
+  <!-- Company Info Section -->
+  <section class="company-info-section">
+    <div class="container company-info-grid">
+      <div class="company-about">
+        <h3>
+          <img src="assets/logo.png" alt="Earphone BD Logo" class="logo-img" style="height: 30px; vertical-align: middle;">
+          Earphone<span>BD</span>
+        </h3>
+        <p>Earphone BD বাংলাদেশের একটি নির্ভরযোগ্য ও বিশ্বস্ত গ্যাজেট শপ। আমাদের লক্ষ্য অত্যন্ত সাশ্রয়ী মূল্যে প্রিমিয়াম কোয়ালিটির ব্লুটুথ ইয়ারফোন, এয়ারপডস এবং বিভিন্ন ট্রেন্ডি স্মার্ট গ্যাজেটস সরাসরি আপনার হাতে পৌঁছে দেওয়া। কাস্টমার সন্তুষ্টি ও আসল কোয়ালিটি আমাদের প্রথম অগ্রাধিকার।</p>
+      </div>
+      <div class="company-links">
+        <h4>আমাদের সেবাসমূহ</h4>
+        <ul class="company-features-list">
+          <li>সারা দেশে দ্রুত ক্যাশ অন ডেলিভারি</li>
+          <li>১০০% প্রিমিয়াম ও অরিজিনাল কোয়ালিটি নিশ্চিত</li>
+          <li>যেকোনো প্রয়োজনে ২৪/৭ কাস্টমার সাপোর্ট</li>
+        </ul>
+      </div>
+      <div class="company-contact">
+        <h4>যোগাযোগ</h4>
+        <ul class="company-contact-list">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <a href="tel:+8801788163380" class="phone-highlight">০১৭৮৮-১৬৩৩৮০</a>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color: #25d366;"><path d="M12.012 2c-5.506 0-9.988 4.482-9.988 9.988 0 1.76.46 3.473 1.332 4.988L2 22l5.19-1.361c1.47.8 3.125 1.22 4.814 1.22 5.506 0 9.988-4.482 9.988-9.988C22 6.482 17.518 2 12.012 2zm6.012 14.73c-.26.73-1.523 1.353-2.126 1.414-.54.06-1.25.13-3.64-.814-3.056-1.206-5.02-4.32-5.17-4.524-.154-.204-1.266-1.683-1.266-3.21 0-1.527.8-2.28 1.085-2.587.285-.306.618-.382.83-.382.21 0 .42.002.603.01.185.01.436-.07.683.524.254.614.867 2.115.942 2.268.077.153.128.33.025.534-.1.204-.15.33-.3.51-.15.18-.31.36-.44.51-.15.153-.306.32-.13.626.175.306.78 1.286 1.67 2.076.9.79 1.656 1.036 1.96 1.19.306.153.483.128.665-.077.18-.204.78-.905.99-1.21.21-.306.42-.255.706-.153.287.1.1.28 1.83.867.87.433 1.45.65.17.65.26 0 .53-.15 1.155-.724.62-.575 1.035-1.275.603-.997z"/></svg>
+            <a href="https://wa.me/8801788163380" target="_blank" class="whatsapp-highlight">০১৭৮৮-১৬৩৩৮০ (WhatsApp)</a>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <a href="mailto:earphonebdofficial@gmail.com">earphonebdofficial@gmail.com</a>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            <a href="https://facebook.com/bdearphone" target="_blank">facebook.com/bdearphone</a>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>পুরান ঢাকা, ঢাকা, বাংলাদেশ</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer>
@@ -344,6 +745,20 @@
       <p>&copy; <a href="admin.html" style="color: inherit; text-decoration: none; cursor: pointer;">2026</a> Earphone BD. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- Floating Messenger CTA -->
+  <a href="https://m.me/bdearphone" class="floating-cta" target="_blank" aria-label="Message on Facebook">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8 0C3.58 0 0 3.34 0 7.46c0 2.34 1.18 4.41 3.02 5.75V16l2.75-1.5c.7.2 1.45.31 2.23.31 4.42 0 8-3.34 8-7.46S12.42 0 8 0zm1.37 10.36L6.96 7.9 2.8 10.36l4.52-4.8 2.41 2.46 4.16-2.46-4.52 4.8z" />
+    </svg>
+  </a>
+
+  <!-- Floating WhatsApp CTA -->
+  <a href="https://wa.me/8801788163380" class="floating-whatsapp" target="_blank" aria-label="Message on WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.73-1.455L0 24zm6.59-4.846c1.66.986 3.284 1.48 4.836 1.482 5.275 0 9.56-4.287 9.563-9.564.002-2.556-1.01-4.96-2.857-6.808a9.492 9.492 0 0 0-6.804-2.846c-5.279 0-9.564 4.286-9.567 9.56-.001 1.703.468 3.36 1.355 4.8l-.3 1.09-.762 2.782 2.875-.753.84-.22zM18.06 14.86c-.328-.164-1.94-.957-2.24-1.067-.3-.11-.52-.164-.737.164-.218.327-.842 1.066-1.033 1.285-.19.22-.383.246-.71.082-.327-.164-1.38-.508-2.63-1.623-.972-.867-1.628-1.94-1.82-2.266-.19-.328-.02-.505.143-.67.147-.146.328-.382.49-.574.164-.19.218-.328.328-.546.11-.218.055-.41-.027-.573-.082-.164-.737-1.776-1.01-2.433-.266-.64-.537-.552-.737-.563-.19-.01-.41-.01-.628-.01-.218 0-.573.082-.873.41-.3.327-1.146 1.12-1.146 2.73 0 1.61 1.173 3.167 1.337 3.385.164.218 2.308 3.525 5.59 4.945.78.336 1.39.537 1.865.688.784.248 1.5.213 2.066.128.63-.095 1.94-.793 2.213-1.56.273-.765.273-1.42.19-1.557-.083-.14-.3-.222-.627-.386z"/>
+    </svg>
+  </a>
 
   <!-- Sales Notification (FOMO) -->
   <div class="sales-notification" id="salesNotification">
@@ -374,6 +789,38 @@
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
   </script>
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer-overlay" id="cart-overlay"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer-header">
+      <h3>SHOPPING CART</h3>
+      <button class="close-cart" id="close-cart">Close &rarr;</button>
+    </div>
+    <div class="cart-items" id="cart-items-container">
+      <!-- Items will be injected by JS -->
+      <div class="empty-cart-msg">আপনার কার্ট খালি আছে।</div>
+    </div>
+    <div class="cart-drawer-footer">
+      <div class="cart-total-row">
+        <span>মোট:</span>
+        <span id="cart-drawer-total">৳0</span>
+      </div>
+      <button class="btn-checkout" onclick="window.location.href='order.html'">অর্ডার করুন</button>
+    </div>
+  </div>
+
+  <!-- Account Drawer -->
+  <div class="account-drawer-overlay" id="account-overlay"></div>
+  <div class="account-drawer" id="account-drawer">
+    <div class="account-drawer-header">
+      <h3>MY ACCOUNT</h3>
+      <button class="close-account" id="close-account">Close &rarr;</button>
+    </div>
+    <div class="account-drawer-content" id="account-drawer-content">
+      <!-- Injected dynamically by script.js -->
+    </div>
+  </div>
 
   <script src="script.js?v=2" defer></script>
 </body>

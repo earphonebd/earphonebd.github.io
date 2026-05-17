@@ -23,14 +23,50 @@
     .order-details { max-height: 0; padding: 0 25px; transition: all 0.4s ease; background: #fff; border-top: 0px solid #f1f5f9; overflow: hidden; opacity: 0; }
     .order-item.active .order-details { max-height: 2000px; padding: 25px; border-top-width: 1px; opacity: 1; }
     .order-item.active { box-shadow: 0 15px 35px rgba(0,0,0,0.06); transform: scale(1.01); border-color: var(--accent); }
-
-    .details-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
-    .info-block { margin-bottom: 12px; padding: 10px; background: #fcfdfe; border-radius: 12px; border: 1px solid #f1f5f9; }
-    .info-label { font-size: 0.75rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
-    .info-value { font-size: 0.95rem; color: #334155; font-weight: 700; line-height: 1.4; }
+    /* Clean, premium invoice-style layouts */
+    .details-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; text-align: left; }
+    
+    .section-title { font-size: 0.85rem; color: #475569; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #f1f5f9; padding-bottom: 6px; }
+    
+    .details-left, .details-right { display: flex; flex-direction: column; gap: 20px; }
+    
+    /* Left column card */
+    .detail-card { background: #fafbfc; border-radius: 16px; padding: 20px; border: 1px solid #e2e8f0; text-align: left; }
+    .detail-card.white { background: #ffffff; }
+    
+    /* Ordered Item Row */
+    .order-product-row { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid #edf2f7; }
+    .order-product-row:last-child { border-bottom: none; }
+    .order-product-img { width: 50px; height: 50px; border-radius: 10px; object-fit: cover; border: 1px solid #e2e8f0; background: #fff; }
+    .order-product-info { flex: 1; }
+    .order-product-name { font-weight: 750; font-size: 0.95rem; color: #1e293b; }
+    .order-product-meta { display: flex; gap: 6px; margin-top: 4px; }
+    .order-product-price { font-size: 0.88rem; color: #64748b; margin-top: 4px; }
+    
+    /* Invoice Summary table */
+    .invoice-table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+    .invoice-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 0.92rem; color: #475569; }
+    .invoice-row.total { border-top: 2px solid #e2e8f0; padding-top: 12px; margin-top: 8px; font-weight: 850; font-size: 1.15rem; color: #1e293b; }
+    
+    /* Right column delivery card */
+    .delivery-card { background: #f8fafc; border-radius: 16px; padding: 20px; border: 1px dashed #cbd5e1; text-align: left; }
+    .delivery-field { margin-bottom: 16px; }
+    .delivery-field:last-child { margin-bottom: 0; }
+    .delivery-label { font-size: 0.72rem; color: #64748b; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; }
+    .delivery-val-wrap { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .delivery-value { font-size: 0.95rem; color: #1e293b; font-weight: 700; line-height: 1.45; }
+    
+    /* Sleek copy button icon */
+    .copy-icon-btn { background: none; border: none; padding: 6px; border-radius: 8px; color: #64748b; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; border: 1px solid transparent; flex-shrink: 0; }
+    .copy-icon-btn:hover { color: var(--accent); background: #eff6ff; border-color: rgba(37,99,235,0.1); }
+    .copy-icon-btn.copied { color: #ffffff !important; background: #10b981 !important; border-color: #10b981 !important; }
+    
+    /* Admin note amber warning box */
+    .note-box { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 14px; border-radius: 8px; color: #b45309; font-size: 0.9rem; font-weight: 600; line-height: 1.4; display: flex; align-items: flex-start; gap: 8px; text-align: left; }
     
     .badge { padding: 4px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: 800; border: 1px solid transparent; }
     .badge-dubai { background: #eff6ff; color: #2563eb; border-color: rgba(37, 99, 235, 0.2); }
+    .badge-usa { background: #f5f3ff; color: #7c3aed; border-color: rgba(124, 58, 237, 0.2); }
     .badge-china { background: #fff7ed; color: #ea580c; border-color: #f9731633; }
     .badge-color { background: #f1f5f9; color: #475569; border-color: #e2e8f0; }
     .badge-new { background: #f1f5f9; color: #475569; border-color: #e2e8f0; }
@@ -43,9 +79,9 @@
     .action-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 15px; border-top: 1px dashed #e2e8f0; }
     .btn-delete { background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; padding: 8px 16px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
     .btn-delete:hover { background: #ffe4e6; transform: scale(1.02); }
-
-    @media (max-width: 850px) {
-      .details-grid { grid-template-columns: 1fr; gap: 10px; }
+ 
+    @media (max-width: 768px) {
+      .details-grid { grid-template-columns: 1fr; gap: 20px; }
     }
 
     #login-overlay { position: fixed; inset: 0; background: #fff; z-index: 10000; display: flex; align-items: center; justify-content: center; }
@@ -157,97 +193,176 @@
             </div>
             <div class="order-details">
               <div class="details-grid">
-                <!-- Customer Column -->
-                <div>
-                  <div class="info-block" style="position: relative; display: flex; justify-content: space-between; align-items: flex-start;">
-                    <div style="flex: 1;">
-                      <div class="info-label">👤 Customer Info</div>
-                      <div class="info-value">
-                        <span id="text-name-${id}">${o.customer ? o.customer.name : 'N/A'}</span><br>
-                        <small style="color:#64748b; font-weight: 700;">
-                          📞 <span id="text-phone-${id}">${o.customer ? o.customer.phone : ''}</span>
-                          ${o.customer && o.customer.email ? `<br>✉️ <span id="text-email-${id}" style="color:#2563eb; font-weight:600; font-size:0.8rem;">${o.customer.email}</span>` : ''}
-                        </small>
-                      </div>
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 10px;">
-                      <button id="copy-name-${id}" onclick="window.copyToClipboard('${(o.customer ? o.customer.name : '').replace(/'/g, "\\'")}', 'copy-name-${id}')" style="background: #f1f5f9; border: 1px solid #e2e8f0; padding: 4px 8px; border-radius: 6px; color: #475569; cursor: pointer; font-size: 0.72rem; font-weight: 700; transition: all 0.2s;" title="Copy Name">👤 Copy Name</button>
-                      <button id="copy-phone-${id}" onclick="window.copyToClipboard('${(o.customer ? o.customer.phone : '').replace(/'/g, "\\'")}', 'copy-phone-${id}')" style="background: #f1f5f9; border: 1px solid #e2e8f0; padding: 4px 8px; border-radius: 6px; color: #475569; cursor: pointer; font-size: 0.72rem; font-weight: 700; transition: all 0.2s;" title="Copy Phone">📞 Copy Phone</button>
-                    </div>
-                  </div>
-                  <div class="info-block" style="position: relative; display: flex; justify-content: space-between; align-items: flex-start;">
-                    <div style="flex: 1; padding-right: 10px;">
-                      <div class="info-label">📍 Address</div>
-                      <div class="info-value">
-                        ${o.customer ? o.customer.address : 'N/A'}
-                        ${(o.order && (o.order.thana || o.order.district)) ? `<br><small style="color:#64748b; font-weight:700;">${o.order.thana || ''}, ${o.order.district || ''}</small>` : ''}
-                      </div>
-                    </div>
-                    <button id="copy-addr-${id}" onclick="window.copyToClipboard('${(o.customer ? o.customer.address : '').replace(/'/g, "\\'")}${(o.order && o.order.thana) ? ', ' + o.order.thana : ''}${(o.order && o.order.district) ? ', ' + o.order.district : ''}', 'copy-addr-${id}')" style="background: #f1f5f9; border: 1px solid #e2e8f0; padding: 4px 8px; border-radius: 6px; color: #475569; cursor: pointer; font-size: 0.72rem; font-weight: 700; margin-top: 10px; transition: all 0.2s;" title="Copy Address">📍 Copy Address</button>
-                  </div>
+                
+                <!-- Left Column (Core Order Details) -->
+                <div class="details-left">
                   
-                  <button id="copy-all-${id}" onclick="window.copyFullDetails('${(o.customer ? o.customer.name : '').replace(/'/g, "\\'")}', '${(o.customer ? o.customer.phone : '').replace(/'/g, "\\'")}', '${(o.customer ? o.customer.address : '').replace(/'/g, "\\'")}', '${(o.order ? o.order.thana : '') || ''}', '${(o.order ? o.order.district : '') || ''}', 'copy-all-${id}')" style="width: 100%; background: var(--accent); color: white; border: none; padding: 10px; border-radius: 12px; font-weight: 800; cursor: pointer; font-size: 0.82rem; display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 12px; transition: all 0.2s; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);">
-                    📋 Copy All Delivery Info
-                  </button>
-                  
-                  <div class="info-block"><div class="info-label">📝 Admin Note</div><div class="info-value" style="font-style:italic; font-weight:500;">${(o.customer && o.customer.note) ? o.customer.note : 'No note provided'}</div></div>
-                </div>
-                <!-- Product Column -->
-                <div>
-                  <div class="info-block">
-                    <div class="info-label">🎧 Ordered Items</div>
-                    <div class="info-value">
+                  <!-- Ordered Items Box -->
+                  <div class="detail-card white">
+                    <div class="section-title">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                      Ordered Items
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
                       ${o.order && o.order.items && Array.isArray(o.order.items) ? 
                         o.order.items.map(item => `
-                          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; border-bottom: 1px solid #f1f5f9; padding-bottom: 6px;">
-                            <img src="${item.image}" style="width: 32px; height: 32px; border-radius: 6px; object-fit: cover; border: 1px solid #e2e8f0; background: #f8fafc;" />
-                            <div style="flex: 1;">
-                              <span style="font-weight: 700; display: block; font-size: 0.88rem;">${item.title}</span>
-                              <div style="margin-top: 3px; display: flex; flex-wrap: wrap; gap: 4px;">
-                                <span class="badge ${item.edition && item.edition.includes('Dubai') ? 'badge-dubai' : 'badge-china'}" style="padding: 1px 6px; font-size: 0.7rem; border-radius: 4px; display: inline-block;">${item.edition || 'N/A'}</span>
-                                <span class="badge badge-color" style="padding: 1px 6px; font-size: 0.7rem; border-radius: 4px; display: inline-block;">🎨 ${item.color || 'N/A'}</span>
+                          <div class="order-product-row">
+                            <img class="order-product-img" src="${item.image}" alt="${item.title}" />
+                            <div class="order-product-info">
+                              <div class="order-product-name">${item.title}</div>
+                              <div class="order-product-meta">
+                                <span class="badge ${item.edition && item.edition.includes('USA') ? 'badge-usa' : (item.edition && item.edition.includes('Dubai') ? 'badge-dubai' : 'badge-china')}" style="padding: 1px 6px; font-size: 0.65rem; border-radius: 4px;">${item.edition || 'N/A'}</span>
+                                <span class="badge badge-color" style="padding: 1px 6px; font-size: 0.65rem; border-radius: 4px;">🎨 ${item.color || 'N/A'}</span>
                               </div>
-                              <small style="color: #64748b; margin-top: 4px; display: block;">Qty: <b>${item.qty}</b> • Price: ৳${item.price}</small>
+                              <div class="order-product-price">Qty: <b>${item.qty}</b> • Price: ৳${item.price}</div>
                             </div>
                           </div>
                         `).join('') 
-                        : `<div style="font-weight: 700; font-size: 0.95rem;">${o.order ? o.order.product : 'N/A'}</div>`
+                        : `
+                          <div class="order-product-row">
+                            <div class="order-product-info">
+                              <div class="order-product-name">${o.order ? o.order.product : 'N/A'}</div>
+                              <div class="order-product-meta" style="margin-top: 6px;">
+                                <span class="badge ${varClass}" style="padding: 1px 6px; font-size: 0.65rem; border-radius: 4px;">${o.order ? o.order.variation : 'Standard'}</span>
+                                <span class="badge badge-color" style="padding: 1px 6px; font-size: 0.65rem; border-radius: 4px; margin-left: 4px;">🎨 ${o.order ? o.order.color : 'N/A'}</span>
+                              </div>
+                              <div class="order-product-price" style="margin-top: 6px;">Qty: <b>${o.order ? (o.order.quantity || 1) : 1}</b> • Price: ${o.order ? o.order.subtotal : 'N/A'}</div>
+                            </div>
+                          </div>
+                        `
                       }
                     </div>
                   </div>
-                  ${o.order && !o.order.items ? `
-                    <div class="info-block"><div class="info-label">✨ Edition & Color</div><div class="info-value">
-                      <span class="badge ${varClass}">${o.order ? o.order.variation : 'Standard'}</span>
-                      <span class="badge badge-color" style="margin-left:5px;">🎨 ${o.order ? o.order.color : 'N/A'}</span>
-                    </div></div>
-                  ` : ''}
-                  <div class="info-block"><div class="info-label">📦 Total Qty</div><div class="info-value"><span style="color:var(--accent); font-weight:900;">${o.order ? (o.order.quantity || 1) : '1'} Pcs</span></div></div>
-                </div>
-                <!-- Shipping Column -->
-                <div>
-                  <div class="info-block"><div class="info-label">🚚 Shipping Area</div><div class="info-value">${o.order ? o.order.shipping_area : '-'}</div></div>
-                  <div class="info-block"><div class="info-label">💰 Pricing</div><div class="info-value">Sub: ${o.order ? o.order.subtotal : '0'}<br>Ship: ${o.order ? o.order.shipping_cost : '0'}</div></div>
-                  <div class="info-block"><div class="info-label">🗓️ Order Date</div><div class="info-value">${o.metadata ? o.metadata.date : ''}</div></div>
                   
-                  <!-- Dynamic Status Selector -->
-                  <div class="info-block">
-                    <div class="info-label">⚙️ Order Status</div>
-                    <div style="margin-top: 4px;">
-                      <select onchange="window.updateOrderStatus('${id}', this.value)" style="width: 100%; padding: 8px 12px; border: 1px solid #edf2f7; border-radius: 10px; background: #ffffff; color: #1e293b; font-weight: 700; font-size: 0.85rem; cursor: pointer; outline: none; transition: all 0.2s; box-shadow: inset 0 1px 2px rgba(0,0,0,0.01);">
-                        <option value="New Order" ${currentStatus === 'New Order' ? 'selected' : ''}>⏳ New Order</option>
-                        <option value="Confirmed" ${currentStatus === 'Confirmed' ? 'selected' : ''}>✅ Confirmed</option>
-                        <option value="Packaging" ${currentStatus === 'Packaging' ? 'selected' : ''}>📦 Packaging</option>
-                        <option value="Shipped" ${currentStatus === 'Shipped' ? 'selected' : ''}>🚚 Shipped</option>
-                        <option value="Completed" ${currentStatus === 'Completed' ? 'selected' : ''}>🎉 Completed</option>
-                        <option value="Cancelled" ${currentStatus === 'Cancelled' ? 'selected' : ''}>❌ Cancelled</option>
-                      </select>
+                  <!-- Pricing Summary Box -->
+                  <div class="detail-card white">
+                    <div class="section-title">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                      Pricing Invoice Summary
+                    </div>
+                    <div class="invoice-table">
+                      <div class="invoice-row">
+                        <span>Subtotal:</span>
+                        <span style="font-weight: 700;">${o.order ? o.order.subtotal : '৳0'}</span>
+                      </div>
+                      <div class="invoice-row">
+                        <span>Shipping Cost:</span>
+                        <span style="font-weight: 700;">${o.order ? o.order.shipping_cost : '৳0'}</span>
+                      </div>
+                      <div class="invoice-row total">
+                        <span>Grand Total:</span>
+                        <span style="color: var(--accent);">${o.order ? o.order.total_price : '৳0'}</span>
+                      </div>
                     </div>
                   </div>
+                  
+                  <!-- Customer Admin Note Box -->
+                  ${(o.customer && o.customer.note && o.customer.note.trim() !== '' && o.customer.note.toLowerCase() !== 'test') ? `
+                    <div class="note-box">
+                      <span style="font-size: 1.1rem; line-height: 1;">📝</span>
+                      <div>
+                        <div style="font-weight: 800; font-size: 0.78rem; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 0.5px;">Customer Note:</div>
+                        <div>${o.customer.note}</div>
+                      </div>
+                    </div>
+                  ` : ''}
+                  
                 </div>
+                
+                <!-- Right Column (Delivery & Shipping) -->
+                <div class="details-right">
+                  
+                  <!-- Delivery Details Card -->
+                  <div class="delivery-card">
+                    <div class="section-title" style="border-bottom-color: #cbd5e1; margin-bottom: 16px;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                      Shipping & Delivery Details
+                    </div>
+                    
+                    <div class="delivery-field">
+                      <div class="delivery-label">👤 Customer Name</div>
+                      <div class="delivery-val-wrap">
+                        <div class="delivery-value" id="text-name-${id}">${o.customer ? o.customer.name : 'N/A'}</div>
+                        <button class="copy-icon-btn" id="copy-name-${id}" onclick="window.copyToClipboard('${(o.customer ? o.customer.name : '').replace(/'/g, "\\'")}', 'copy-name-${id}')" title="Copy Name">
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div class="delivery-field">
+                      <div class="delivery-label">📞 Phone Number</div>
+                      <div class="delivery-val-wrap">
+                        <div class="delivery-value" id="text-phone-${id}" style="color: var(--accent);">${o.customer ? o.customer.phone : 'N/A'}</div>
+                        <button class="copy-icon-btn" id="copy-phone-${id}" onclick="window.copyToClipboard('${(o.customer ? o.customer.phone : '').replace(/'/g, "\\'")}', 'copy-phone-${id}')" title="Copy Phone">
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    ${o.customer && o.customer.email ? `
+                      <div class="delivery-field">
+                        <div class="delivery-label">✉️ Email Address</div>
+                        <div class="delivery-val-wrap">
+                          <div class="delivery-value" id="text-email-${id}" style="font-size: 0.85rem; word-break: break-all;">${o.customer.email}</div>
+                          <button class="copy-icon-btn" id="copy-email-${id}" onclick="window.copyToClipboard('${o.customer.email.replace(/'/g, "\\'")}', 'copy-email-${id}')" title="Copy Email">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                          </button>
+                        </div>
+                      </div>
+                    ` : ''}
+                    
+                    <div class="delivery-field">
+                      <div class="delivery-label">📍 Full Address</div>
+                      <div class="delivery-val-wrap" style="align-items: flex-start;">
+                        <div class="delivery-value" style="font-size: 0.9rem;">
+                          ${o.customer ? o.customer.address : 'N/A'}
+                          ${(o.order && (o.order.thana || o.order.district)) ? `<br><span style="color: #64748b; font-size: 0.82rem; font-weight: 600;">${o.order.thana || ''}, ${o.order.district || ''}</span>` : ''}
+                        </div>
+                        <button class="copy-icon-btn" id="copy-addr-${id}" onclick="window.copyToClipboard('${(o.customer ? o.customer.address : '').replace(/'/g, "\\'")}${(o.order && o.order.thana) ? ', ' + o.order.thana : ''}${(o.order && o.order.district) ? ', ' + o.order.district : ''}', 'copy-addr-${id}')" title="Copy Address">
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div class="delivery-field">
+                      <div class="delivery-label">🚚 Shipping Zone</div>
+                      <div class="delivery-value" style="font-size: 0.88rem;">${o.order ? o.order.shipping_area : '-'}</div>
+                    </div>
+                    
+                    <div class="delivery-field">
+                      <div class="delivery-label">🗓️ Ordered At</div>
+                      <div class="delivery-value" style="font-size: 0.85rem; color: #475569;">${o.metadata ? o.metadata.date : ''}</div>
+                    </div>
+                    
+                    <button id="copy-all-${id}" onclick="window.copyFullDetails('${(o.customer ? o.customer.name : '').replace(/'/g, "\\'")}', '${(o.customer ? o.customer.phone : '').replace(/'/g, "\\'")}', '${(o.customer ? o.customer.address : '').replace(/'/g, "\\'")}', '${(o.order ? o.order.thana : '') || ''}', '${(o.order ? o.order.district : '') || ''}', 'copy-all-${id}')" style="width: 100%; background: var(--accent); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 800; cursor: pointer; font-size: 0.88rem; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 15px; transition: all 0.2s; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.18);">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                      Copy All Delivery Info
+                    </button>
+                  </div>
+                  
+                  <!-- Fulfillment Status Box -->
+                  <div class="detail-card white" style="padding: 16px;">
+                    <div class="section-title" style="margin-bottom: 12px; padding-bottom: 4px;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                      Order Status Fulfillment
+                    </div>
+                    <select onchange="window.updateOrderStatus('${id}', this.value)" style="width: 100%; padding: 10px 14px; border: 2px solid #e2e8f0; border-radius: 10px; background: #ffffff; color: #1e293b; font-weight: 800; font-size: 0.88rem; cursor: pointer; outline: none; transition: all 0.2s;">
+                      <option value="New Order" ${currentStatus === 'New Order' ? 'selected' : ''}>⏳ New Order</option>
+                      <option value="Confirmed" ${currentStatus === 'Confirmed' ? 'selected' : ''}>✅ Confirmed</option>
+                      <option value="Packaging" ${currentStatus === 'Packaging' ? 'selected' : ''}>📦 Packaging</option>
+                      <option value="Shipped" ${currentStatus === 'Shipped' ? 'selected' : ''}>🚚 Shipped</option>
+                      <option value="Completed" ${currentStatus === 'Completed' ? 'selected' : ''}>🎉 Completed</option>
+                      <option value="Cancelled" ${currentStatus === 'Cancelled' ? 'selected' : ''}>❌ Cancelled</option>
+                    </select>
+                  </div>
+                  
+                </div>
+                
               </div>
-              <div class="action-bar">
-                <span style="color:#94a3b8; font-size:0.8rem;">ID: ${id}</span>
-                <button onclick="window.deleteOrder('${id}')" class="btn-delete">Remove Order</button>
+              
+              <div class="action-bar" style="margin-top: 24px; padding-top: 18px; border-top: 1px dashed #e2e8f0;">
+                <span style="color:#94a3b8; font-size:0.75rem; font-family: monospace;">Order ID: ${id}</span>
+                <button onclick="window.deleteOrder('${id}')" class="btn-delete" style="padding: 8px 18px; border-radius: 8px;">Remove Order</button>
               </div>
             </div>
           `;
@@ -269,21 +384,27 @@
         const btn = document.getElementById(btnId);
         if (btn) {
           const originalHTML = btn.innerHTML;
-          let label = "Copied!";
-          if (btnId.includes('name')) label = "📋 Copied!";
-          else if (btnId.includes('phone')) label = "📋 Copied!";
-          else if (btnId.includes('addr')) label = "📋 Copied!";
-          else label = "📋 Copied All Info!";
+          const isIconBtn = !btnId.includes('copy-all');
+          
+          if (isIconBtn) {
+            btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            btn.classList.add('copied');
+          } else {
+            btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied All Delivery Info!`;
+            btn.style.background = '#10b981';
+            btn.style.color = '#ffffff';
+            btn.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.2)';
+          }
 
-          btn.innerHTML = label;
-          btn.style.background = '#10b981';
-          btn.style.color = '#ffffff';
-          btn.style.borderColor = '#10b981';
           setTimeout(() => {
             btn.innerHTML = originalHTML;
-            btn.style.background = '';
-            btn.style.color = '';
-            btn.style.borderColor = '';
+            if (isIconBtn) {
+              btn.classList.remove('copied');
+            } else {
+              btn.style.background = '';
+              btn.style.color = '';
+              btn.style.boxShadow = '';
+            }
           }, 1500);
         }
       }).catch(err => {

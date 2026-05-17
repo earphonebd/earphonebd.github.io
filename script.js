@@ -217,6 +217,26 @@ document.addEventListener('DOMContentLoaded', () => {
         buyNowBtn.href = `order.html?product=${productId}`;
       }
 
+      // Bind Add to Cart action dynamically
+      const addToCartBtn = document.getElementById('add-to-cart-btn');
+      if (addToCartBtn) {
+        addToCartBtn.onclick = () => {
+          if (window.addToCart) {
+            window.addToCart(productId);
+            if (window.openCart) {
+              window.openCart();
+            }
+          }
+        };
+      }
+
+      // Prefill WhatsApp order link with dynamic product data
+      const whatsappOrderBtn = document.getElementById('whatsapp-order-btn');
+      if (whatsappOrderBtn && product) {
+        const message = encodeURIComponent(`হ্যালো Earphone BD, আমি আপনার ওয়েবসাইট থেকে "${product.title} (${product.edition})" প্রোডাক্টটি অর্ডার করতে চাই।`);
+        whatsappOrderBtn.href = `https://wa.me/8801788163380?text=${message}`;
+      }
+
       // Update reviews
       const reviewList = document.getElementById('review-list');
       if (reviewList && product.reviews) {
