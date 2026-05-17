@@ -2222,3 +2222,47 @@ footer {
   transform: translateY(-1.5px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
 }
+
+/* Responsive fixes for profile names and email clipping on mobile */
+.profile-meta {
+  min-width: 0;
+  flex: 1;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding-bottom: 80px; /* Safe scroll boundary to prevent bottom cut-offs */
+}
+
+@media (max-width: 400px) {
+  .account-drawer-content {
+    padding: 16px !important;
+  }
+  .profile-header {
+    padding: 12px !important;
+    gap: 12px !important;
+    border-radius: 12px !important;
+  }
+  .profile-avatar {
+    width: 46px !important;
+    height: 46px !important;
+    flex-shrink: 0 !important;
+  }
+  .profile-meta h4 {
+    font-size: 0.95rem !important;
+  }
+  .profile-meta p {
+    font-size: 0.78rem !important;
+  }
+  .orders-title {
+    font-size: 0.92rem !important;
+  }
+  .user-order-card {
+    padding: 12px !important;
+    border-radius: 10px !important;
+  }
+}

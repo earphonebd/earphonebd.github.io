@@ -1512,7 +1512,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="profile-container">
           <div class="profile-header">
             <div class="profile-avatar" style="overflow: hidden; border: 2px solid #2563eb;">
-              ${currentUser.photo ? `<img src="${currentUser.photo}" alt="Avatar" style="width:100%; height:100%; object-fit:cover;">` : `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`}
+              ${currentUser.photo ? `<img src="${currentUser.photo}" alt="Avatar" referrerpolicy="no-referrer" onerror="this.onerror=null; this.outerHTML='<svg width=\\'24\\' height=\\'24\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'#2563eb\\' stroke-width=\\'2\\'><path d=\\'M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2\\'></path><circle cx=\\'12\\' cy=\\'7\\' r=\\'4\\'></circle></svg>'" style="width:100%; height:100%; object-fit:cover;">` : `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`}
             </div>
             <div class="profile-meta">
               <h4>${currentUser.name}</h4>
@@ -1527,7 +1527,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           
-          <button class="btn-logout" onclick="window.handleLogout()">লগআউট করুন</button>
+          <button class="btn-logout" onclick="window.handleLogout()">Sign Out (লগআউট)</button>
         </div>
       `;
       window.fetchUserOrders(currentUser.email, currentUser.phone);

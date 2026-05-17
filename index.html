@@ -352,7 +352,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
-    import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+    import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
     
     const firebaseConfig = {
       apiKey: "AIzaSyAdE8jMo0ZNqkK-JSERuY88i0cxAOlkA3w",
@@ -369,6 +369,27 @@
     const analytics = getAnalytics(app);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
+
+    // Listen to Firebase persistent Auth State changes (Source of Truth)
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("Firebase Auth State: Logged In", user);
+        const userData = {
+          name: user.displayName,
+          email: user.email,
+          phone: user.phoneNumber || "",
+          photo: user.photoURL
+        };
+        localStorage.setItem('earphone_bd_user', JSON.stringify(userData));
+      } else {
+        console.log("Firebase Auth State: Logged Out");
+        localStorage.removeItem('earphone_bd_user');
+      }
+      // Instantly trigger re-render of Account UI across pages
+      if (window.updateAccountUI) {
+        window.updateAccountUI();
+      }
+    });
 
     // Check redirect results on load
     getRedirectResult(auth)
@@ -387,7 +408,8 @@
         }
       })
       .catch((error) => {
-        console.error("Google Redirect Error:", error);
+        console.error("Google Redirect Result Error:", error);
+        alert("গুগল রিডাইরেক্ট ত্রুটি: " + error.code + "\nবার্তা: " + error.message + "\n\nপরামর্শ: আপনি কি localhost:5500 এর পরিবর্তে 127.0.0.1:5500 ব্যবহার করছেন? দয়া করে ব্রাউজারের এড্রেসবারে localhost লিখে ট্রাই করুন।");
       });
 
     // Expose authentication actions globally for script.js
@@ -399,25 +421,27 @@
       }
       
       try {
-        // Redirect-based Google Login is highly secure and bypasses popup blockers
-        await signInWithRedirect(auth, provider);
-      } catch (error) {
-        console.error("Google Auth Redirect Error, attempting popup fallback...", error);
+        console.log("Attempting Google Sign-In with Popup...");
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        const userData = {
+          name: user.displayName,
+          email: user.email,
+          phone: user.phoneNumber || "",
+          photo: user.photoURL
+        };
+        localStorage.setItem('earphone_bd_user', JSON.stringify(userData));
+        window.showToast('গুগল দিয়ে সফলভাবে লগইন হয়েছে!');
+        if (window.updateAccountUI) window.updateAccountUI();
+      } catch (popupErr) {
+        console.warn("Google Popup Auth failed or blocked, attempting redirect fallback...", popupErr);
+        
+        // If popup is closed or blocked, attempt redirect fallback
         try {
-          const result = await signInWithPopup(auth, provider);
-          const user = result.user;
-          const userData = {
-            name: user.displayName,
-            email: user.email,
-            phone: user.phoneNumber || "",
-            photo: user.photoURL
-          };
-          localStorage.setItem('earphone_bd_user', JSON.stringify(userData));
-          window.showToast('গুগল দিয়ে সফলভাবে লগইন হয়েছে!');
-          if (window.updateAccountUI) window.updateAccountUI();
-        } catch (popupErr) {
-          console.error("Google Popup Fallback Error:", popupErr);
-          window.showToast('গুগল লগইন ব্যর্থ হয়েছে! আবার চেষ্টা করুন।');
+          await signInWithRedirect(auth, provider);
+        } catch (redirectErr) {
+          console.error("Google Redirect Auth Fallback Error:", redirectErr);
+          alert("গুগল লগইন ত্রুটি:\nকোড: " + redirectErr.code + "\nবার্তা: " + redirectErr.message);
         }
       }
     };
@@ -425,12 +449,10 @@
     window.firebaseLogout = async () => {
       try {
         await signOut(auth);
-        localStorage.removeItem('earphone_bd_user');
         window.showToast('লগআউট করা হয়েছে!');
-        if (window.updateAccountUI) window.updateAccountUI();
       } catch (error) {
         console.error("Logout Error:", error);
-        window.showToast('লগআউট ব্যর্থ হয়েছে!');
+        alert("লগআউট ত্রুটি: " + error.message);
       }
     };
   </script>
