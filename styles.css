@@ -19,18 +19,26 @@
   scroll-behavior: smooth;
 }
 
+html, body {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
 body {
   background-color: var(--bg-color);
   color: var(--text-primary);
   line-height: 1.7;
-  overflow-x: hidden;
 }
 
 /* Utilities */
 .container {
+  width: 100% !important;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  box-sizing: border-box !important;
 }
 .section {
   padding: 60px 0;
@@ -983,6 +991,8 @@ footer {
   font-weight: 800;
   color: var(--text-primary);
 }
+
+@media (max-width: 768px) {
   .section-title {
     font-size: 1.8rem;
   }
@@ -1060,8 +1070,10 @@ footer {
     font-size: 0.85rem !important;
   }
   .products-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 8px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
   }
   .product-card {
     padding: 0;
@@ -1069,13 +1081,19 @@ footer {
     min-height: auto;
     overflow: hidden !important;
     border-radius: 8px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-width: 0 !important;
   }
   .product-image-wrapper {
     padding: 0;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
   .product-image {
     height: 140px;
     object-fit: cover;
+    width: 100% !important;
   }
   .product-discount-badge {
     font-size: 0.6rem;
@@ -1088,12 +1106,16 @@ footer {
     margin: 8px 8px 0px 8px !important;
     line-height: 1.2;
     text-align: left;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
   .product-price-row {
     margin: 4px 8px 8px 8px !important;
     gap: 4px !important;
     flex-wrap: wrap !important;
     text-align: left;
+    box-sizing: border-box !important;
   }
   .current-price {
     font-size: 0.9rem !important;
@@ -1108,14 +1130,25 @@ footer {
   .card-buttons {
     padding: 0 8px 12px 8px !important;
     gap: 6px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
   .btn-order-now {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 8px 4px !important;
     font-size: 0.75rem !important;
     border-radius: 6px !important;
     gap: 4px !important;
     background-color: var(--accent-color);
     color: white;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
   }
   .btn-add-cart {
     display: flex;
@@ -1127,10 +1160,26 @@ footer {
     gap: 4px !important;
     border: 1px solid var(--accent-color);
     color: var(--accent-color);
+    width: 100% !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
   }
   .btn-order-now svg, .btn-add-cart svg {
     width: 12px !important;
     height: 12px !important;
+    flex-shrink: 0 !important;
+  }
+  @media (max-width: 400px) {
+    .btn-order-now svg, .btn-add-cart svg {
+      display: none !important;
+    }
+    .btn-order-now, .btn-add-cart {
+      font-size: 0.7rem !important;
+      padding: 8px 2px !important;
+    }
   }
 }
 
@@ -1213,7 +1262,7 @@ footer {
 .cart-drawer {
   position: fixed;
   top: 0;
-  right: -400px;
+  right: 0;
   width: 100%;
   max-width: 400px;
   height: 100%;
@@ -1222,11 +1271,12 @@ footer {
   box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  transition: right 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 .cart-drawer.active {
-  right: 0;
+  transform: translateX(0);
 }
 
 .cart-drawer-header {
