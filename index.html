@@ -352,7 +352,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+    import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
     
     const firebaseConfig = {
       apiKey: "AIzaSyAdE8jMo0ZNqkK-JSERuY88i0cxAOlkA3w",
@@ -370,25 +370,55 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
+    // Check redirect results on load
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result && result.user) {
+          const user = result.user;
+          const userData = {
+            name: user.displayName,
+            email: user.email,
+            phone: user.phoneNumber || "",
+            photo: user.photoURL
+          };
+          localStorage.setItem('earphone_bd_user', JSON.stringify(userData));
+          window.showToast('গুগল দিয়ে সফলভাবে লগইন হয়েছে!');
+          if (window.updateAccountUI) window.updateAccountUI();
+        }
+      })
+      .catch((error) => {
+        console.error("Google Redirect Error:", error);
+      });
+
     // Expose authentication actions globally for script.js
     window.signInWithGoogle = async () => {
+      // Security warning for local double-clicks
+      if (window.location.protocol === 'file:') {
+        alert('লোকাল ফাইল (file://) ডাবল-ক্লিক করে ওপেন করলে গুগল লগইন কাজ করবে না। অনুগ্রহ করে এটি Live Server দিয়ে রান করুন অথবা হোস্টিংয়ে ডেপ্লয় করুন।');
+        return;
+      }
+      
       try {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        
-        const userData = {
-          name: user.displayName,
-          email: user.email,
-          phone: user.phoneNumber || "",
-          photo: user.photoURL
-        };
-        
-        localStorage.setItem('earphone_bd_user', JSON.stringify(userData));
-        window.showToast('গুগল দিয়ে সফলভাবে লগইন হয়েছে!');
-        window.updateAccountUI();
+        // Redirect-based Google Login is highly secure and bypasses popup blockers
+        await signInWithRedirect(auth, provider);
       } catch (error) {
-        console.error("Google Auth Error:", error);
-        window.showToast('গুগল লগইন ব্যর্থ হয়েছে! আবার চেষ্টা করুন।');
+        console.error("Google Auth Redirect Error, attempting popup fallback...", error);
+        try {
+          const result = await signInWithPopup(auth, provider);
+          const user = result.user;
+          const userData = {
+            name: user.displayName,
+            email: user.email,
+            phone: user.phoneNumber || "",
+            photo: user.photoURL
+          };
+          localStorage.setItem('earphone_bd_user', JSON.stringify(userData));
+          window.showToast('গুগল দিয়ে সফলভাবে লগইন হয়েছে!');
+          if (window.updateAccountUI) window.updateAccountUI();
+        } catch (popupErr) {
+          console.error("Google Popup Fallback Error:", popupErr);
+          window.showToast('গুগল লগইন ব্যর্থ হয়েছে! আবার চেষ্টা করুন।');
+        }
       }
     };
 
@@ -397,7 +427,7 @@
         await signOut(auth);
         localStorage.removeItem('earphone_bd_user');
         window.showToast('লগআউট করা হয়েছে!');
-        window.updateAccountUI();
+        if (window.updateAccountUI) window.updateAccountUI();
       } catch (error) {
         console.error("Logout Error:", error);
         window.showToast('লগআউট ব্যর্থ হয়েছে!');
