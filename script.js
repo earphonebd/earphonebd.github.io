@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Create toast container if it doesn't exist
       const newContainer = document.createElement('div');
       newContainer.id = 'toast-container';
-      newContainer.style.cssText = 'position: fixed; top: 20px; right: 20px; z-index: 3000; display: flex; flex-direction: column; gap: 10px;';
+      newContainer.style.cssText = 'position: fixed; top: 30px; right: 30px; z-index: 100000; display: flex; flex-direction: column; gap: 10px;';
       document.body.appendChild(newContainer);
     }
     const toast = document.createElement('div');
@@ -1401,15 +1401,149 @@ document.addEventListener('DOMContentLoaded', () => {
   if (closeBtn) closeBtn.addEventListener('click', window.closeCart);
   if (overlay) overlay.addEventListener('click', window.closeCart);
 
-  // Account Button Listener
-  const accountBtn = document.querySelector('.header-action-item[title="My Account"]');
-  if (accountBtn) {
-    accountBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.showToast('একাউন্ট ফিচারটি শীঘ্রই আসছে!');
-    });
-  }
+  // --- Account Drawer & Authentication System Logic ---
+  window.openAccount = () => {
+    const drawer = document.getElementById('account-drawer');
+    const overlay = document.getElementById('account-overlay');
+    if (drawer) drawer.classList.add('active');
+    if (overlay) overlay.classList.add('active');
+    window.updateAccountUI();
+  };
+
+  window.closeAccount = () => {
+    const drawer = document.getElementById('account-drawer');
+    const overlay = document.getElementById('account-overlay');
+    if (drawer) drawer.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
+  };
+
+  window.handleLogout = () => {
+    if (window.firebaseLogout) {
+      window.firebaseLogout();
+    } else {
+      localStorage.removeItem('earphone_bd_user');
+      window.showToast('লগআউট করা হয়েছে!');
+      window.updateAccountUI();
+    }
+  };
+
+  window.fetchUserOrders = async (email, phone) => {
+    const listContainer = document.getElementById('profile-orders-list');
+    if (!listContainer) return;
+
+    try {
+      const res = await fetch('https://earphone-bd-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json');
+      const allOrders = await res.json();
+
+      if (!allOrders) {
+        listContainer.innerHTML = '<div class="empty-orders">আপনার কোনো অর্ডার পাওয়া যায়নি।</div>';
+        return;
+      }
+
+      const userOrders = Object.entries(allOrders)
+        .map(([id, val]) => ({ id, ...val }))
+        .filter(order => order.customer && (
+          (email && order.customer.email === email) ||
+          (phone && order.customer.phone === phone)
+        ))
+        .sort((a, b) => (b.metadata?.timestamp || 0) - (a.metadata?.timestamp || 0));
+
+      if (userOrders.length === 0) {
+        listContainer.innerHTML = '<div class="empty-orders">আপনার কোনো অর্ডার পাওয়া যায়নি।</div>';
+        return;
+      }
+
+      let html = '';
+      userOrders.forEach(order => {
+        const orderDate = order.metadata?.date || new Date(order.metadata?.timestamp || Date.now()).toLocaleString('bn-BD');
+        const status = order.metadata?.status || 'New Order';
+        const statusClass = 'status-' + status.toLowerCase().replace(/\s+/g, '-');
+        
+        html += `
+          <div class="user-order-card">
+            <div class="user-order-header">
+              <span class="user-order-date">${orderDate}</span>
+              <span class="user-order-status ${statusClass}">${status}</span>
+            </div>
+            <div class="user-order-body">
+              <div class="user-order-product">${order.order?.product || 'Product details unavailable'}</div>
+              <div class="user-order-total">
+                <span>মোট পরিমাণ:</span>
+                <strong>${order.order?.total_price || '৳0'}</strong>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      listContainer.innerHTML = html;
+    } catch (err) {
+      console.error("Order fetch error:", err);
+      listContainer.innerHTML = '<div class="empty-orders">অর্ডার লোড করতে সমস্যা হয়েছে!</div>';
+    }
+  };
+
+  window.updateAccountUI = () => {
+    const contentContainer = document.getElementById('account-drawer-content');
+    if (!contentContainer) return;
+
+    const currentUser = JSON.parse(localStorage.getItem('earphone_bd_user'));
+
+    if (!currentUser) {
+      contentContainer.innerHTML = `
+        <div class="auth-container" style="text-align: center; padding: 40px 10px;">
+          <div style="font-size: 3.5rem; margin-bottom: 20px; color: #2563eb; filter: drop-shadow(0 4px 10px rgba(37,99,235,0.1));">👤</div>
+          <h3 style="font-size: 1.25rem; font-weight: 800; color: #1e293b; margin-bottom: 10px;">আপনার অ্যাকাউন্ট</h3>
+          <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 30px; line-height: 1.5; padding: 0 10px;">অর্ডার ট্র্যাক করতে এবং আপনার লাইভ অর্ডার স্ট্যাটাস দেখতে গুগল অ্যাকাউন্ট দিয়ে লগইন করুন।</p>
+          
+          <button onclick="window.signInWithGoogle()" class="btn-google-login" style="display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; background: white; color: #1e293b; border: 1px solid #cbd5e1; padding: 14px 20px; border-radius: 12px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 2px 6px rgba(0,0,0,0.03); box-sizing: border-box;">
+            <svg width="20" height="20" viewBox="0 0 24 24" style="flex-shrink:0;">
+              <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.53-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-8.7c0-.4-.03-.8-.09-1.27z"/>
+              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16c-3.11 0-5.74-2.11-6.68-4.96H1.21v3.15C3.18 21.88 7.31 24 12 24z"/>
+              <path fill="#FBBC05" d="M5.32 14.24A7.16 7.16 0 0 1 4.91 12c0-.79.13-1.57.41-2.24V6.61H1.21A11.94 11.94 0 0 0 0 12c0 1.92.45 3.74 1.21 5.39l4.11-3.15z"/>
+              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0C7.31 0 3.18 2.12 1.21 5.39l4.11 3.15c.94-2.85 3.57-4.96 6.68-4.96z"/>
+            </svg>
+            Google দিয়ে লগইন করুন
+          </button>
+        </div>
+      `;
+    } else {
+      contentContainer.innerHTML = `
+        <div class="profile-container">
+          <div class="profile-header">
+            <div class="profile-avatar" style="overflow: hidden; border: 2px solid #2563eb;">
+              ${currentUser.photo ? `<img src="${currentUser.photo}" alt="Avatar" style="width:100%; height:100%; object-fit:cover;">` : `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`}
+            </div>
+            <div class="profile-meta">
+              <h4>${currentUser.name}</h4>
+              <p>${currentUser.email}</p>
+            </div>
+          </div>
+          
+          <div class="profile-orders-section">
+            <h3 class="orders-title">আমার অর্ডারসমূহ (My Orders)</h3>
+            <div id="profile-orders-list">
+              <div class="loading-orders">অর্ডার লোড হচ্ছে...</div>
+            </div>
+          </div>
+          
+          <button class="btn-logout" onclick="window.handleLogout()">লগআউট করুন</button>
+        </div>
+      `;
+      window.fetchUserOrders(currentUser.email, currentUser.phone);
+    }
+  };
+
+  // Account Drawer Trigger Events
+  const accountBtn = document.getElementById('account-btn');
+  const closeAccountBtn = document.getElementById('close-account');
+  const accountOverlay = document.getElementById('account-overlay');
+
+  if (accountBtn) accountBtn.addEventListener('click', (e) => { e.preventDefault(); window.openAccount(); });
+  if (closeAccountBtn) closeAccountBtn.addEventListener('click', window.closeAccount);
+  if (accountOverlay) accountOverlay.addEventListener('click', window.closeAccount);
 
   // Initialize UI
   updateCartUI();
+  updateAccountUI();
 });

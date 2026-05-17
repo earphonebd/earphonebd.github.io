@@ -23,7 +23,7 @@
         Earphone<span>BD</span>
       </a>
       <div class="header-actions">
-        <a href="#" class="header-action-item" title="My Account">
+        <a href="javascript:void(0)" class="header-action-item account-btn" id="account-btn" title="My Account">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
         </a>
         <a href="#" class="header-action-item cart-btn" title="Shopping Cart">
@@ -352,6 +352,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
     
     const firebaseConfig = {
       apiKey: "AIzaSyAdE8jMo0ZNqkK-JSERuY88i0cxAOlkA3w",
@@ -366,6 +367,42 @@
 
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // Expose authentication actions globally for script.js
+    window.signInWithGoogle = async () => {
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        
+        const userData = {
+          name: user.displayName,
+          email: user.email,
+          phone: user.phoneNumber || "",
+          photo: user.photoURL
+        };
+        
+        localStorage.setItem('earphone_bd_user', JSON.stringify(userData));
+        window.showToast('গুগল দিয়ে সফলভাবে লগইন হয়েছে!');
+        window.updateAccountUI();
+      } catch (error) {
+        console.error("Google Auth Error:", error);
+        window.showToast('গুগল লগইন ব্যর্থ হয়েছে! আবার চেষ্টা করুন।');
+      }
+    };
+
+    window.firebaseLogout = async () => {
+      try {
+        await signOut(auth);
+        localStorage.removeItem('earphone_bd_user');
+        window.showToast('লগআউট করা হয়েছে!');
+        window.updateAccountUI();
+      } catch (error) {
+        console.error("Logout Error:", error);
+        window.showToast('লগআউট ব্যর্থ হয়েছে!');
+      }
+    };
   </script>
 
   <!-- Cart Drawer -->
@@ -385,6 +422,18 @@
         <span id="cart-drawer-total">৳0</span>
       </div>
       <button class="btn-checkout" onclick="window.location.href='order.html'">অর্ডার করুন</button>
+    </div>
+  </div>
+
+  <!-- Account Drawer -->
+  <div class="account-drawer-overlay" id="account-overlay"></div>
+  <div class="account-drawer" id="account-drawer">
+    <div class="account-drawer-header">
+      <h3>MY ACCOUNT</h3>
+      <button class="close-account" id="close-account">Close &rarr;</button>
+    </div>
+    <div class="account-drawer-content" id="account-drawer-content">
+      <!-- Injected dynamically by script.js -->
     </div>
   </div>
 

@@ -166,6 +166,7 @@
                         <span id="text-name-${id}">${o.customer ? o.customer.name : 'N/A'}</span><br>
                         <small style="color:#64748b; font-weight: 700;">
                           📞 <span id="text-phone-${id}">${o.customer ? o.customer.phone : ''}</span>
+                          ${o.customer && o.customer.email ? `<br>✉️ <span id="text-email-${id}" style="color:#2563eb; font-weight:600; font-size:0.8rem;">${o.customer.email}</span>` : ''}
                         </small>
                       </div>
                     </div>

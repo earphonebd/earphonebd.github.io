@@ -1248,7 +1248,7 @@ footer {
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(2px);
-  z-index: 2000;
+  z-index: 200000 !important;
   display: none;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -1267,7 +1267,7 @@ footer {
   max-width: 400px;
   height: 100%;
   background: #f8fafc; /* Light background for the drawer */
-  z-index: 2001;
+  z-index: 200001 !important;
   box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -1321,7 +1321,7 @@ footer {
 .cart-item {
   background: white;
   border-radius: 12px;
-  padding: 15px;
+  padding: 15px 45px 15px 15px; /* Safely reserve space for remove icon */
   margin-bottom: 12px;
   display: flex;
   gap: 15px;
@@ -1355,6 +1355,7 @@ footer {
 .cart-item-controls {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
 }
 
@@ -1397,6 +1398,7 @@ footer {
   font-size: 0.9rem;
   color: #64748b;
   font-weight: 500;
+  text-align: right;
 }
 
 .cart-item-price-calc b {
@@ -1406,9 +1408,8 @@ footer {
 
 .remove-item-icon {
   position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 12px;
+  top: 12px;
   color: #94a3b8;
   cursor: pointer;
   padding: 5px;
@@ -1482,7 +1483,7 @@ footer {
   position: fixed;
   top: 30px;
   right: 30px;
-  z-index: 9999;
+  z-index: 100000;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -1525,10 +1526,11 @@ footer {
 
 @media (max-width: 480px) {
   #toast-container {
-    top: 20px;
+    top: 75px !important;
     right: 20px;
     left: 20px;
     width: calc(100% - 40px);
+    z-index: 100000 !important;
   }
   .toast {
     min-width: auto;
@@ -1902,4 +1904,321 @@ footer {
   .delivery-options {
     grid-template-columns: 1fr;
   }
+}
+
+/* ==========================================================================
+   Premium Account Drawer & Authentication System Styles
+   ========================================================================== */
+
+.account-drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 200000 !important;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.account-drawer-overlay.active {
+  display: block;
+  opacity: 1;
+}
+
+.account-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  background: #f8fafc; /* Premium clean slate background */
+  z-index: 200001 !important;
+  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.account-drawer.active {
+  transform: translateX(0);
+}
+
+.account-drawer-header {
+  padding: 20px;
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.account-drawer-header h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #1e293b;
+}
+
+.close-account {
+  background: none;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #64748b;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-account:hover {
+  color: #1e293b;
+}
+
+.account-drawer-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+/* Auth Section Styles */
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-tabs {
+  display: flex;
+  border-bottom: 2px solid #e2e8f0;
+  margin-bottom: 10px;
+}
+
+.auth-tab-btn {
+  flex: 1;
+  padding: 12px;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.auth-tab-btn.active {
+  color: #2563eb;
+}
+
+.auth-tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #2563eb;
+}
+
+.btn-auth-submit {
+  width: 100%;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 15px;
+}
+
+.btn-auth-submit:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+/* Profile Dashboard Styles */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.profile-header {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.profile-avatar {
+  width: 54px;
+  height: 54px;
+  background: #eff6ff;
+  color: #2563eb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-meta h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+.profile-meta p {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.profile-orders-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.orders-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1e293b;
+  border-left: 4px solid #2563eb;
+  padding-left: 8px;
+}
+
+/* User Order Cards Styles */
+.user-order-card {
+  background: white;
+  border-radius: 14px;
+  border: 1px solid #f1f5f9;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.user-order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed #f1f5f9;
+  padding-bottom: 10px;
+}
+
+.user-order-date {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.user-order-status {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+/* Status Color Palette */
+.status-new-order, .status-ordered, .status-order-placed {
+  background: #f0f9ff;
+  color: #0369a1;
+}
+
+.status-confirmed {
+  background: #e0e7ff;
+  color: #4338ca;
+}
+
+.status-packaging {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.status-delivered {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.status-cancelled {
+  background: #fff1f2;
+  color: #be123c;
+}
+
+.user-order-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.user-order-product {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.4;
+}
+
+.user-order-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.user-order-total strong {
+  font-size: 0.95rem;
+  color: #1e293b;
+  font-weight: 700;
+}
+
+.btn-logout {
+  width: 100%;
+  background: white;
+  color: #ef4444;
+  border: 1px solid #fee2e2;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 10px;
+}
+
+.btn-logout:hover {
+  background: #fef2f2;
+}
+
+.loading-orders, .empty-orders {
+  text-align: center;
+  padding: 30px;
+  font-size: 0.9rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.btn-google-login:hover {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
 }

@@ -163,6 +163,17 @@
         return;
       }
 
+      // Pre-populate name if logged in via Google
+      try {
+        const currentUserObj = JSON.parse(localStorage.getItem('earphone_bd_user') || 'null');
+        if (currentUserObj && currentUserObj.name) {
+          const nameInput = document.getElementById('name');
+          if (nameInput) nameInput.value = currentUserObj.name;
+        }
+      } catch (err) {
+        console.error("Error pre-populating name:", err);
+      }
+
       orderForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         console.log("Order form submitted...");
@@ -180,6 +191,8 @@
             const el = document.getElementById(id);
             return el ? (el.value || el.innerText || "").trim() : "";
           };
+
+          const currentUserObj = JSON.parse(localStorage.getItem('earphone_bd_user') || 'null');
 
           // Compile items info for backward compatibility with admin panel
           const itemsList = window.orderItems || [];
@@ -215,7 +228,8 @@
               name: getValue('name'),
               phone: getValue('phone'),
               address: getValue('address'),
-              note: getValue('order-note')
+              note: getValue('order-note'),
+              email: currentUserObj ? currentUserObj.email : ""
             },
             order: {
               items: itemsList,
