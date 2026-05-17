@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'p1_white': {
       title: 'AirPods Pro 2nd',
       price: '599 TK',
-      regularPrice: '1,200 TK',
-      discount: '50% OFF',
+      regularPrice: '950 TK',
+      discount: '37% OFF',
       image: 'assets/airpod_pro_2nd_generation_dubai_white.png',
       edition: 'Dubai Edition',
       color: 'Classic White',
@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'p1_black': {
       title: 'AirPods Pro 2nd',
       price: '649 TK',
-      regularPrice: '1,300 TK',
-      discount: '50% OFF',
+      regularPrice: '1,050 TK',
+      discount: '38% OFF',
       image: 'assets/airpod_pro_2nd_generation_dubai_black.png',
       edition: 'Dubai Edition',
       color: 'Classic Black',
@@ -73,8 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'p2_white': {
       title: 'AirPods Pro 2nd',
       price: '399 TK',
-      regularPrice: '800 TK',
-      discount: '50% OFF',
+      regularPrice: '650 TK',
+      discount: '39% OFF',
       image: 'assets/airpod_pro_2nd_generation_china_white.png',
       edition: 'China Edition',
       color: 'Classic White',
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
       reviews: [
         { name: "Samiul Islam", text: "বাজেট অনুযায়ী অনেক ভালো। পপ-আপ অ্যানিমেশন কাজ করে।" },
         { name: "Rakib Hasan", text: "কম দামে এর থেকে ভালো আর কিছু হয় না। ডেলিভারি ফাস্ট ছিল।" },
-        { name: "Priya Ghosh", text: "বেশি টাকা খরচ করতে না চাইলে এটা বেস্ট অপশন।" },
+        { name: "Priya Ghosh", text: "বেসি টাকা খরচ করতে না চাইলে এটা বেস্ট অপশন।" },
         { name: "Ashikur Rahman", text: "১ সপ্তাহ হলো ব্যবহার করছি, কোনো সমস্যা নেই।" },
         { name: "Niloy Das", text: "লুকিং টা একদম অরিজিনাল এর মত।" },
         { name: "Sonia Akter", text: "সস্তায় ভালো জিনিস। সাউন্ড কোয়ালিটি ও মোটামুটি ভালো।" },
@@ -95,8 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'p2_black': {
       title: 'AirPods Pro 2nd',
       price: '449 TK',
-      regularPrice: '900 TK',
-      discount: '50% OFF',
+      regularPrice: '750 TK',
+      discount: '40% OFF',
       image: 'assets/airpod_pro_2nd_generation_china_black.png',
       edition: 'China Edition',
       color: 'Classic Black',
@@ -117,8 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'p3': {
       title: 'AirPods Pro 2nd ANC',
       price: '1,190 TK',
-      regularPrice: '2,500 TK',
-      discount: '52% OFF',
+      regularPrice: '1,850 TK',
+      discount: '36% OFF',
       image: 'assets/airpod_pro_2nd_generation_premium_anc.png',
       edition: 'Dubai Premium ANC',
       color: 'Classic White',
@@ -139,8 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'p4': {
       title: 'AirPods Pro 3rd ANC',
       price: '1,990 TK',
-      regularPrice: '4,000 TK',
-      discount: '50% OFF',
+      regularPrice: '2,950 TK',
+      discount: '33% OFF',
       image: 'assets/airpod_pro_3rd_generation_premium_anc.png',
       edition: 'Dubai Premium ANC',
       color: 'Classic White',
@@ -221,12 +221,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const reviewList = document.getElementById('review-list');
       if (reviewList && product.reviews) {
         reviewList.innerHTML = product.reviews.map(rev => `
-          <div class="review-item" style="padding: 16px; border: 1px solid #f1f5f9; border-radius: 16px; background: white; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.01); text-align: left;">
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-              <strong style="font-size: 1.05rem; color: #1e293b; display: flex; align-items: center; gap: 6px;">
+          <div class="review-item" style="padding: 16px; background: white; border-radius: 16px; border: 1px solid #f1f5f9; margin-bottom: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.01);">
+            <div style="display: flex; align-items: center; margin-bottom: 8px;">
+              <strong style="font-size: 1.05rem; color: #1e293b; display: inline-flex; align-items: center;">
                 ${rev.name}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="#2563eb" style="flex-shrink: 0; display: block;" title="Verified Purchase">
-                  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                <svg viewBox="0 0 24 24" width="16" height="16" style="display: inline-block; vertical-align: middle; margin-left: 6px; flex-shrink: 0;" title="Verified Buyer">
+                  <circle cx="12" cy="12" r="10" fill="#1877f2"/>
+                  <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="#ffffff"/>
                 </svg>
               </strong>
             </div>
@@ -1159,13 +1160,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const reviewList = document.getElementById('review-list');
     const newReview = document.createElement('div');
     newReview.className = 'review-item';
-    newReview.style.cssText = 'padding: 16px; border: 1px solid #f1f5f9; border-radius: 16px; background: white; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.01); text-align: left;';
+    newReview.style.cssText = 'padding: 16px; background: white; border-radius: 16px; border: 1px solid #f1f5f9; margin-bottom: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.01);';
     newReview.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-        <strong style="font-size: 1.05rem; color: #1e293b; display: flex; align-items: center; gap: 6px;">
+      <div style="display: flex; align-items: center; margin-bottom: 8px;">
+        <strong style="font-size: 1.05rem; color: #1e293b; display: inline-flex; align-items: center;">
           ${name}
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#2563eb" style="flex-shrink: 0; display: block;" title="Verified Purchase">
-            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          <svg viewBox="0 0 24 24" width="16" height="16" style="display: inline-block; vertical-align: middle; margin-left: 6px; flex-shrink: 0;">
+            <circle cx="12" cy="12" r="10" fill="#1877f2"/>
+            <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="#ffffff"/>
           </svg>
         </strong>
       </div>
