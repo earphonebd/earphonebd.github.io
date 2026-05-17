@@ -221,14 +221,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const reviewList = document.getElementById('review-list');
       if (reviewList && product.reviews) {
         reviewList.innerHTML = product.reviews.map(rev => `
-          <div class="review-item">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
-              <strong style="font-size: 1.1rem;">${rev.name}</strong>
-              <div class="verified-badge">
-                ভেরিফাইড কাস্টমার <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              </div>
+          <div class="review-item" style="padding: 16px; border: 1px solid #f1f5f9; border-radius: 16px; background: white; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.01); text-align: left;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+              <strong style="font-size: 1.05rem; color: #1e293b; display: flex; align-items: center; gap: 6px;">
+                ${rev.name}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#2563eb" style="flex-shrink: 0; display: block;" title="Verified Purchase">
+                  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+              </strong>
             </div>
-            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.5;">${rev.text}</p>
+            <p style="font-size: 0.95rem; color: #475569; line-height: 1.5; margin: 0;">${rev.text}</p>
           </div>
         `).join('');
       }
@@ -1157,9 +1159,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const reviewList = document.getElementById('review-list');
     const newReview = document.createElement('div');
     newReview.className = 'review-item';
+    newReview.style.cssText = 'padding: 16px; border: 1px solid #f1f5f9; border-radius: 16px; background: white; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.01); text-align: left;';
     newReview.innerHTML = `
-      <strong style="display: block; margin-bottom: 5px;">${name}</strong>
-      <p style="font-size: 0.95rem; color: var(--text-secondary);">${text}</p>
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+        <strong style="font-size: 1.05rem; color: #1e293b; display: flex; align-items: center; gap: 6px;">
+          ${name}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#2563eb" style="flex-shrink: 0; display: block;" title="Verified Purchase">
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+        </strong>
+      </div>
+      <p style="font-size: 0.95rem; color: #475569; line-height: 1.5; margin: 0;">${text}</p>
     `;
     
     reviewList.prepend(newReview);
@@ -1408,6 +1418,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (drawer) drawer.classList.add('active');
     if (overlay) overlay.classList.add('active');
     window.updateAccountUI();
+    
+    // Add #account to URL so refreshing stays on Account page
+    if (window.location.hash !== '#account') {
+      window.location.hash = 'account';
+    }
   };
 
   window.closeAccount = () => {
@@ -1415,6 +1430,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.getElementById('account-overlay');
     if (drawer) drawer.classList.remove('active');
     if (overlay) overlay.classList.remove('active');
+    
+    // Clean up hash from URL
+    if (window.location.hash === '#account') {
+      history.pushState("", document.title, window.location.pathname + window.location.search);
+    }
   };
 
   window.handleLogout = () => {
@@ -1455,21 +1475,69 @@ document.addEventListener('DOMContentLoaded', () => {
 
       let html = '';
       userOrders.forEach(order => {
-        const orderDate = order.metadata?.date || new Date(order.metadata?.timestamp || Date.now()).toLocaleString('bn-BD');
+        // Formulate a premium Order ID
+        const shortId = order.id ? order.id.substring(order.id.length - 6).toUpperCase() : 'N/A';
+        
+        // Formulate Date
+        const rawDate = order.metadata?.date || '';
+        const orderDate = rawDate || new Date(order.metadata?.timestamp || Date.now()).toLocaleString('bn-BD');
+        
+        // Translate status dynamically
         const status = order.metadata?.status || 'New Order';
         const statusClass = 'status-' + status.toLowerCase().replace(/\s+/g, '-');
         
-        html += `
-          <div class="user-order-card">
-            <div class="user-order-header">
-              <span class="user-order-date">${orderDate}</span>
-              <span class="user-order-status ${statusClass}">${status}</span>
+        let statusBn = status;
+        if (status === 'New Order' || status === 'ordered' || status === 'order-placed') statusBn = 'নতুন অর্ডার';
+        else if (status === 'Confirmed' || status === 'confirmed') statusBn = 'কনফার্মড';
+        else if (status === 'Packaging' || status === 'packaging') statusBn = 'প্যাকিং হচ্ছে';
+        else if (status === 'Shipped' || status === 'shipped' || status === 'sent') statusBn = 'ডেলিভারি চলছে';
+        else if (status === 'Completed' || status === 'Delivered' || status === 'delivered') statusBn = 'ডেলিভারড';
+        else if (status === 'Cancelled' || status === 'cancelled') statusBn = 'বাতিল';
+
+        // Compile items list beautifully
+        const items = order.order?.items || [];
+        let itemsHtml = '';
+        if (items.length > 0) {
+          itemsHtml = items.map(item => `
+            <div class="user-order-item-row" style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #475569; margin-bottom: 4px; gap: 10px;">
+              <span class="item-name" style="font-weight: 600; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                📦 ${item.title} ${item.edition ? `(${item.edition})` : ''} ${item.color ? `(${item.color})` : ''}
+              </span>
+              <span class="item-qty-price" style="font-weight: 700; color: #1e293b; flex-shrink: 0;">
+                ${item.qty}টি × ${item.price}
+              </span>
             </div>
-            <div class="user-order-body">
-              <div class="user-order-product">${order.order?.product || 'Product details unavailable'}</div>
-              <div class="user-order-total">
-                <span>মোট পরিমাণ:</span>
-                <strong>${order.order?.total_price || '৳0'}</strong>
+          `).join('');
+        } else {
+          itemsHtml = `
+            <div style="font-size: 0.85rem; color: #475569; font-weight: 600;">
+              📦 ${order.order?.product || 'প্রোডাক্ট বিবরণ পাওয়া যায়নি'}
+            </div>
+          `;
+        }
+
+        html += `
+          <div class="user-order-card" style="background: white; border-radius: 14px; border: 1px solid #e2e8f0; padding: 14px; margin-bottom: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.01), 0 2px 4px -1px rgba(0,0,0,0.01); display: flex; flex-direction: column; gap: 10px; transition: all 0.2s;">
+            <div class="user-order-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #e2e8f0; padding-bottom: 8px; margin-bottom: 2px;">
+              <span class="user-order-id" style="font-size: 0.78rem; font-weight: 800; color: #2563eb; background: #eff6ff; padding: 4px 8px; border-radius: 6px;">
+                #EBD-${shortId}
+              </span>
+              <span class="user-order-status ${statusClass}" style="padding: 4px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; text-transform: capitalize;">
+                ${statusBn}
+              </span>
+            </div>
+            
+            <div class="user-order-items-container" style="display: flex; flex-direction: column; gap: 4px; padding: 2px 0;">
+              ${itemsHtml}
+            </div>
+            
+            <div class="user-order-footer" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #e2e8f0; padding-top: 8px; font-size: 0.8rem; color: #64748b; margin-top: 2px;">
+              <span class="user-order-date" style="font-weight: 500; font-size: 0.75rem;">
+                📅 ${orderDate}
+              </span>
+              <div class="user-order-total" style="font-size: 0.85rem; flex-shrink: 0;">
+                <span style="color: #64748b; font-weight: 500;">মোট:</span>
+                <strong style="color: #1e293b; font-size: 0.95rem; font-weight: 800; margin-left: 2px;">${order.order?.total_price || '৳০'}</strong>
               </div>
             </div>
           </div>
@@ -1543,7 +1611,29 @@ document.addEventListener('DOMContentLoaded', () => {
   if (closeAccountBtn) closeAccountBtn.addEventListener('click', window.closeAccount);
   if (accountOverlay) accountOverlay.addEventListener('click', window.closeAccount);
 
+  // URL Hash Navigation Routing (Enables browser Back button to close drawer)
+  window.addEventListener('hashchange', () => {
+    if (window.location.hash === '#account') {
+      window.openAccount();
+    } else {
+      const drawer = document.getElementById('account-drawer');
+      if (drawer && drawer.classList.contains('active')) {
+        window.closeAccount();
+      }
+    }
+  });
+
+  // Check URL Hash on Load to restore Account View upon Refresh
+  const handleHashRouting = () => {
+    if (window.location.hash === '#account') {
+      setTimeout(() => {
+        window.openAccount();
+      }, 150);
+    }
+  };
+
   // Initialize UI
   updateCartUI();
   updateAccountUI();
+  handleHashRouting();
 });
