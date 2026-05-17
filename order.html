@@ -5,6 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Order Now | Earphone BD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -39,12 +42,12 @@
           <h2 class="section-title-accent">Shipping Address</h2>
           <form id="orderForm">
             <div class="form-group">
-              <label>Full Name</label>
-              <input type="text" id="name" placeholder="আপনার পুরো নাম লিখুন" required>
+              <label>Full Name (পুরো নাম)</label>
+              <input type="text" id="name" placeholder="আপনার পুরো নাম লিখুন" minlength="3" pattern="^[a-zA-Z\s\u0980-\u09FF]{3,50}$" title="অনুগ্রহ করে আপনার সঠিক নাম লিখুন (কমপক্ষে ৩ অক্ষর)" required>
             </div>
             <div class="form-group">
-              <label>Phone Number</label>
-              <input type="tel" id="phone" placeholder="আপনার মোবাইল নাম্বার লিখুন" required>
+              <label>Phone Number (মোবাইল নাম্বার)</label>
+              <input type="tel" id="phone" placeholder="যেমন: 017XXXXXXXX" pattern="^01[3-9]\d{8}$" maxlength="11" title="১১ ডিজিটের সঠিক মোবাইল নাম্বার দিন (যেমন: 01712345678)" required>
             </div>
             <div class="form-row">
               <div class="form-group">
@@ -285,7 +288,7 @@
     @keyframes progress { from { width: 100%; } to { width: 0%; } }
   </style>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 
 </html>

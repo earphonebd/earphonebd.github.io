@@ -1,6 +1,4 @@
-/* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
-
+/* Google Fonts loaded inside HTML files for higher PageSpeed performance */
 :root {
   --bg-color: #ffffff;
   --surface-color: #f8f9fa;
@@ -1020,14 +1018,57 @@ footer {
 }
 
 @media (max-width: 768px) {
+  header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    background: rgba(255, 255, 255, 0.96) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    z-index: 10000 !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+  }
+  .container {
+    padding: 0 12px !important;
+  }
+  .logo {
+    font-size: 1.35rem !important;
+  }
+  .logo-img {
+    height: 38px !important;
+  }
+  .header-content {
+    height: 60px !important;
+  }
+  .header-actions {
+    gap: 8px !important;
+  }
+  .header-action-item {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  .section {
+    padding: 30px 0 !important;
+  }
+  .section-title {
+    font-size: 1.6rem !important;
+    margin-bottom: 6px !important;
+  }
+  .section-subtitle {
+    margin-bottom: 20px !important;
+    font-size: 0.85rem !important;
+  }
   .products-grid {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px;
+    gap: 8px !important;
   }
   .product-card {
     padding: 0;
     position: relative;
     min-height: auto;
+    overflow: hidden !important;
+    border-radius: 8px !important;
   }
   .product-image-wrapper {
     padding: 0;
@@ -1043,36 +1084,36 @@ footer {
     left: 5px;
   }
   .product-title {
-    font-size: 0.85rem;
-    margin: 8px 10px 0px 10px;
+    font-size: 0.8rem !important;
+    margin: 8px 8px 0px 8px !important;
     line-height: 1.2;
     text-align: left;
   }
   .product-price-row {
-    margin: 0 10px 8px 10px;
-    gap: 4px;
-    flex-wrap: wrap;
+    margin: 4px 8px 8px 8px !important;
+    gap: 4px !important;
+    flex-wrap: wrap !important;
     text-align: left;
   }
   .current-price {
-    font-size: 1rem;
+    font-size: 0.9rem !important;
   }
   .regular-price {
-    font-size: 0.8rem;
+    font-size: 0.75rem !important;
   }
   .save-badge {
-    font-size: 0.65rem;
-    padding: 1px 6px;
+    font-size: 0.6rem !important;
+    padding: 1px 4px !important;
   }
   .card-buttons {
-    padding: 0 10px 15px 10px;
-    gap: 6px;
+    padding: 0 8px 12px 8px !important;
+    gap: 6px !important;
   }
   .btn-order-now {
-    padding: 10px 5px;
-    font-size: 0.8rem;
-    border-radius: 6px;
-    gap: 4px;
+    padding: 8px 4px !important;
+    font-size: 0.75rem !important;
+    border-radius: 6px !important;
+    gap: 4px !important;
     background-color: var(--accent-color);
     color: white;
   }
@@ -1080,16 +1121,16 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 4px;
-    font-size: 0.75rem;
-    border-radius: 6px;
-    gap: 4px;
+    padding: 7px 4px !important;
+    font-size: 0.72rem !important;
+    border-radius: 6px !important;
+    gap: 4px !important;
     border: 1px solid var(--accent-color);
     color: var(--accent-color);
   }
   .btn-order-now svg, .btn-add-cart svg {
-    width: 14px;
-    height: 14px;
+    width: 12px !important;
+    height: 12px !important;
   }
 }
 
