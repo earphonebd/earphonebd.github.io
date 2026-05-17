@@ -140,6 +140,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
     import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
     
     const firebaseConfig = {
       apiKey: "AIzaSyAdE8jMo0ZNqkK-JSERuY88i0cxAOlkA3w",
@@ -154,6 +155,14 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // Helper to get form input values
+    const getValue = (id) => {
+      const el = document.getElementById(id);
+      return el ? (el.value || el.innerText || "").trim() : "";
+    };
 
     // Initialize Order Handling
     const initOrder = () => {
@@ -174,24 +183,47 @@
         console.error("Error pre-populating name:", err);
       }
 
-      orderForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        console.log("Order form submitted...");
-        
+      // Firebase Auth Observer to check if user signs in during checkout
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const userData = {
+            name: user.displayName,
+            email: user.email,
+            phone: user.phoneNumber || "",
+            photo: user.photoURL
+          };
+          localStorage.setItem('earphone_bd_user', JSON.stringify(userData));
+          
+          // Auto pre-populate name field if not filled
+          const nameInput = document.getElementById('name');
+          if (nameInput && !nameInput.value) {
+            nameInput.value = user.displayName;
+          }
+
+          // Check for pending order and confirm it automatically!
+          const pendingOrderStr = localStorage.getItem('pending_checkout_order');
+          if (pendingOrderStr) {
+            console.log("Found pending checkout order. Automating submission...");
+            localStorage.removeItem('pending_checkout_order');
+            await handleConfirmOrder();
+          }
+        } else {
+          localStorage.removeItem('earphone_bd_user');
+        }
+      });
+
+      // Unified order confirmation submission logic
+      const handleConfirmOrder = async () => {
         const submitBtns = document.querySelectorAll('.btn-confirm-order');
+        if (submitBtns.length === 0) return;
         const originalBtnText = submitBtns[0].innerHTML;
+        
         submitBtns.forEach(btn => {
           btn.innerText = 'অর্ডার প্রসেসিং হচ্ছে...';
           btn.disabled = true;
         });
 
         try {
-          // Robust data collection
-          const getValue = (id) => {
-            const el = document.getElementById(id);
-            return el ? (el.value || el.innerText || "").trim() : "";
-          };
-
           const currentUserObj = JSON.parse(localStorage.getItem('earphone_bd_user') || 'null');
 
           // Compile items info for backward compatibility with admin panel
@@ -276,6 +308,58 @@
             btn.disabled = false;
           });
         }
+      };
+
+      // Form Submit Handler
+      orderForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        console.log("Submit button clicked, validating input...");
+
+        const name = getValue('name');
+        const phone = getValue('phone');
+        const address = getValue('address');
+
+        if (!name || !phone || !address) {
+          alert('দয়া করে আপনার নাম, মোবাইল নাম্বার এবং সম্পূর্ণ ঠিকানা সঠিকভাবে পূরণ করুন।');
+          return;
+        }
+
+        // Validate Bangladeshi Mobile Number Pattern
+        const phoneRegex = /^01[3-9]\d{8}$/;
+        if (!phoneRegex.test(phone)) {
+          alert('দয়া করে সঠিক ১১-ডিজিটের বাংলাদেশী মোবাইল নাম্বার দিন (যেমন: 017XXXXXXXX)।');
+          return;
+        }
+
+        const currentUserObj = JSON.parse(localStorage.getItem('earphone_bd_user') || 'null');
+
+        if (!currentUserObj) {
+          // Store order details in localStorage temporarily to continue after login
+          const pendingOrder = {
+            name: name,
+            phone: phone,
+            address: address,
+            note: getValue('order-note'),
+            district: getValue('district-select'),
+            thana: getValue('thana-select')
+          };
+          localStorage.setItem('pending_checkout_order', JSON.stringify(pendingOrder));
+
+          try {
+            // Trigger beautiful popup sign-in
+            console.log("Triggering Google Popup Auth during checkout...");
+            await signInWithPopup(auth, provider);
+            // Once popup completes, onAuthStateChanged observer will trigger automatic confirmation!
+          } catch (popupErr) {
+            console.error("Google Auth failed inside Checkout form:", popupErr);
+            alert("অর্ডার সম্পূর্ণ করতে গুগল লগইন করা আবশ্যক। দয়া করে আবার চেষ্টা করুন।");
+            localStorage.removeItem('pending_checkout_order');
+          }
+          return;
+        }
+
+        // If already logged in, proceed directly!
+        await handleConfirmOrder();
       });
     };
 
