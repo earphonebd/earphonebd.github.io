@@ -638,21 +638,42 @@
 
     <!-- Interactive Filters & Actions -->
     <div class="filters-bar">
-      <div class="filter-label">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-        Filter Date Range:
+      <!-- Date Filter Group -->
+      <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+        <div class="filter-label">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          Date Range:
+        </div>
+        <div class="btn-group">
+          <button onclick="setFilter('today')" id="filter-today" class="btn-filter">Today</button>
+          <button onclick="setFilter('yesterday')" id="filter-yesterday" class="btn-filter">Yesterday</button>
+          <button onclick="setFilter('7days')" id="filter-7days" class="btn-filter">7 Days</button>
+          <button onclick="setFilter('30days')" id="filter-30days" class="btn-filter">30 Days</button>
+          <button onclick="setFilter('all')" id="filter-all" class="btn-filter active">All Time</button>
+        </div>
       </div>
-      <div class="btn-group">
-        <button onclick="setFilter('today')" id="filter-today" class="btn-filter">Today</button>
-        <button onclick="setFilter('yesterday')" id="filter-yesterday" class="btn-filter">Yesterday</button>
-        <button onclick="setFilter('7days')" id="filter-7days" class="btn-filter">Last 7 Days</button>
-        <button onclick="setFilter('30days')" id="filter-30days" class="btn-filter">Last 30 Days</button>
-        <button onclick="setFilter('all')" id="filter-all" class="btn-filter active">All Time</button>
+
+      <!-- Status Filter Group -->
+      <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+        <div class="filter-label">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+          Order Status:
+        </div>
+        <div class="btn-group">
+          <button onclick="setStatusFilter('all')" id="status-filter-all" class="btn-filter active">All Statuses</button>
+          <button onclick="setStatusFilter('Completed')" id="status-filter-Completed" class="btn-filter">Completed</button>
+          <button onclick="setStatusFilter('Shipped')" id="status-filter-Shipped" class="btn-filter">Shipped</button>
+          <button onclick="setStatusFilter('processing')" id="status-filter-processing" class="btn-filter">Processing</button>
+          <button onclick="setStatusFilter('Cancelled')" id="status-filter-Cancelled" class="btn-filter">Cancelled</button>
+          <button onclick="setStatusFilter('Returned')" id="status-filter-Returned" class="btn-filter">Returned</button>
+        </div>
       </div>
-      <div style="width: 100%;">
-        <button onclick="exportToCSV()" class="btn-action primary" style="width: 100%; justify-content: center;">
+
+      <!-- Action Button Group -->
+      <div class="action-buttons">
+        <button onclick="exportToCSV()" class="btn-action primary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          Export CSV Report
+          Export CSV
         </button>
       </div>
     </div>
@@ -691,6 +712,28 @@
         <p class="value" id="kpi-delivered">৳0</p>
         <span class="sub-value" id="kpi-delivered-sub">0 completed orders</span>
         <span class="badge badge-success" id="kpi-delivered-rate">0% of total</span>
+      </div>
+
+      <!-- Delivered / Net Profit Card -->
+      <div class="kpi-card success">
+        <h3>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          Net Profit
+        </h3>
+        <p class="value" id="kpi-profit-delivered" style="color: var(--success);">৳0</p>
+        <span class="sub-value" id="kpi-profit-delivered-sub">From completed orders</span>
+        <span class="badge badge-success" id="kpi-profit-delivered-rate">0% margin</span>
+      </div>
+
+      <!-- Active / Potential Profit Card -->
+      <div class="kpi-card purple">
+        <h3>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          Potential Profit
+        </h3>
+        <p class="value" id="kpi-profit-potential" style="color: var(--purple);">৳0</p>
+        <span class="sub-value" id="kpi-profit-potential-sub">From all active orders</span>
+        <span class="badge badge-purple" id="kpi-profit-potential-rate">0% margin</span>
       </div>
 
       <!-- Courier / Shipped Card -->
@@ -809,12 +852,14 @@
                 <th>Product Description</th>
                 <th style="text-align: center;">Units Sold</th>
                 <th style="text-align: right;">Total Revenue</th>
+                <th style="text-align: right;">Net Profit</th>
+                <th style="text-align: right;">Margin</th>
                 <th style="text-align: right;">Revenue Share</th>
               </tr>
             </thead>
             <tbody>
               <!-- Rendered Dynamically -->
-              <tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Loading product statistics...</td></tr>
+              <tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Loading product statistics...</td></tr>
             </tbody>
           </table>
         </div>
@@ -846,6 +891,71 @@
 
     </div>
 
+    <!-- Predictive Stock Procurement Planner Section (NEW) -->
+    <div class="table-card" style="margin-top: 30px; grid-column: span 2;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 12px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 1.6rem;">🔮</span>
+          <div>
+            <h4 style="margin: 0; font-size: 1.25rem; font-weight: 900; color: var(--text-main); border: none; padding: 0;">বুদ্ধিমান স্টক প্রজেকশন ও ক্রয় প্ল্যানার (Predictive Stock Planner)</h4>
+            <p style="margin: 4px 0 0 0; font-size: 0.82rem; color: var(--text-muted); font-weight: 600;">বিগত বিক্রয়ের গতিবেগ (Sales Velocity) বিশ্লেষণ করে আগামী দিনের প্রয়োজনীয় স্টকের এ্যাকুরেট অনুমান</p>
+          </div>
+        </div>
+        
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <label style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted);">স্টকের মেয়াদ (Days):</label>
+            <select id="projection-days" style="padding: 8px 12px; border: 2px solid #cbd5e1; border-radius: 10px; font-size: 0.8rem; font-weight: 800; color: var(--text-main); outline: none; background: white;">
+              <option value="3">৩ দিন (3 Days)</option>
+              <option value="7">৭ দিন (1 Week)</option>
+              <option value="15" selected>১৫ দিন (2 Weeks)</option>
+              <option value="30">৩০ দিন (1 Month)</option>
+              <option value="custom">কাস্টম দিন (Custom Days...)</option>
+            </select>
+            <input type="number" id="projection-custom-days" min="1" max="365" value="10" style="display: none; width: 75px; padding: 8px 10px; border: 2px solid #cbd5e1; border-radius: 10px; font-size: 0.8rem; font-weight: 800; color: var(--text-main); outline: none; background: #fff;" placeholder="দিন">
+          </div>
+          
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <label style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted);">সেফটি বাফার:</label>
+            <select id="projection-buffer" style="padding: 8px 12px; border: 2px solid #cbd5e1; border-radius: 10px; font-size: 0.8rem; font-weight: 800; color: var(--text-main); outline: none; background: white;">
+              <option value="0">০% (Exact Trend)</option>
+              <option value="0.1" selected>১০% (Standard Buffer)</option>
+              <option value="0.2">২০% (High Demand Buffer)</option>
+              <option value="0.3">৩০% (Aggressive Buffer)</option>
+            </select>
+          </div>
+          
+          <button id="btn-copy-projection" style="background: var(--accent); color: white; border: none; padding: 8px 16px; border-radius: 10px; font-weight: 800; cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            ক্রয় তালিকা কপি করুন
+          </button>
+        </div>
+      </div>
+      
+      <div style="background: #f8fafc; border-left: 4px solid var(--accent); padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+        💡 <strong>কীভাবে কাজ করে?</strong> এই সিস্টেমটি আপনার স্টোরের প্রথম ও শেষ অর্ডারের মধ্যবর্তী মোট দিন হিসাব করে প্রতিটি প্রোডাক্ট ভ্যারিয়েন্টের <strong>দৈনিক গড় বিক্রয় (Daily Sales Velocity)</strong> বের করে। অতপর, আপনার নির্ধারিত মেয়াদ (Days) এবং ঝুঁকি এড়ানোর জন্য সেফটি বাফার যোগ করে এ্যাকুরেট ক্রয় সুপারিশ প্রদান করে।
+      </div>
+      
+      <div class="table-responsive">
+        <table class="report-table" id="projection-table">
+          <thead>
+            <tr>
+              <th>প্রোডাক্ট ভ্যারিয়েন্ট (Product, Edition & Color)</th>
+              <th style="text-align: center;">মোট বিক্রি (Valid Sales)</th>
+              <th style="text-align: center;">দৈনিক বিক্রির গতিবেগ (Velocity/Day)</th>
+              <th style="text-align: center;">প্রজেক্টেড ডিমান্ড (Forecasted)</th>
+              <th style="text-align: center; background: #eff6ff; color: var(--accent); font-weight: 950;">সুপারিশকৃত স্টক ক্রয় (Recommended)</th>
+              <th style="text-align: right;">আনুমানিক পাইকারি খরচ (Est. Cost)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Rendered dynamically -->
+            <tr><td colspan="6" style="text-align: center; color: var(--text-muted);">বিশ্লেষণ করা হচ্ছে...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 
   <script type="module">
@@ -868,6 +978,7 @@
     // Global state
     let allOrders = [];
     let currentFilter = 'all'; // 'today', 'yesterday', '7days', '30days', 'all'
+    let currentStatusFilter = 'all'; // 'all', 'Completed', 'Shipped', 'processing', 'Cancelled', 'Returned'
     
     // Chart instances references
     let trendChartInstance = null;
@@ -892,10 +1003,53 @@
     }
 
     // Helper functions
-    function parsePrice(priceStr) {
-      if (priceStr === undefined || priceStr === null) return 0;
-      const str = String(priceStr);
+    function parsePrice(priceVal) {
+      if (priceVal === undefined || priceVal === null) return 0;
+      if (typeof priceVal === 'number') return priceVal;
+      const str = String(priceVal);
+      if (str.includes('.')) {
+        return parseFloat(str.replace(/[^\d.]/g, '')) || 0;
+      }
       return parseInt(str.replace(/[^\d]/g, '')) || 0;
+    }
+
+    function getItemCostPrice(title, edition, color, qty = 1) {
+      let unitCost = 0;
+      const t = (title || "").toLowerCase();
+      const e = (edition || "").toLowerCase();
+      const c = (color || "").toLowerCase();
+      
+      if (t.includes("3rd") || e.includes("3rd") || t.includes("pro 3")) {
+        unitCost = 1100; // AirPods Pro 3rd ANC (Dubai Premium ANC)
+      } else if (t.includes("anc") || e.includes("anc") || e.includes("usa")) {
+        unitCost = 700; // AirPods Pro 2nd ANC (USA Premium ANC)
+      } else if (e.includes("dubai") || t.includes("dubai")) {
+        if (c.includes("black") || t.includes("black")) {
+          unitCost = 340; // Dubai Black
+        } else {
+          unitCost = 290; // Dubai White (default)
+        }
+      } else if (e.includes("china") || t.includes("china") || e.includes("chaina") || t.includes("chaina") || e.includes("চায়না")) {
+        if (c.includes("black") || t.includes("black")) {
+          unitCost = 210; // China Black
+        } else {
+          unitCost = 200; // China White
+        }
+      } else {
+        // Fallback: assume Dubai Edition as it is the most common
+        if (c.includes("black") || t.includes("black")) {
+          unitCost = 340;
+        } else {
+          unitCost = 290;
+        }
+      }
+
+      // Check for cover/accessory
+      if (t.includes("covor") || t.includes("cover")) {
+        return 100 * qty; // Exact cover wholesale cost as requested by user
+      }
+      
+      return unitCost * qty;
     }
 
     // Launch connection and load reports
@@ -930,11 +1084,24 @@
     window.setFilter = (filterName) => {
       currentFilter = filterName;
       
-      // Update UI active class
-      document.querySelectorAll('.btn-filter').forEach(btn => {
+      // Update UI active class for date filters
+      document.querySelectorAll('[id^="filter-"]').forEach(btn => {
         btn.classList.remove('active');
       });
       document.getElementById('filter-' + filterName).classList.add('active');
+
+      updateUIElements();
+    };
+
+    // Expose setStatusFilter globally
+    window.setStatusFilter = (statusName) => {
+      currentStatusFilter = statusName;
+      
+      // Update UI active class for status filters
+      document.querySelectorAll('[id^="status-filter-"]').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.getElementById('status-filter-' + statusName).classList.add('active');
 
       updateUIElements();
     };
@@ -950,21 +1117,39 @@
 
       // Filter orders array
       const filteredOrders = allOrders.filter(o => {
+        // 1. Date filter match
         const ts = o.metadata ? (o.metadata.timestamp || 0) : 0;
-        if (!ts) return currentFilter === 'all'; // Show legacy orders in 'All Time'
-        
-        switch (currentFilter) {
-          case 'today':
-            return ts >= todayStart;
-          case 'yesterday':
-            return ts >= yesterdayStart && ts < todayStart;
-          case '7days':
-            return ts >= sevenDaysStart;
-          case '30days':
-            return ts >= thirtyDaysStart;
-          default:
-            return true; // all
+        let dateMatch = true;
+        if (!ts) {
+          dateMatch = currentFilter === 'all';
+        } else {
+          switch (currentFilter) {
+            case 'today':
+              dateMatch = ts >= todayStart;
+              break;
+            case 'yesterday':
+              dateMatch = ts >= yesterdayStart && ts < todayStart;
+              break;
+            case '7days':
+              dateMatch = ts >= sevenDaysStart;
+              break;
+            case '30days':
+              dateMatch = ts >= thirtyDaysStart;
+              break;
+            default:
+              dateMatch = true;
+          }
         }
+
+        if (!dateMatch) return false;
+
+        // 2. Status filter match
+        const status = o.metadata ? (o.metadata.status || 'New Order') : 'New Order';
+        if (currentStatusFilter === 'all') return true;
+        if (currentStatusFilter === 'processing') {
+          return ['New Order', 'Confirmed', 'Packaging'].includes(status);
+        }
+        return status === currentStatusFilter;
       });
 
       // 1. KPI Metric calculations
@@ -980,6 +1165,12 @@
       let cancelledCount = 0;
       let returnedRevenue = 0; // Only Returned
       let returnedCount = 0;
+
+      // Profit metric calculations
+      let totalCost = 0;
+      let totalProfit = 0;
+      let deliveredCost = 0;
+      let deliveredProfit = 0;
 
       // Product sales totals
       let productBreakdown = {};
@@ -1045,11 +1236,13 @@
         }
 
         // Group Geographical
-        if (!districtBreakdown[district]) {
-          districtBreakdown[district] = { count: 0, revenue: 0 };
+        if (status !== 'Cancelled' && status !== 'Returned') {
+          if (!districtBreakdown[district]) {
+            districtBreakdown[district] = { count: 0, revenue: 0 };
+          }
+          districtBreakdown[district].count++;
+          districtBreakdown[district].revenue += price;
         }
-        districtBreakdown[district].count++;
-        districtBreakdown[district].revenue += price;
 
         // Group Date-wise (TimeSeries) for Trend Chart
         let dateKey = 'Legacy/No Date';
@@ -1069,44 +1262,74 @@
         }
 
         // Group Products & Editions
-        if (o.order && o.order.items && Array.isArray(o.order.items)) {
-          o.order.items.forEach(item => {
-            const title = item.title || 'Unknown Product';
-            const qty = parseInt(item.qty) || 1;
-            const itemPrice = parsePrice(item.price) * qty;
+        if (status !== 'Cancelled' && status !== 'Returned') {
+          if (o.order && o.order.items && Array.isArray(o.order.items)) {
+            const shippingCost = o.order.shipping_cost ? parsePrice(o.order.shipping_cost) : 0;
+            const itemsCount = o.order.items.length;
+            const shippingPerItem = itemsCount > 0 ? (shippingCost / itemsCount) : 0;
 
-            // Product Breakdown stats
+            o.order.items.forEach(item => {
+              const title = item.title || 'Unknown Product';
+              const qty = parseInt(item.qty) || 1;
+              const itemPrice = (parsePrice(item.price) * qty) + shippingPerItem;
+
+              // Calculate cost and profit
+              const cost = getItemCostPrice(title, item.edition || o.order.variation, item.color || o.order.color, qty);
+              const profit = itemPrice - cost;
+              totalCost += cost;
+              totalProfit += profit;
+              if (status === 'Completed') {
+                deliveredCost += cost;
+                deliveredProfit += profit;
+              }
+
+              // Product Breakdown stats
+              if (!productBreakdown[title]) {
+                productBreakdown[title] = { qty: 0, revenue: 0, cost: 0, profit: 0 };
+              }
+              productBreakdown[title].qty += qty;
+              productBreakdown[title].revenue += itemPrice;
+              productBreakdown[title].cost += cost;
+              productBreakdown[title].profit += profit;
+
+              // Edition stats
+              const ed = item.edition || 'China Edition';
+              if (ed.includes('USA')) editionCounts['USA Edition'] += qty;
+              else if (ed.includes('Dubai')) editionCounts['Dubai Edition'] += qty;
+              else if (ed.includes('China')) editionCounts['China Edition'] += qty;
+              else editionCounts['Standard/Others'] += qty;
+            });
+          } else {
+            // Legacy format / Fallback
+            const title = o.order ? (o.order.product || 'Unknown Product') : 'Unknown Product';
+            const qty = o.order ? (parseInt(o.order.quantity) || 1) : 1;
+            const itemPrice = price; // Grand total is best fallback for single item
+
+            // Calculate cost and profit
+            const cost = getItemCostPrice(title, o.order ? o.order.variation : '', o.order ? o.order.color : '', qty);
+            const profit = itemPrice - cost;
+            totalCost += cost;
+            totalProfit += profit;
+            if (status === 'Completed') {
+              deliveredCost += cost;
+              deliveredProfit += profit;
+            }
+
             if (!productBreakdown[title]) {
-              productBreakdown[title] = { qty: 0, revenue: 0 };
+              productBreakdown[title] = { qty: 0, revenue: 0, cost: 0, profit: 0 };
             }
             productBreakdown[title].qty += qty;
             productBreakdown[title].revenue += itemPrice;
+            productBreakdown[title].cost += cost;
+            productBreakdown[title].profit += profit;
 
             // Edition stats
-            const ed = item.edition || 'China Edition';
+            const ed = o.order ? (o.order.variation || 'China Edition') : 'China Edition';
             if (ed.includes('USA')) editionCounts['USA Edition'] += qty;
             else if (ed.includes('Dubai')) editionCounts['Dubai Edition'] += qty;
             else if (ed.includes('China')) editionCounts['China Edition'] += qty;
             else editionCounts['Standard/Others'] += qty;
-          });
-        } else {
-          // Legacy format / Fallback
-          const title = o.order ? (o.order.product || 'Unknown Product') : 'Unknown Product';
-          const qty = o.order ? (parseInt(o.order.quantity) || 1) : 1;
-          const itemPrice = price; // Grand total is best fallback for single item
-
-          if (!productBreakdown[title]) {
-            productBreakdown[title] = { qty: 0, revenue: 0 };
           }
-          productBreakdown[title].qty += qty;
-          productBreakdown[title].revenue += itemPrice;
-
-          // Edition stats
-          const ed = o.order ? (o.order.variation || 'China Edition') : 'China Edition';
-          if (ed.includes('USA')) editionCounts['USA Edition'] += qty;
-          else if (ed.includes('Dubai')) editionCounts['Dubai Edition'] += qty;
-          else if (ed.includes('China')) editionCounts['China Edition'] += qty;
-          else editionCounts['Standard/Others'] += qty;
         }
       });
 
@@ -1120,6 +1343,15 @@
       document.getElementById('kpi-delivered-sub').innerText = `${deliveredCount} completed orders`;
       const deliveredRate = totalRevenue > 0 ? Math.round((deliveredRevenue / totalRevenue) * 100) : 0;
       document.getElementById('kpi-delivered-rate').innerText = `${deliveredRate}% delivery conversion`;
+
+      // Update Profit KPI values
+      document.getElementById('kpi-profit-delivered').innerText = '৳' + deliveredProfit.toLocaleString();
+      const deliveredMargin = deliveredRevenue > 0 ? Math.round((deliveredProfit / deliveredRevenue) * 100) : 0;
+      document.getElementById('kpi-profit-delivered-rate').innerText = `${deliveredMargin}% margin`;
+
+      document.getElementById('kpi-profit-potential').innerText = '৳' + totalProfit.toLocaleString();
+      const potentialMargin = totalRevenue > 0 ? Math.round((totalProfit / totalRevenue) * 100) : 0;
+      document.getElementById('kpi-profit-potential-rate').innerText = `${potentialMargin}% margin`;
       
       document.getElementById('kpi-courier').innerText = '৳' + courierRevenue.toLocaleString();
       document.getElementById('kpi-courier-sub').innerText = `${courierCount} shipped orders`;
@@ -1146,19 +1378,22 @@
       }).sort((a, b) => b.revenue - a.revenue);
 
       if (sortedProducts.length === 0) {
-        productTableBody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">No sales data available.</td></tr>';
+        productTableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No sales data available.</td></tr>';
       } else {
         sortedProducts.forEach(prod => {
           const share = totalRevenue > 0 ? Math.round((prod.revenue / totalRevenue) * 100) : 0;
+          const margin = prod.revenue > 0 ? Math.round((prod.profit / prod.revenue) * 100) : 0;
           const tr = document.createElement('tr');
           tr.innerHTML = `
             <td>
               <div style="font-weight: 800; color: var(--text-main);">${prod.name}</div>
             </td>
             <td style="text-align: center;"><b>${prod.qty}</b> Pcs</td>
-            <td style="text-align: right; color: var(--accent);">৳${prod.revenue.toLocaleString()}</td>
+            <td style="text-align: right; color: var(--text-main);">৳${Math.round(prod.revenue).toLocaleString()}</td>
+            <td style="text-align: right; color: var(--success); font-weight: 700;">৳${Math.round(prod.profit).toLocaleString()}</td>
+            <td style="text-align: right; color: var(--text-muted); font-size: 0.85rem;">${margin}%</td>
             <td style="text-align: right;">
-              <span style="font-weight: 800; color: var(--text-main);">${share}%</span>
+              <span style="font-weight: 800; color: var(--accent);">${share}%</span>
               <div class="table-progress-bar" style="margin-left: auto;">
                 <div class="table-progress-fill" style="width: ${share}%;"></div>
               </div>
@@ -1185,7 +1420,7 @@
           tr.innerHTML = `
             <td><span style="font-weight: 700;">${dist.name}</span></td>
             <td style="text-align: center; font-weight: 700;">${dist.count}</td>
-            <td style="text-align: right; color: var(--accent);">৳${dist.revenue.toLocaleString()}</td>
+            <td style="text-align: right; color: var(--accent);">৳${Math.round(dist.revenue).toLocaleString()}</td>
             <td style="text-align: right; color: var(--text-muted);">৳${avg.toLocaleString()}</td>
           `;
           districtTableBody.appendChild(tr);
@@ -1197,7 +1432,229 @@
       renderStatusChart(statusCounts);
       renderEditionChart(editionCounts);
       renderProductChart(sortedProducts);
+
+      // 5. Trigger Predictive Stock Procurement Planner
+      updateProjection();
     }
+
+    function updateProjection() {
+      const projectionTableBody = document.querySelector('#projection-table tbody');
+      if (!projectionTableBody) return;
+      projectionTableBody.innerHTML = '';
+
+      if (allOrders.length === 0) {
+        projectionTableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No data available to project.</td></tr>';
+        return;
+      }
+
+      // 1. Calculate active history span in days
+      const timestamps = allOrders.map(o => o.metadata ? o.metadata.timestamp : null).filter(t => t);
+      const minTimestamp = timestamps.length > 0 ? Math.min(...timestamps) : (Date.now() - 14 * 24 * 60 * 60 * 1000);
+      const maxTimestamp = Date.now();
+      const historyDays = Math.max(1, Math.ceil((maxTimestamp - minTimestamp) / (24 * 60 * 60 * 1000)));
+
+      // 2. Read configurations
+      const daysDropdown = document.getElementById('projection-days');
+      let targetDays = parseInt(daysDropdown.value);
+      if (daysDropdown.value === 'custom') {
+        targetDays = parseInt(document.getElementById('projection-custom-days').value) || 10;
+      }
+      const bufferPercent = parseFloat(document.getElementById('projection-buffer').value) || 0.1;
+
+      // 3. Group by Variant (Product + Edition + Color) for Completed/Active orders
+      const variantSales = {};
+      allOrders.forEach(o => {
+        const status = o.metadata ? (o.metadata.status || 'New Order') : 'New Order';
+        if (status === 'Cancelled' || status === 'Returned') return;
+
+        if (o.order) {
+          if (o.order.items && Array.isArray(o.order.items)) {
+            o.order.items.forEach(item => {
+              const title = item.title || o.order.product || 'Unknown Product';
+              // Exclude cover items as we do not standardly sell them/keep stock
+              if (title.toLowerCase().includes("cover") || title.toLowerCase().includes("covor")) return;
+
+              const edition = item.edition || o.order.variation || '';
+              const color = item.color || o.order.color || '';
+              const qty = parseInt(item.qty) || 1;
+              const key = `${title} | ${edition} | ${color}`;
+              
+              if (!variantSales[key]) {
+                variantSales[key] = { title, edition, color, qty: 0 };
+              }
+              variantSales[key].qty += qty;
+            });
+          } else {
+            const title = o.order.product || 'Unknown Product';
+            // Exclude cover items as we do not standardly sell them/keep stock
+            if (title.toLowerCase().includes("cover") || title.toLowerCase().includes("covor")) return;
+
+            const edition = o.order.variation || '';
+            const color = o.order.color || '';
+            const qty = parseInt(o.order.quantity) || 1;
+            const key = `${title} | ${edition} | ${color}`;
+
+            if (!variantSales[key]) {
+              variantSales[key] = { title, edition, color, qty: 0 };
+            }
+            variantSales[key].qty += qty;
+          }
+        }
+      });
+
+      // 4. Render recommendations
+      const sortedKeys = Object.keys(variantSales).sort((a, b) => variantSales[b].qty - variantSales[a].qty);
+      
+      if (sortedKeys.length === 0) {
+        projectionTableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No sales data to base projection on.</td></tr>';
+        return;
+      }
+
+      sortedKeys.forEach(key => {
+        const item = variantSales[key];
+        const velocity = item.qty / historyDays;
+        const projected = velocity * targetDays;
+        const recommended = Math.ceil(projected * (1 + bufferPercent));
+        
+        const unitCost = getItemCostPrice(item.title, item.edition, item.color, 1);
+        const totalEstCost = unitCost * recommended;
+
+        // Visual layout styling matching report style
+        const editionBadgeClass = (item.edition.includes('Dubai') || item.edition.includes('দুবাই')) ? 'badge-purple' : 'badge-accent';
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <div style="font-weight: 800; color: var(--text-main); font-size: 0.95rem;">${item.title}</div>
+            <div style="font-size: 0.72rem; margin-top: 4px; display: flex; gap: 6px; flex-wrap: wrap;">
+              <span class="badge ${editionBadgeClass}" style="padding: 1px 6px; border-radius: 4px; margin-top: 0; font-size: 0.65rem;">${item.edition || 'N/A'}</span>
+              <span class="badge badge-orange" style="padding: 1px 6px; border-radius: 4px; margin-top: 0; font-size: 0.65rem;">🎨 ${item.color || 'N/A'}</span>
+            </div>
+          </td>
+          <td style="text-align: center; font-weight: 700; color: var(--text-main);">${item.qty} টি</td>
+          <td style="text-align: center; font-family: monospace; font-weight: 700; color: var(--text-muted);">${velocity.toFixed(2)} / দিন</td>
+          <td style="text-align: center; font-family: monospace; font-weight: 700; color: var(--text-muted);">${projected.toFixed(1)} টি</td>
+          <td style="text-align: center; background: #eff6ff; font-weight: 900; color: var(--accent); font-size: 1.1rem; border: 1px dashed #bfdbfe;">
+            ${recommended} টি
+          </td>
+          <td style="text-align: right; font-weight: 800; color: var(--success);">৳${totalEstCost.toLocaleString()}</td>
+        `;
+        projectionTableBody.appendChild(tr);
+      });
+    }
+
+    // List copy helper function
+    window.copyProjectionBuyingList = () => {
+      const daysDropdown = document.getElementById('projection-days');
+      let targetDays = parseInt(daysDropdown.value);
+      if (daysDropdown.value === 'custom') {
+        targetDays = parseInt(document.getElementById('projection-custom-days').value) || 10;
+      }
+      const bufferPercent = parseFloat(document.getElementById('projection-buffer').value) || 0.1;
+      
+      const timestamps = allOrders.map(o => o.metadata ? o.metadata.timestamp : null).filter(t => t);
+      const minTimestamp = timestamps.length > 0 ? Math.min(...timestamps) : (Date.now() - 14 * 24 * 60 * 60 * 1000);
+      const maxTimestamp = Date.now();
+      const historyDays = Math.max(1, Math.ceil((maxTimestamp - minTimestamp) / (24 * 60 * 60 * 1000)));
+
+      const variantSales = {};
+      allOrders.forEach(o => {
+        const status = o.metadata ? (o.metadata.status || 'New Order') : 'New Order';
+        if (status === 'Cancelled' || status === 'Returned') return;
+
+        if (o.order) {
+          if (o.order.items && Array.isArray(o.order.items)) {
+            o.order.items.forEach(item => {
+              const title = item.title || o.order.product || 'Unknown Product';
+              // Exclude cover items as we do not standardly sell them/keep stock
+              if (title.toLowerCase().includes("cover") || title.toLowerCase().includes("covor")) return;
+
+              const edition = item.edition || o.order.variation || '';
+              const color = item.color || o.order.color || '';
+              const qty = parseInt(item.qty) || 1;
+              const key = `${title} | ${edition} | ${color}`;
+              if (!variantSales[key]) {
+                variantSales[key] = { title, edition, color, qty: 0 };
+              }
+              variantSales[key].qty += qty;
+            });
+          } else {
+            const title = o.order.product || 'Unknown Product';
+            // Exclude cover items as we do not standardly sell them/keep stock
+            if (title.toLowerCase().includes("cover") || title.toLowerCase().includes("covor")) return;
+
+            const edition = o.order.variation || '';
+            const color = o.order.color || '';
+            const qty = parseInt(o.order.quantity) || 1;
+            const key = `${title} | ${edition} | ${color}`;
+            if (!variantSales[key]) {
+              variantSales[key] = { title, edition, color, qty: 0 };
+            }
+            variantSales[key].qty += qty;
+          }
+        }
+      });
+
+      const summaryText = [];
+      summaryText.push(`🔮 বুদ্ধিমান স্টক প্রজেকশন ক্রয় তালিকা (${targetDays} দিনের প্রজেকশন)`);
+      summaryText.push(`সেফটি বাফার: ${bufferPercent * 100}% | মোট স্টোর দিন: ${historyDays} দিন`);
+      summaryText.push(`তারিখ: ${new Date().toLocaleDateString('bn-BD')} | সময়: ${new Date().toLocaleTimeString('bn-BD')}`);
+      summaryText.push(`-------------------------------------------------`);
+      
+      let index = 1;
+      let grandTotalItems = 0;
+      let grandTotalCost = 0;
+
+      const sortedKeys = Object.keys(variantSales).sort((a, b) => variantSales[b].qty - variantSales[a].qty);
+      sortedKeys.forEach(key => {
+        const item = variantSales[key];
+        const velocity = item.qty / historyDays;
+        const projected = velocity * targetDays;
+        const recommended = Math.ceil(projected * (1 + bufferPercent));
+        
+        const unitCost = getItemCostPrice(item.title, item.edition, item.color, 1);
+        const totalEstCost = unitCost * recommended;
+
+        if (recommended > 0) {
+          summaryText.push(`${index++}. ${item.title} (${item.edition} - ${item.color}) ➔ ${recommended} টি (পাইকারি খরচ: ৳${totalEstCost.toLocaleString()})`);
+          grandTotalItems += recommended;
+          grandTotalCost += totalEstCost;
+        }
+      });
+
+      summaryText.push(`-------------------------------------------------`);
+      summaryText.push(`মোট ক্রয়যোগ্য প্রোডাক্ট পরিমাণ: ${grandTotalItems} টি`);
+      summaryText.push(`সর্বমোট আনুমানিক বিনিয়োগ: ৳${grandTotalCost.toLocaleString()}`);
+      
+      navigator.clipboard.writeText(summaryText.join('\n')).then(() => {
+        alert('বুদ্ধিমান প্রজেকশন ক্রয় তালিকাটি সফলভাবে ক্লিপবোর্ডে কপি হয়েছে! পাইকারি বিক্রেতাকে পেস্ট করে পাঠাতে পারেন।');
+      }).catch(err => {
+        alert('কপি করতে ব্যর্থ হয়েছে: ' + err.message);
+      });
+    };
+
+    // Attach DOM listener for changes in projection inputs
+    const daysDropdown = document.getElementById('projection-days');
+    const customDaysInput = document.getElementById('projection-custom-days');
+
+    daysDropdown.addEventListener('change', () => {
+      if (daysDropdown.value === 'custom') {
+        customDaysInput.style.display = 'inline-block';
+      } else {
+        customDaysInput.style.display = 'none';
+      }
+      updateProjection();
+    });
+
+    customDaysInput.addEventListener('input', () => {
+      updateProjection();
+    });
+
+    document.getElementById('projection-buffer').addEventListener('change', () => { updateProjection(); });
+    document.getElementById('btn-copy-projection').addEventListener('click', () => { window.copyProjectionBuyingList(); });
+
+    window.updateProjection = updateProjection;
+
 
     // Chart.js: Trend Chart (Sales Revenue + Order Volume)
     function renderTrendChart(timeSeries) {
@@ -1487,17 +1944,41 @@
       const sevenDaysStart = now - 7 * 24 * 60 * 60 * 1000;
       const thirtyDaysStart = now - 30 * 24 * 60 * 60 * 1000;
 
-      // Filter based on active filter
+      // Filter based on active date and status filters
       const filtered = allOrders.filter(o => {
+        // 1. Date filter match
         const ts = o.metadata ? (o.metadata.timestamp || 0) : 0;
-        if (!ts) return currentFilter === 'all';
-        switch (currentFilter) {
-          case 'today': return ts >= todayStart;
-          case 'yesterday': return ts >= yesterdayStart && ts < todayStart;
-          case '7days': return ts >= sevenDaysStart;
-          case '30days': return ts >= thirtyDaysStart;
-          default: return true;
+        let dateMatch = true;
+        if (!ts) {
+          dateMatch = currentFilter === 'all';
+        } else {
+          switch (currentFilter) {
+            case 'today':
+              dateMatch = ts >= todayStart;
+              break;
+            case 'yesterday':
+              dateMatch = ts >= yesterdayStart && ts < todayStart;
+              break;
+            case '7days':
+              dateMatch = ts >= sevenDaysStart;
+              break;
+            case '30days':
+              dateMatch = ts >= thirtyDaysStart;
+              break;
+            default:
+              dateMatch = true;
+          }
         }
+
+        if (!dateMatch) return false;
+
+        // 2. Status filter match
+        const status = o.metadata ? (o.metadata.status || 'New Order') : 'New Order';
+        if (currentStatusFilter === 'all') return true;
+        if (currentStatusFilter === 'processing') {
+          return ['New Order', 'Confirmed', 'Packaging'].includes(status);
+        }
+        return status === currentStatusFilter;
       });
 
       if (filtered.length === 0) {
@@ -1506,8 +1987,8 @@
       }
 
       // Headers for CSV
-      let csvContent = "data:text/csv;charset=utf-8,";
-      csvContent += "Order ID,Customer Name,Phone,Email,District,Thana,Address,Products Summary,Total Price,Shipping Area,Status,Order Date\n";
+      let csvContent = "\uFEFF"; // Add BOM for Excel UTF-8 display compatibility
+      csvContent += "Order ID,Customer Name,Phone,Email,District,Thana,Address,Products Summary,Cost Price,Selling Price,Delivery Cost,Total Price,Profit,Shipping Area,Status,Order Date\n";
 
       filtered.forEach(o => {
         const id = o.id || "";
@@ -1519,25 +2000,44 @@
         const address = o.customer ? `"${(o.customer.address || "").replace(/"/g, '""').replace(/\n/g, ' ')}"` : "";
         
         let prodSummary = "";
+        let costPrice = 0;
+        
         if (o.order && o.order.items && Array.isArray(o.order.items)) {
           prodSummary = o.order.items.map(item => `${item.title} (${item.qty} Pcs - ${item.edition || 'Standard'})`).join(' | ');
+          o.order.items.forEach(item => {
+            const title = item.title || 'Unknown Product';
+            const qty = parseInt(item.qty) || 1;
+            costPrice += getItemCostPrice(title, item.edition || o.order.variation, item.color || o.order.color, qty);
+          });
         } else {
+          const title = o.order ? (o.order.product || 'Unknown Product') : 'Unknown Product';
+          const qty = o.order ? (parseInt(o.order.quantity) || 1) : 1;
           prodSummary = o.order ? `${o.order.product || "Unspecified"} (${o.order.quantity || 1} Pcs - ${o.order.variation || 'Standard'})` : "Unspecified";
+          costPrice += getItemCostPrice(title, o.order ? o.order.variation : '', o.order ? o.order.color : '', qty);
         }
         prodSummary = `"${prodSummary.replace(/"/g, '""')}"`;
 
-        const price = o.order ? `"${o.order.total_price}"` : "0";
+        const status = o.metadata ? (o.metadata.status || 'New Order') : 'New Order';
+        const sellingPrice = o.order ? parsePrice(o.order.subtotal) : 0;
+        const deliveryCost = o.order ? parsePrice(o.order.shipping_cost) : 0;
+        const totalPrice = o.order ? parsePrice(o.order.total_price) : 0;
+        
+        let profit = 0;
+        if (status !== 'Cancelled' && status !== 'Returned') {
+          profit = sellingPrice - costPrice;
+        }
+
         const shipping = o.order ? `"${o.order.shipping_area}"` : "";
-        const status = o.metadata ? `"${o.metadata.status || 'New Order'}"` : "New Order";
         const date = o.metadata ? `"${o.metadata.date || ""}"` : "";
 
-        csvContent += `${id},${name},${phone},${email},${district},${thana},${address},${prodSummary},${price},${shipping},${status},${date}\n`;
+        csvContent += `${id},${name},${phone},${email},${district},${thana},${address},${prodSummary},${costPrice},${sellingPrice},${deliveryCost},${totalPrice},${profit},${shipping},"${status}",${date}\n`;
       });
 
-      // Trigger standard browser download
-      const encodedUri = encodeURI(csvContent);
+      // Trigger standard browser download using Blob to support larger datasets and UTF-8 characters safely
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
+      link.setAttribute("href", url);
       
       const fileDate = new Date().toISOString().slice(0,10);
       link.setAttribute("download", `EarphoneBD_Sales_Report_${currentFilter}_${fileDate}.csv`);

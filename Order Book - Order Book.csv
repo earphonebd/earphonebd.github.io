@@ -1,0 +1,49 @@
+SL,Date,Order ID,Customer Name,Number,Address,Dhaka,Product Model,Color,QTY,Cost Price,Selling Price,Delivery Cost,Total Price,Profit,Status
+1,6-5-2026,1001,Tanvir Islam,01798-089864,"কুতুবখালী বড় মাদরাসা, যাত্রাবাড়ী",Yes,AirPods Pro 2nd Generation (Dubai),Black,1,340,485,65,550,145,Delivered
+2,7-5-2026,1002,বিথী সুলতানা,01788-163380,"মহিষখোলা, নড়াইল সদর",No,AirPods Pro 2nd Generation (Dubai),Black,1,340,525,125,650,185,Delivered
+3,7-5-2026,1003,মোশাররফ হুসাইন,01755748841,কুতুবখালি যাত্রাবাড়ী বড় মাদ্রাসা,No,AirPods Pro 2nd Generation (Chaina),White,1,200,325,125,450,125,Cancelled
+4,7-5-2026,1004,মনজুরুল,01940547042,"মহেশখালী, শাপলাপুর কক্সবাজার",No,AirPods Pro 2nd Generation (Dubai),White,1,290,275,125,400,-15,Delivered
+5,8-5-2026,1005,রবিউল,01795453311,"ঢাকা কল্যানপুর, দারুসসালাম,  মিরপুর রোড",Yes,AirPods Pro 2nd Generation (Dubai),White,1,290,485,65,550,195,Delivered
+6,8-5-2026,1006,ইব্রাহিম,01338980917,গাজীপুর মৌচাক,Yes,AirPods Pro 2nd Generation (Dubai),White,2,290,1035,65,1100,745,Delivered
+7,8-5-2026,1007,Md. Ruman Islam,01719688760,"Galaxy House (2420-2422), Road: 25/A, Block: M, Dhaka",Yes,AirPods Pro 2nd Generation Premium ANC,White,1,700,935,65,1000,235,Delivered
+8,10-05-2026,1008,হাফিজুর রহমান,01633028294,"রোড: ৫, ব্লক: ই, ফরাজি এভিনিউ, বনশ্রী",Yes,AirPods Pro 2nd Generation (Dubai),White,1,290,535,65,600,245,Returned
+9,10-5-2026,1009,রাসেল,01630898575,"সিদ্ধীরগজ্য, নারায়নগঞ্জ",No,AirPods Pro 2nd Generation (Dubai),White,1,290,425,125,550,135,Delivered
+10,10-5-2026,1010,আরিয়ান আহমেদ তুরজো,01949764623,"গাওয়াই বাজার, দক্ষিণ খাঁন, উত্তরা, ঢাকা",Yes,AirPods Pro 2nd Generation (Dubai),Black,1,340,465,65,530,125,Delivered
+11,10-5-2026,1011,Antor,01701507054,"সাতক্ষীরা সদর, সাতক্ষীরা",No,AirPods Pro 2nd Generation (Dubai),White,1,290,425,125,550,135,Cancelled
+12,10-5-2026,1012,ফাহাদ হুসাইন ,01617183012,"চরমোনাই, থানা: কোতয়ালি, জেলা: বরিশাল",No,AirPods Pro 2nd Generation (Dubai),Black,1,340,425,125,550,85,Delivered
+13,10-5-2026,1013,মিনহাজ ,০১৯৬৯০০৭৮৬০,"গ্রাম: কামালদিয়া, থানা: মধুখালী, জেলা: ফরিদপুর",No,AirPods Pro 2nd Generation (Dubai),White,1,290,425,125,550,135,Cancelled
+14,10-5-2026,1014,সিদ্দিক,01924770806,"আনসার ক্লাব, বক্তুলি, জেলা: দিনাজপুর",No,AirPods Pro 2nd Generation (Dubai),White,2,290,905,125,1030,615,Returned
+15,10-5-2026,1015,আব্দুল্লাহ,01792153213,"চায়না প্রজেক্টর গেটের সামনে, বরাট বাজার, থানা: ভালুকা, জেলা: ময়মনসিংহ",No,AirPods Pro 2nd Generation (Chaina),Black,1,210,375,125,500,165,Delivered
+16,11-5-2026,1016,রনি আহমেদ ,01921354232,"বাঘের বাজার , গাজীপুর",No,AirPods Pro 3rd Generation Premium ANC,Black,1,1100,1475,125,1600,375,Delivered
+17,11-5-2026,1017,পপি ,01885659416,"উত্তর নলবিলা বড়ুয়া পাড়া, ১ নং ওয়ার্ড, কালারমারছাড়া, মহেশখালী, কক্সবাজার",No,AirPods Pro 2nd Generation (Chaina),Black,1,210,305,125,430,95,Delivered
+18,11-5-2026,1018,Sagor ,01837770361,"গাজীপুর হাই স্কুল, থানা: মতলব (উত্তর), জেলা: চাঁদপুর",No,AirPods Pro 2nd Generation (Dubai),Black,1,340,425,125,550,85,Delivered
+19,11-5-2026,1019,শুভ,01867074121,"মাদিলাহাট, থানা: ফুলবাড়ি, জেলা: দিনাজপুর",No,AirPods Pro 2nd Generation (Dubai),Black,1,340,475,125,600,135,Returned
+20,11-5-2026,1020,মো: নাদিম,01864031569,"ইকরাম সোয়েটার লিমিটেড, কাঁঠালি ইউনিয়ন, উপজেলা: ভালুকা, জেলা: ময়মনসিংহ",No,AirPods Pro 2nd Generation (Dubai),Black,1,340,475,125,600,135,Delivered
+21,11-5-2026,1021,মো: ওমর ফারুক ,01825792077,"কমলাপুর মাটিয়া গোরস্থান, জেলা: ফরিদপুর",No,AirPods Pro 2nd Generation (Dubai),Black,1,340,425,125,550,85,Delivered
+22,11-5-2026,1022,Muhammad Amir,01645593855,"১১৪, পিয়াসী রেস্টুরেন্ট এন্ড বার, শহীদ তাজ উদ্দিন আহমেদ স্মরণী, বড় মগবাজার, ঢাকা-১২১৭",Yes,AirPods Pro 2nd Generation (Dubai),Black,1,340,535,65,600,195,Delivered
+23,11-5-2026,1023,জাহেদ আহমদ ,01731663670,"জালালাবাদ ক্যান্টনমেন্ট, বটেশ্বর, সিলেট",No,AirPods Pro 2nd Generation (Dubai),Black,1,340,475,125,600,135,Delivered
+24,11-5-2026,1024,সাকিব,01743053388,"পপুলার ডায়াগনস্টিক সেন্টার, চরপাড়া, জেলা: ময়মনসিংহ",No,AirPods Pro 2nd Generation (Dubai),White,1,290,395,125,520,105,Returned
+25,11-5-2026,1025,আরাফাত চৌধুরী ,01850815793,"বড় কমলদা, থানা: মিরেশ্বরাই, জেলা: চট্টগ্রাম",No,AirPods Pro 2nd Generation (Chaina),Black,1,210,325,125,450,115,Delivered
+26,11-5-2026,1026,মোঃ তরিকুল ইসলাম ,০১৯৬৭৪৫৩৯৯২,"জামালের গেরেজ, মিম্তিবাগ, মাসদাইল",No,AirPods Pro 2nd Generation (Dubai),White,1,290,425,125,550,135,Delivered
+27,12-5-2026,1027,Rakib ,01701588368,"রুইয়ের ভাগ, তেবাড়িয়া, নাটোর সদর, নাটোর",No,AirPods Pro 2nd Generation (Dubai),White,1,290,325,125,450,35,Delivered
+28,12-5-2026,1028,হাফেজ ফয়সাল আহমেদ,"01605359397
+01314905641","পশ্চিম পাড়া মসজিদ, ধীরুয়াইল, নিকলী, কিশোরগঞ্জ",No,AirPods Pro 2nd Generation (Dubai),Black,1,340,475,125,600,135,Delivered
+29,13-5-2026,1029,Rana,01601701050,"গুলিস্তান মোড়, আনন্দ বাজার থেকে ভেতরে, মাওনা, গাজীপুর",No,AirPods Pro 2nd Generation (Dubai),Black,1,340,475,125,600,135,Cancelled
+30,13-5-2026,1030,হৃদয় ,01613740544,"জমচড়া, রংপুর",No,AirPods Pro 2nd Generation (Dubai),White,1,290,425,125,550,135,Returned
+31,13-5-2026,1031,ঝরনা,01320716918,"জগদল, সুনামগঞ্জ",No,AirPods Pro 2nd Generation (Dubai),Black,1,340,475,125,600,135,Returned
+32,13-5-2026,1032,মোহাম্মদ আব্দুল আহাদ ,01760461772,"খড়ারিয়া মাদ্রাসা, সিলাম, দক্ষিণ সুরমা, সিলেট",No,AirPods Pro 2nd Generation (Dubai),White,1,290,425,125,550,135,Returned
+33,14-5-2026,1033,Abdur Rob hasan,01581131431,"চবইহট্টা, ভেলাবাড়ি, সারিয়াকান্দি, বগুড়া",No,AirPods Pro 2nd Generation (Chaina),Black,1,210,735,125,860,525,Delivered
+34,14-5-2026,1034,মো: মামুন আলী,01345205885,"৪ নং রাস্তা, মিরপুর, মৌলভীবাজার",No,AirPods Pro 2nd Generation (Chaina),White,1,200,265,125,390,65,Delivered
+35,14-5-2026,1035,সাকিব,01868085939,"নোয়াপাড়া, রাউজান, চট্টগ্রাম",No,AirPods Pro 2nd Generation (Dubai),Black,1,340,475,125,600,135,On Transit
+36,15-5-2026,1036,আরমান,01994039216,"হাটমাগোড়া, মাদারগঞ্জ, জামালপুর",No,AirPods Pro 2nd Generation (Chaina),Black,2,210,675,125,800,465,On Transit
+37,18-5-2026,1037,ইমন ,০১৩৪০৮৫৯২৯৭,"আরানী, বাঘা, রাজশাহী",No,"AirPods Pro 2nd Generation (Dubai), AirPods Covor",Black,1,390,725,125,850,335,On Transit
+38,18-5-2026,1038,মোহাম্মদ রাসেল আহমেদ ,01965537543,"বাইতুল কুরবান জামে মসজিদ, ফতুল্লা, নারায়ণগঞ্জ",No,AirPods Pro 2nd Generation (Chaina),Black,2,420,675,125,800,255,On Transit
+39,18-5-2026,1039,রিয়াদ,01733010054,"মন্ডল মোড়, আটঘরিয়া, পাবনা",No,AirPods Pro 2nd Generation (Chaina),White,2,400,595,125,720,195,Processing
+40,18-5-2026,1040,আমির,01771575911,"আমান বাজার, চট্টগ্রাম",No,AirPods Pro 2nd Generation (Dubai),Black,1,340,475,125,600,135,Processing
+41,18-5-2026,1041,সাইদ,01310308886,"বতিহালা বাজার, ধোবাউড়া, ময়মনসিংহ",No,AirPods Pro 2nd Generation (Dubai),Black,1,340,445,125,570,105,Processing
+42,18-5-2026,1042,মিলন শেখ ,01991929065,"স্কয়ার মাস্টার বাড়ি, আমতলী বসুভিটা, ভালুকা, ময়মনসিংহ",No,AirPods Pro 2nd Generation (Dubai),Black,1,340,445,125,570,105,Processing
+43,18-5-2026,1043,মোঃ হেলাল হোসাইন,01317999703,"চাটমোহর, পাবনা",No,AirPods Pro 2nd Generation (Dubai),White,1,290,405,125,530,115,Processing
+44,18-5-2026,1044,মিঠুন,01818841037,"জয় কালিবাজার, আনোয়ারা, চট্টগ্রাম",No,AirPods Pro 2nd Generation (Dubai),White,1,290,425,125,550,135,Processing
+45,18-5-2026,1045,আব্দুল্লাহ,01636444516,"ডুমনি বাজার, খিলক্ষেত, ঢাকা",Yes,AirPods Pro 2nd Generation (Dubai),White,1,290,475,65,540,185,Processing
+46,18-5-2026,1046,নুরুল ইসলাম,01708329517,"ডৌবাড়ী ইউনিয়ন, গোয়াইনঘাট, সিলেট",No,AirPods Pro 2nd Generation (Dubai),White,1,290,425,125,550,135,Processing
+47,18-5-2026,1047,মোঃ আব্দুল্লাহ,01787961278,"চকচকা কলা বাগান, ফুলবাড়ী, দিনাজপুর",No,AirPods Pro 2nd Generation (Dubai),White,1,290,425,125,550,135,Processing
