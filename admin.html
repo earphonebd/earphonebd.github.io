@@ -75,6 +75,7 @@
     .badge-shipped { background: #eff6ff; color: #2563eb; border-color: rgba(37, 99, 235, 0.2); }
     .badge-completed { background: #e6fcf5; color: #0ca678; border-color: rgba(12, 166, 120, 0.2); }
     .badge-cancelled { background: #fff5f5; color: #fa5252; border-color: rgba(250, 82, 82, 0.2); }
+    .badge-returned { background: #fff7ed; color: #f97316; border-color: rgba(249, 115, 22, 0.2); }
     
     .action-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 15px; border-top: 1px dashed #e2e8f0; }
     .btn-delete { background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; padding: 8px 16px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
@@ -82,6 +83,104 @@
  
     @media (max-width: 768px) {
       .details-grid { grid-template-columns: 1fr; gap: 20px; }
+    }
+
+    /* Navigation tabs stylesheet mapping reports.html */
+    .nav-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #edf2f7;
+      padding-bottom: 12px;
+    }
+    .nav-tab {
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #64748b;
+      padding: 10px 20px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .nav-tab:hover {
+      color: var(--accent);
+      background: #eff6ff;
+    }
+    .nav-tab.active {
+      font-weight: 800;
+      color: var(--accent);
+      background: #eff6ff;
+    }
+
+    @media (max-width: 600px) {
+      .nav-tabs {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 8px;
+        width: 100%;
+        -webkit-overflow-scrolling: touch;
+      }
+      .nav-tab {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        flex-shrink: 0;
+      }
+      .header-flex {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+      .header-flex button {
+        width: 100%;
+        justify-content: center;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-bottom: 25px;
+      }
+      .stat-card:nth-child(3) {
+        grid-column: span 2;
+      }
+      .stat-card {
+        padding: 15px 10px;
+      }
+      .stat-card h3 {
+        font-size: 0.75rem;
+      }
+      .stat-card p {
+        font-size: 1.4rem;
+      }
+      .order-header {
+        padding: 15px;
+        gap: 10px;
+      }
+      .cust-basic h4 {
+        font-size: 1rem;
+      }
+      .cust-basic p {
+        font-size: 0.85rem;
+      }
+      .order-details {
+        padding: 0 15px;
+      }
+      .order-item.active .order-details {
+        padding: 15px;
+      }
+      .detail-card {
+        padding: 15px;
+      }
+      .action-bar {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+      }
+      .action-bar select, .action-bar button {
+        width: 100%;
+      }
     }
 
     #login-overlay { position: fixed; inset: 0; background: #fff; z-index: 10000; display: flex; align-items: center; justify-content: center; }
@@ -99,12 +198,27 @@
   </div>
 
   <div class="admin-container">
-    <div class="header-flex">
+    <div class="header-flex" style="margin-bottom: 25px;">
       <div>
         <h1 style="font-weight: 900; font-size: 2rem; margin: 0; color: #1e293b;">Order <span style="color: var(--accent);">Dashboard</span></h1>
         <p style="color: #94a3b8; font-weight: 600; margin-top: 5px;">Real-time management system</p>
       </div>
-      <button onclick="location.reload()" style="background: white; border: 1px solid #e2e8f0; padding: 10px 20px; border-radius: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">Refresh</button>
+      <button onclick="location.reload()" style="background: white; border: 1px solid #e2e8f0; padding: 10px 20px; border-radius: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.02); display: flex; align-items: center; gap: 8px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+        Refresh
+      </button>
+    </div>
+
+    <!-- Sleek Navigation Tabs -->
+    <div class="nav-tabs">
+      <a href="admin.html" class="nav-tab active">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+        Orders Dashboard
+      </a>
+      <a href="reports.html" class="nav-tab">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        Reports & Analytics
+      </a>
     </div>
 
     <div class="stats-grid">
@@ -137,6 +251,7 @@
 
     window.checkPass = () => {
       if (document.getElementById('admin-pass').value === 'admin123') {
+        sessionStorage.setItem('admin_authenticated', 'true');
         document.getElementById('login-overlay').style.display = 'none';
         loadOrders();
       } else alert('Access Denied!');
@@ -157,25 +272,30 @@
           const o = data[id];
           total++;
           if (o.metadata && o.metadata.date.split(',')[0] === todayDate) today++;
-          const price = parseInt((o.order ? o.order.total_price : '0').replace(/[^\d]/g, '')) || 0;
-          sales += price;
+          const priceVal = o.order ? o.order.total_price : '0';
+          const price = parseInt(String(priceVal).replace(/[^\d]/g, '')) || 0;
+          
+          const currentStatus = o.metadata ? (o.metadata.status || 'New Order') : 'New Order';
+          if (currentStatus !== 'Cancelled' && currentStatus !== 'Returned') {
+            sales += price;
+          }
 
           const item = document.createElement('div');
           item.className = 'order-item';
           const varClass = (o.order && o.order.variation && o.order.variation.includes('Dubai')) ? 'badge-dubai' : 'badge-china';
           
-          const currentStatus = o.metadata ? (o.metadata.status || 'New Order') : 'New Order';
           let statusBadgeClass = 'badge-new';
           if (currentStatus === 'Confirmed') statusBadgeClass = 'badge-confirmed';
           else if (currentStatus === 'Packaging') statusBadgeClass = 'badge-packaging';
           else if (currentStatus === 'Shipped') statusBadgeClass = 'badge-shipped';
           else if (currentStatus === 'Completed') statusBadgeClass = 'badge-completed';
           else if (currentStatus === 'Cancelled') statusBadgeClass = 'badge-cancelled';
+          else if (currentStatus === 'Returned') statusBadgeClass = 'badge-returned';
 
           item.innerHTML = `
             <div class="order-header" onclick="this.parentElement.classList.toggle('active')">
               <div class="cust-basic">
-                <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                   <h4 style="margin: 0; font-size: 1.15rem; font-weight: 800; color: #1e293b;">${o.customer ? o.customer.name : 'Unknown'}</h4>
                   <span class="badge ${statusBadgeClass}" style="padding: 2px 8px; font-size: 0.65rem; font-weight: 800; border-radius: 6px; border: 1px solid transparent; display: inline-block;">
                     ${currentStatus}
@@ -353,6 +473,7 @@
                       <option value="Shipped" ${currentStatus === 'Shipped' ? 'selected' : ''}>🚚 Shipped</option>
                       <option value="Completed" ${currentStatus === 'Completed' ? 'selected' : ''}>🎉 Completed</option>
                       <option value="Cancelled" ${currentStatus === 'Cancelled' ? 'selected' : ''}>❌ Cancelled</option>
+                      <option value="Returned" ${currentStatus === 'Returned' ? 'selected' : ''}>🔄 Returned</option>
                     </select>
                   </div>
                   
@@ -428,6 +549,13 @@
           alert("Error updating status: " + err.message);
         });
     };
+
+    // Auto-login on load if session is active
+    if (sessionStorage.getItem('admin_authenticated') === 'true') {
+      const overlay = document.getElementById('login-overlay');
+      if (overlay) overlay.style.display = 'none';
+      loadOrders();
+    }
   </script>
 </body>
 </html>
