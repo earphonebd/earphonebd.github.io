@@ -325,6 +325,17 @@
     .badge-paid { background: var(--success-light); color: var(--success); border-color: rgba(16, 185, 129, 0.15); }
     .badge-partial { background: var(--warning-light); color: var(--warning); border-color: rgba(245, 158, 11, 0.15); }
     .badge-unpaid { background: var(--danger-light); color: var(--danger); border-color: rgba(239, 68, 68, 0.15); }
+    .badge-staff { background: var(--purple-light); color: var(--purple); border-color: rgba(139, 92, 246, 0.15); }
+
+    .select-wrapper {
+      border: 1.5px solid transparent;
+      transition: all 0.2s;
+    }
+    .select-wrapper:focus-within {
+      background: white !important;
+      border-color: var(--border-focus) !important;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    }
 
     .badge-new { background: #f1f5f9; color: #475569; border-color: #e2e8f0; }
     .badge-confirmed { background: #ecfdf5; color: #059669; border-color: rgba(5, 150, 105, 0.15); }
@@ -700,6 +711,32 @@
           <input type="text" id="search-input" placeholder="Search moderator name..." oninput="filterTable()">
         </div>
 
+        <!-- Status Filter Dropdown -->
+        <div class="select-wrapper" style="display: flex; align-items: center; background: #f1f5f9; padding: 4px 12px; border-radius: 12px;">
+          <span style="font-size: 0.85rem; font-weight: 750; color: var(--text-muted); margin-right: 6px; white-space: nowrap;">Filter:</span>
+          <select id="status-filter" onchange="calculateAndRender()" style="border: none; background: transparent; outline: none; font-family: inherit; font-size: 0.88rem; font-weight: 750; color: var(--text-main); cursor: pointer; padding: 4px 0;">
+            <option value="all">All Statuses (সব)</option>
+            <option value="active">Active (সক্রিয় মডারেটর)</option>
+            <option value="unpaid">Unpaid (অ পরিশোধিত)</option>
+            <option value="partial">Partially Paid (আংশিক পরিশোধিত)</option>
+            <option value="paid">Paid (পরিশোধিত)</option>
+            <option value="staff">Staff (স্টাফ / কমিশন বাদে)</option>
+          </select>
+        </div>
+
+        <!-- Performance Sort Dropdown -->
+        <div class="select-wrapper" style="display: flex; align-items: center; background: #f1f5f9; padding: 4px 12px; border-radius: 12px;">
+          <span style="font-size: 0.85rem; font-weight: 750; color: var(--text-muted); margin-right: 6px; white-space: nowrap;">Sort by:</span>
+          <select id="performance-sort" onchange="calculateAndRender()" style="border: none; background: transparent; outline: none; font-family: inherit; font-size: 0.88rem; font-weight: 750; color: var(--text-main); cursor: pointer; padding: 4px 0;">
+            <option value="name_asc">Name (A-Z)</option>
+            <option value="completed_desc">Completed Orders (High to Low)</option>
+            <option value="completed_asc">Completed Orders (Low to High)</option>
+            <option value="saved_desc">Total Saved Orders (High to Low)</option>
+            <option value="success_desc">Success Rate (High to Low)</option>
+            <option value="balance_desc">Outstanding Balance (High to Low)</option>
+          </select>
+        </div>
+
         <!-- Commission Configurator -->
         <div class="config-box">
           <label for="commission-rate">৳ Commission Rate / Order:</label>
@@ -865,6 +902,7 @@
     // --- State Storage ---
     let cachedOrders = {};
     let cachedPayouts = {};
+    let cachedConfigs = {};
     let currentCommissionRate = 20;
 
     // Load initial commission rate config from localstorage
@@ -911,7 +949,24 @@
         cachedPayouts = snapshot.val() || {};
         calculateAndRender();
       });
+
+      // Listen to moderator configurations
+      const configsRef = ref(db, 'moderator_configs');
+      onValue(configsRef, (snapshot) => {
+        cachedConfigs = snapshot.val() || {};
+        calculateAndRender();
+      });
     }
+
+    // --- Toggle Moderator Exclusion ---
+    window.toggleModeratorExclusion = (name, isExcluded) => {
+      update(ref(db, `moderator_configs/${name}`), {
+        excludeFromPayout: isExcluded
+      })
+      .catch(err => {
+        alert('Failed to update moderator configs: ' + err.message);
+      });
+    };
 
     // --- Change commission rate dynamically ---
     window.changeCommissionRate = (val) => {
@@ -987,17 +1042,20 @@
           paidAmount += parseFloat(modPayouts[pid].amount) || 0;
         });
 
+        // Config checks
+        const excludeFromPayout = (cachedConfigs[modName] && cachedConfigs[modName].excludeFromPayout) ? true : false;
+
         // Calculations
         const successDenominator = stats.totalSaved - stats.cancelled - stats.returned;
         const successRate = successDenominator > 0 ? (stats.completed / successDenominator) * 100 : 0;
         
-        const earned = stats.completed * currentCommissionRate;
-        const balance = earned - paidAmount;
+        const earned = excludeFromPayout ? 0 : (stats.completed * currentCommissionRate);
+        const balance = excludeFromPayout ? 0 : (earned - paidAmount);
 
         totalOrders += stats.totalSaved;
         totalCompleted += stats.completed;
         globalEarned += earned;
-        globalPaid += paidAmount;
+        globalPaid += excludeFromPayout ? 0 : paidAmount;
         globalOutstanding += balance;
 
         moderatorsList.push({
@@ -1009,6 +1067,7 @@
           earned: earned,
           paid: paidAmount,
           balance: balance,
+          excludeFromPayout: excludeFromPayout,
           ordersList: stats.ordersList
         });
       });
@@ -1021,27 +1080,72 @@
       document.getElementById('kpi-total-paid').innerText = '৳' + globalPaid.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + ' Total Paid';
       document.getElementById('kpi-total-outstanding').innerText = '৳' + globalOutstanding.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
 
-      // Sort moderators alphabetically
-      moderatorsList.sort((a, b) => a.name.localeCompare(b.name));
+      // 3. Apply Filtering
+      const statusFilter = document.getElementById('status-filter') ? document.getElementById('status-filter').value : 'all';
+      const searchQuery = document.getElementById('search-input') ? document.getElementById('search-input').value.toLowerCase().trim() : '';
+
+      const filteredList = moderatorsList.filter(m => {
+        // Name Search
+        if (searchQuery && !m.name.toLowerCase().includes(searchQuery)) {
+          return false;
+        }
+
+        // Status Filter
+        if (statusFilter === 'all') {
+          return true;
+        } else if (statusFilter === 'active') {
+          return !m.excludeFromPayout;
+        } else if (statusFilter === 'staff') {
+          return m.excludeFromPayout;
+        } else if (statusFilter === 'paid') {
+          return !m.excludeFromPayout && m.balance <= 0;
+        } else if (statusFilter === 'partial') {
+          return !m.excludeFromPayout && m.paid > 0 && m.balance > 0;
+        } else if (statusFilter === 'unpaid') {
+          return !m.excludeFromPayout && m.paid === 0 && m.balance > 0;
+        }
+        return true;
+      });
+
+      // 4. Apply Sorting
+      const sortOption = document.getElementById('performance-sort') ? document.getElementById('performance-sort').value : 'name_asc';
+      filteredList.sort((a, b) => {
+        if (sortOption === 'name_asc') {
+          return a.name.localeCompare(b.name);
+        } else if (sortOption === 'completed_desc') {
+          return b.completed - a.completed;
+        } else if (sortOption === 'completed_asc') {
+          return a.completed - b.completed;
+        } else if (sortOption === 'saved_desc') {
+          return b.totalSaved - a.totalSaved;
+        } else if (sortOption === 'success_desc') {
+          return b.successRate - a.successRate;
+        } else if (sortOption === 'balance_desc') {
+          return b.balance - a.balance;
+        }
+        return 0;
+      });
 
       // Render Table Rows
       const tbody = document.getElementById('moderators-tbody');
       tbody.innerHTML = '';
 
-      if (moderatorsList.length === 0) {
+      if (filteredList.length === 0) {
         tbody.innerHTML = `
           <tr>
             <td colspan="10" style="text-align: center; color: var(--text-muted); padding: 40px;">
-              No moderators active. Manual entry submissions will appear here.
+              No matching moderators found.
             </td>
           </tr>
         `;
         return;
       }
 
-      moderatorsList.forEach(m => {
+      filteredList.forEach(m => {
         let statusBadge = '';
-        if (m.balance <= 0) {
+        if (m.excludeFromPayout) {
+          statusBadge = '<span class="badge badge-staff">Staff (No Payouts)</span>';
+        } else if (m.balance <= 0) {
           statusBadge = '<span class="badge badge-paid">Paid</span>';
         } else if (m.paid > 0) {
           statusBadge = '<span class="badge badge-partial">Partially Paid</span>';
@@ -1053,9 +1157,15 @@
         tr.setAttribute('data-mod-name', m.name);
         tr.innerHTML = `
           <td>
-            <div class="moderator-name">
-              <span style="font-size: 1.1rem;">👤</span>
-              <span>${m.name}</span>
+            <div class="moderator-name" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 1.1rem;">👤</span>
+                <span>${m.name}</span>
+              </div>
+              <label style="display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--text-muted); cursor: pointer; margin-top: 4px; user-select: none; font-weight: 700;">
+                <input type="checkbox" onchange="toggleModeratorExclusion('${m.name.replace(/'/g, "\\'")}', this.checked)" ${m.excludeFromPayout ? 'checked' : ''} style="cursor: pointer; width: 14px; height: 14px; accent-color: var(--purple); margin: 0;">
+                Staff (No Payouts)
+              </label>
             </div>
           </td>
           <td><b>${m.totalSaved}</b> orders</td>
@@ -1068,15 +1178,17 @@
             </div>
           </td>
           <td><b>৳${m.revenue.toLocaleString()}</b></td>
-          <td style="color: var(--accent); font-weight:800;">৳${m.earned.toLocaleString(undefined, { maximumFractionDigits: 1 })}</td>
+          <td style="color: var(--accent); font-weight:800;">
+            ${m.excludeFromPayout ? '<span style="color: var(--text-muted); font-size: 0.82rem; font-weight: 700; text-decoration: line-through;">৳' + (m.completed * currentCommissionRate).toLocaleString() + '</span> <span style="font-size:0.85rem; color:var(--purple);">৳0</span>' : '৳' + m.earned.toLocaleString(undefined, { maximumFractionDigits: 1 })}
+          </td>
           <td style="color: var(--success); font-weight:800;">৳${m.paid.toLocaleString(undefined, { maximumFractionDigits: 1 })}</td>
-          <td style="color: ${m.balance > 0 ? 'var(--warning)' : 'var(--text-muted)'}; font-weight:900; font-size:1.05rem;">
+          <td style="color: ${m.excludeFromPayout ? 'var(--text-muted)' : (m.balance > 0 ? 'var(--warning)' : 'var(--text-muted)')}; font-weight:900; font-size:1.05rem;">
             ৳${m.balance.toLocaleString(undefined, { maximumFractionDigits: 1 })}
           </td>
           <td>${statusBadge}</td>
           <td>
             <div class="row-actions">
-              <button class="btn-row pay" onclick="openPaymentModal('${m.name.replace(/'/g, "\\'")}', ${m.balance})">
+              <button class="btn-row pay" ${m.excludeFromPayout ? 'disabled style="opacity: 0.5; cursor: not-allowed; background: #f1f5f9; color: #94a3b8; border-color: #e2e8f0;"' : ''} onclick="openPaymentModal('${m.name.replace(/'/g, "\\'")}', ${m.balance})">
                 💳 Pay
               </button>
               <button class="btn-row" onclick="openHistoryModal('${m.name.replace(/'/g, "\\'")}')">
@@ -1094,18 +1206,7 @@
 
     // --- Search functionality ---
     window.filterTable = () => {
-      const search = document.getElementById('search-input').value.toLowerCase().trim();
-      const rows = document.querySelectorAll('#moderators-tbody tr');
-
-      rows.forEach(row => {
-        const modName = row.getAttribute('data-mod-name');
-        if (!modName) return;
-        if (modName.toLowerCase().includes(search)) {
-          row.style.display = '';
-        } else {
-          row.style.display = 'none';
-        }
-      });
+      calculateAndRender();
     };
 
     // --- Export Payout CSV Report ---
@@ -1145,13 +1246,16 @@
           paid += parseFloat(modPayouts[pid].amount) || 0;
         });
 
+        const excludeFromPayout = (cachedConfigs[name] && cachedConfigs[name].excludeFromPayout) ? true : false;
+
         const successDenominator = stats.total - stats.cancelled - stats.returned;
         const successRate = successDenominator > 0 ? (stats.completed / successDenominator) * 100 : 0;
-        const earned = stats.completed * currentCommissionRate;
-        const balance = earned - paid;
+        const earned = excludeFromPayout ? 0 : (stats.completed * currentCommissionRate);
+        const balance = excludeFromPayout ? 0 : (earned - paid);
 
         let statusText = 'UNPAID';
-        if (balance <= 0) statusText = 'PAID';
+        if (excludeFromPayout) statusText = 'STAFF (NO COMMISSION)';
+        else if (balance <= 0) statusText = 'PAID';
         else if (paid > 0) statusText = 'PARTIALLY PAID';
 
         csv += `"${name.replace(/"/g, '""')}",${stats.total},${stats.completed},${stats.cancelled},${stats.returned},${successRate.toFixed(1)}%,${stats.revenue},${earned},${paid},${balance},"${statusText}"\n`;

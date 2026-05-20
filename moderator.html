@@ -852,7 +852,7 @@
     <div id="status-bar" class="top-status-bar" style="display: none;">
       <div class="mod-greet" style="display: flex; align-items: center; gap: 10px;">
         <img id="bar-mod-avatar" src="" alt="Avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-light); display: none;">
-        <span>👋 Hello, <strong id="bar-mod-name" style="color: var(--accent);">-</strong></span>
+        <span>👋 Hello, <strong id="bar-mod-name" style="color: var(--accent);">-</strong><span id="bar-mod-badge" class="badge" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.25); font-size: 0.72rem; padding: 2px 8px; border-radius: 6px; font-weight: 800; display: none; margin-left: 6px; vertical-align: middle;">Staff</span></span>
         <button onclick="signOutModerator()" class="btn-edit-name" style="background: var(--danger); color: white; border-color: rgba(239, 68, 68, 0.15); display: flex; align-items: center; gap: 4px;">
           <span>🚪 Sign Out</span>
         </button>
@@ -1010,8 +1010,8 @@
               <span style="font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Delivered Orders</span>
               <strong id="payout-stat-delivered" style="font-size: 1.1rem; color: var(--text-main); font-weight: 850;">0</strong>
             </div>
-            <div style="background: var(--success-light); border: 1px solid rgba(16, 185, 129, 0.15); border-radius: 12px; padding: 12px 10px; text-align: center;">
-              <span style="font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Earned Commission</span>
+            <div style="background: var(--success-light); border: 1px solid rgba(16, 185, 129, 0.15); border-radius: 12px; padding: 12px 10px; text-align: center;" id="payout-stat-earned-card">
+              <span style="font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;" id="payout-stat-earned-label">Earned Commission</span>
               <strong id="payout-stat-earned" style="font-size: 1.1rem; color: var(--success); font-weight: 850;">৳0</strong>
             </div>
           </div>
@@ -1022,7 +1022,7 @@
               <strong id="payout-stat-paid" style="font-size: 1.1rem; color: var(--accent); font-weight: 850;">৳0</strong>
             </div>
             <div style="background: var(--warning-light); border: 1px solid rgba(245, 158, 11, 0.15); border-radius: 12px; padding: 12px 10px; text-align: center;" id="payout-stat-balance-card">
-              <span style="font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Pending Balance</span>
+              <span style="font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;" id="payout-stat-balance-label">Pending Balance</span>
               <strong id="payout-stat-balance" style="font-size: 1.1rem; color: var(--warning); font-weight: 850;">৳0</strong>
             </div>
           </div>
@@ -1183,6 +1183,9 @@
     // State parameters
     let currentModeratorName = "";
     let selectedProductId = "p1_white";
+    let unsubscribeConfig = null;
+    let isExcludedFromPayout = false;
+    let cachedCompletedOrdersCount = 0;
 
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
@@ -1316,6 +1319,12 @@
           // Unsubscribe current database listeners
           if (unsubscribeOrders) { unsubscribeOrders(); unsubscribeOrders = null; }
           if (unsubscribePayouts) { unsubscribePayouts(); unsubscribePayouts = null; }
+          if (unsubscribeConfig) { unsubscribeConfig(); unsubscribeConfig = null; }
+          isExcludedFromPayout = false;
+          cachedCompletedOrdersCount = 0;
+          
+          const badge = document.getElementById("bar-mod-badge");
+          if (badge) badge.style.display = "none";
         }
         
         // Hide loading state overlay nicely
@@ -1540,6 +1549,21 @@
 
       if (unsubscribeOrders) unsubscribeOrders();
       if (unsubscribePayouts) unsubscribePayouts();
+      if (unsubscribeConfig) unsubscribeConfig();
+
+      // Subscribe to exclusion configs in real-time
+      const configRef = ref(db, `moderator_configs/${currentModeratorName}`);
+      unsubscribeConfig = onValue(configRef, (snapshot) => {
+        const configVal = snapshot.val();
+        isExcludedFromPayout = (configVal && configVal.excludeFromPayout) ? true : false;
+        
+        const badge = document.getElementById("bar-mod-badge");
+        if (badge) {
+          badge.style.display = isExcludedFromPayout ? "inline-block" : "none";
+        }
+        
+        loadPayoutsAndRender(cachedCompletedOrdersCount);
+      });
 
       const ordersRef = ref(db, 'orders');
       unsubscribeOrders = onValue(ordersRef, (snapshot) => {
@@ -1588,6 +1612,7 @@
         renderRecentHistory(historyData.slice(0, 10));
 
         // Load payouts and render
+        cachedCompletedOrdersCount = completedOrdersCount;
         loadPayoutsAndRender(completedOrdersCount);
       });
     }
@@ -1613,8 +1638,8 @@
 
         // Calculate values based on 20 TK per sale
         const COMMISSION_RATE = 20;
-        const earned = completedOrdersCount * COMMISSION_RATE;
-        const outstanding = earned - totalPaid;
+        const earned = isExcludedFromPayout ? 0 : (completedOrdersCount * COMMISSION_RATE);
+        const outstanding = isExcludedFromPayout ? 0 : (earned - totalPaid);
 
         // Render to UI elements
         document.getElementById("payout-stat-delivered").textContent = completedOrdersCount;
@@ -1624,18 +1649,62 @@
         const balanceField = document.getElementById("payout-stat-balance");
         balanceField.textContent = "৳" + outstanding.toLocaleString();
 
+        const earnedCard = document.getElementById("payout-stat-earned-card");
+        const earnedLabel = document.getElementById("payout-stat-earned-label");
+        const earnedField = document.getElementById("payout-stat-earned");
         const balanceCard = document.getElementById("payout-stat-balance-card");
-        if (outstanding <= 0) {
-          balanceField.style.color = "var(--success)";
+        const balanceLabel = document.getElementById("payout-stat-balance-label");
+
+        if (isExcludedFromPayout) {
+          // Purple glassmorphic styling for Staff
+          if (earnedCard) {
+            earnedCard.style.background = "rgba(139, 92, 246, 0.08)";
+            earnedCard.style.borderColor = "rgba(139, 92, 246, 0.2)";
+          }
+          if (earnedLabel) {
+            earnedLabel.textContent = "Staff (No Commission)";
+          }
+          if (earnedField) {
+            earnedField.style.color = "#8b5cf6";
+          }
           if (balanceCard) {
-            balanceCard.style.background = "var(--success-light)";
-            balanceCard.style.borderColor = "rgba(16, 185, 129, 0.15)";
+            balanceCard.style.background = "rgba(139, 92, 246, 0.08)";
+            balanceCard.style.borderColor = "rgba(139, 92, 246, 0.2)";
+          }
+          if (balanceLabel) {
+            balanceLabel.textContent = "Staff (No Payouts)";
+          }
+          if (balanceField) {
+            balanceField.style.color = "#8b5cf6";
           }
         } else {
-          balanceField.style.color = "var(--warning)";
-          if (balanceCard) {
-            balanceCard.style.background = "var(--warning-light)";
-            balanceCard.style.borderColor = "rgba(245, 158, 11, 0.15)";
+          // Standard styling
+          if (earnedCard) {
+            earnedCard.style.background = "var(--success-light)";
+            earnedCard.style.borderColor = "rgba(16, 185, 129, 0.15)";
+          }
+          if (earnedLabel) {
+            earnedLabel.textContent = "Earned Commission";
+          }
+          if (earnedField) {
+            earnedField.style.color = "var(--success)";
+          }
+          if (balanceLabel) {
+            balanceLabel.textContent = "Pending Balance";
+          }
+
+          if (outstanding <= 0) {
+            balanceField.style.color = "var(--success)";
+            if (balanceCard) {
+              balanceCard.style.background = "var(--success-light)";
+              balanceCard.style.borderColor = "rgba(16, 185, 129, 0.15)";
+            }
+          } else {
+            balanceField.style.color = "var(--warning)";
+            if (balanceCard) {
+              balanceCard.style.background = "var(--warning-light)";
+              balanceCard.style.borderColor = "rgba(245, 158, 11, 0.15)";
+            }
           }
         }
 
