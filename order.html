@@ -93,7 +93,7 @@
           </div>
           <div class="summary-row">
             <span id="shipping-label">Shipping</span>
-            <strong id="summary-shipping">৳29</strong>
+            <strong id="summary-shipping">Free</strong>
           </div>
           <div class="summary-total summary-row">
             <span>Total Amount</span>
@@ -303,10 +303,13 @@
           if (itemsList.length === 1 && itemsList[0].color) {
             color = itemsList[0].color;
           } else if (itemsStr.includes('black')) {
-            color = "Black";
+            color = "Classic Black";
           } else if (itemsStr.includes('white')) {
-            color = "White";
+            color = "Classic White";
           }
+
+          if (color.toLowerCase().trim() === 'white') color = 'Classic White';
+          if (color.toLowerCase().trim() === 'black') color = 'Classic Black';
 
           const orderData = {
             customer: {

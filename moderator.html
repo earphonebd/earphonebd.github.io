@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚡ Rapid Moderator Workspace | Earphone BD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent: #2563eb;
+      --accent-light: #eff6ff;
+      --accent-hover: #1d4ed8;
+      --success: #10b981;
+      --success-light: #ecfdf5;
+      --warning: #f59e0b;
+      --border-color: #e2e8f0;
+      --border-focus: #3b82f6;
+      --danger: #ef4444;
+    }
+
+    body {
+      background: var(--bg);
+      background-image: radial-gradient(circle at top right, rgba(37, 99, 235, 0.04), transparent 400px),
+                        radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.02), transparent 450px);
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      margin: 0;
+      padding: 10px;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      box-sizing: border-box;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 680px;
+      margin: 15px auto;
+    }
+
+    /* Minimalist Top Status Strip */
+    .top-status-bar {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 14px 20px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.02);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .mod-greet {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-main);
+    }
+
+    .btn-edit-name {
+      background: var(--accent-light);
+      border: 1px solid rgba(37, 99, 235, 0.15);
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-edit-name:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    .session-stats-bar {
+      display: flex;
+      gap: 15px;
+      color: var(--text-muted);
+    }
+
+    .session-stats-bar span strong {
+      color: var(--text-main);
+    }
+
+    /* Identity Prompt Bar */
+    .identity-prompt-bar {
+      background: var(--accent-light);
+      border: 1px solid rgba(37, 99, 235, 0.15);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.02);
+    }
+
+    .identity-prompt-bar h4 {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .identity-flex {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Compact Main Form Card */
+    .form-card {
+      background: var(--card-bg);
+      border-radius: 28px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+      border: 1px solid var(--border-color);
+      box-sizing: border-box;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 18px;
+      margin-bottom: 20px;
+    }
+
+    .card-header h2 {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-header p {
+      margin: 4px 0 0 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .form-section-title {
+      font-size: 0.78rem;
+      font-weight: 900;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 24px 0 14px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-section-title::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background: var(--border-color);
+    }
+
+    /* Grid helpers */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    @media (max-width: 500px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 15px;
+    }
+
+    .input-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .input-field {
+      padding: 12px 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      outline: none;
+      color: var(--text-main);
+      background: #ffffff;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    .input-field:focus {
+      border-color: var(--border-focus);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    /* Phone checkmark visual highlight */
+    .input-field.valid-phone {
+      border-color: var(--success) !important;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1) !important;
+    }
+
+    /* Product Grid Selectors */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .product-card {
+      background: #ffffff;
+      border: 2px solid var(--border-color);
+      border-radius: 14px;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 125px;
+      box-sizing: border-box;
+    }
+
+    .product-card:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-2px);
+    }
+
+    .product-card.active {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.08);
+    }
+
+    .product-card img {
+      width: 55px;
+      height: 55px;
+      object-fit: contain;
+      margin-bottom: 6px;
+    }
+
+    .product-card .prod-title {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.3;
+      margin-bottom: 2px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-card .prod-meta {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .product-card .prod-price {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .product-card .checkmark {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .product-card.active .checkmark {
+      opacity: 1;
+    }
+
+    /* Qty Counter Buttons Widget & Presets */
+    .qty-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .qty-counter {
+      display: flex;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+      height: 45px;
+    }
+
+    .qty-btn {
+      background: none;
+      border: none;
+      width: 45px;
+      font-size: 1.3rem;
+      font-weight: 800;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: background 0.2s;
+    }
+
+    .qty-btn:hover {
+      background: #f1f5f9;
+      color: var(--text-main);
+    }
+
+    .qty-val-input {
+      flex-grow: 1;
+      border: none;
+      background: transparent;
+      text-align: center;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      width: 40px;
+      outline: none;
+    }
+
+    .qty-presets {
+      display: flex;
+      gap: 6px;
+    }
+
+    .preset-pill {
+      flex: 1;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px 0;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      outline: none;
+    }
+
+    .preset-pill:hover {
+      background: #f1f5f9;
+      color: var(--text-main);
+    }
+
+    .preset-pill.active {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Dynamic Billing Card */
+    .billing-summary {
+      background: #f8fafc;
+      border: 1px dashed var(--border-color);
+      border-radius: 18px;
+      padding: 18px;
+      margin: 24px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .bill-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .bill-row.total {
+      border-top: 1px dashed var(--border-color);
+      padding-top: 12px;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--text-main);
+    }
+
+    .bill-row.total span:last-child {
+      color: var(--accent);
+    }
+
+    /* Giant submission button */
+    .btn-submit {
+      width: 100%;
+      background: var(--success);
+      color: white;
+      border: none;
+      padding: 16px 20px;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
+    }
+
+    .btn-submit:hover {
+      background: #059669;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    /* Collapsible History Section at Bottom */
+    .collapsible-container {
+      margin-top: 20px;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      background: var(--card-bg);
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.02);
+    }
+
+    .collapsible-trigger {
+      width: 100%;
+      padding: 15px 20px;
+      background: transparent;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      outline: none;
+      transition: color 0.2s;
+    }
+
+    .collapsible-trigger:hover {
+      color: var(--text-main);
+    }
+
+    .collapsible-content {
+      max-height: 0;
+      overflow-y: auto;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      background: #f8fafc;
+      border-top: 0 solid var(--border-color);
+    }
+
+    .collapsible-content.expanded {
+      max-height: 380px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .history-list {
+      padding: 12px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .history-item {
+      background: var(--card-bg);
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s;
+    }
+
+    .history-item:hover {
+      border-color: #cbd5e1;
+    }
+
+    .history-meta h5 {
+      margin: 0;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .history-meta p {
+      margin: 4px 0 0 0;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .history-price {
+      text-align: right;
+      font-weight: 900;
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+
+    /* Alert Toast Element */
+    .toast-popup {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: var(--success);
+      color: white;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 100000;
+    }
+
+    .toast-popup.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* --- Premium Mobile Optimization Custom Styles --- */
+    .grid-2-preserve {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .grid-2-address-shipping {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 15px;
+    }
+
+    .grid-preserve-qty {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 15px;
+    }
+
+    .submit-action-container {
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    @media (max-width: 600px) {
+      .input-field {
+        font-size: 16px !important; /* Force 16px to prevent iOS Safari auto-zoom behavior */
+        padding: 10px 14px;
+        border-radius: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 6px;
+      }
+
+      .wrapper {
+        margin: 5px auto 95px auto; /* 95px bottom margin to clear the floating/sticky bottom bar */
+      }
+
+      .form-card {
+        padding: 16px;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(15, 23, 42, 0.02);
+      }
+
+      .card-header {
+        padding-bottom: 12px;
+        margin-bottom: 15px;
+      }
+
+      .card-header h2 {
+        font-size: 1.2rem;
+      }
+
+      .card-header p {
+        font-size: 0.75rem;
+      }
+
+      .form-section-title {
+        font-size: 0.72rem;
+        margin: 18px 0 10px 0;
+        letter-spacing: 0.5px;
+      }
+
+      /* Compact preservers for grid fields on mobile */
+      .grid-2-preserve {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .grid-2-address-shipping {
+        grid-template-columns: 1.6fr 1fr;
+        gap: 8px;
+      }
+
+      .grid-preserve-qty {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .product-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .product-card {
+        min-height: 115px;
+        padding: 8px;
+        border-radius: 10px;
+      }
+
+      .product-card img {
+        width: 46px;
+        height: 46px;
+        margin-bottom: 4px;
+      }
+
+      .product-card .prod-title {
+        font-size: 0.7rem;
+        line-height: 1.25;
+      }
+
+      .product-card .prod-meta {
+        font-size: 0.58rem;
+        margin-bottom: 4px;
+      }
+
+      .product-card .prod-price {
+        font-size: 0.8rem;
+      }
+
+      .qty-counter {
+        height: 40px;
+        border-radius: 10px;
+      }
+
+      .qty-btn {
+        width: 40px;
+        font-size: 1.15rem;
+      }
+
+      .qty-presets {
+        gap: 4px;
+      }
+
+      .preset-pill {
+        padding: 6px 0;
+        font-size: 0.72rem;
+        border-radius: 6px;
+      }
+
+      .billing-summary {
+        padding: 12px 14px;
+        margin: 18px 0;
+        border-radius: 12px;
+        gap: 8px;
+      }
+
+      .bill-row {
+        font-size: 0.8rem;
+      }
+
+      .bill-row.total {
+        font-size: 1.05rem;
+        padding-top: 10px;
+      }
+
+      /* Premium Mobile Sticky Footer Submission Drawer */
+      .submit-action-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: var(--card-bg);
+        border-top: 1px solid var(--border-color);
+        padding: 10px 14px;
+        box-sizing: border-box;
+        z-index: 99999;
+        box-shadow: 0 -8px 25px rgba(15, 23, 42, 0.05);
+      }
+
+      .btn-submit {
+        padding: 13px 18px;
+        font-size: 0.95rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
+      }
+
+      /* Compact session greeting */
+      .top-status-bar {
+        padding: 10px 14px;
+        border-radius: 14px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        font-size: 0.82rem;
+        margin-bottom: 12px;
+      }
+
+      .session-stats-bar {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        border-top: 1px solid var(--border-color);
+        padding-top: 6px;
+      }
+
+      .identity-prompt-bar {
+        padding: 14px;
+        border-radius: 16px;
+        margin-bottom: 12px;
+        gap: 8px;
+      }
+
+      .identity-prompt-bar h4 {
+        font-size: 0.85rem;
+      }
+
+      .identity-flex {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .identity-flex .btn-submit {
+        width: 100%;
+        height: 44px;
+      }
+
+      .collapsible-container {
+        border-radius: 14px;
+        margin-top: 15px;
+      }
+
+      .collapsible-trigger {
+        padding: 12px 16px;
+        font-size: 0.82rem;
+      }
+
+      .toast-popup {
+        bottom: 75px; /* Shift up to clear mobile sticky submit footer */
+        left: 15px;
+        right: 15px;
+        padding: 12px 20px;
+        font-size: 0.82rem;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    
+    <!-- Top Greeting Status Strip (Shown when logged-in) -->
+    <div id="status-bar" class="top-status-bar" style="display: none;">
+      <div class="mod-greet">
+        <span>👋 Hello, <strong id="bar-mod-name" style="color: var(--accent);">-</strong></span>
+        <button onclick="editProfileName()" class="btn-edit-name">✎ Change</button>
+      </div>
+      <div class="session-stats-bar">
+        <span>Today: <strong id="stat-count">0</strong> Orders</span>
+        <span>Sales: <strong id="stat-sales" style="color: var(--success);">৳0</strong></span>
+      </div>
+    </div>
+
+    <!-- Identity Config Prompt (Shown only when NO profile is set) -->
+    <div id="identity-prompt" class="identity-prompt-bar" style="display: none;">
+      <h4>🎙️ Setup Your Moderator Profile (একবার প্রোফাইল নাম লিখুন)</h4>
+      <div class="identity-flex">
+        <input type="text" id="setup-mod-name" class="input-field" placeholder="যেমন: Sajida, Tania, Sadia..." style="background: #ffffff;">
+        <button onclick="saveProfileName()" class="btn-submit" style="width: auto; padding: 0 20px; white-space: nowrap; height: 48px;">Set Identity</button>
+      </div>
+    </div>
+
+    <!-- Main Order Entry Card -->
+    <div class="form-card">
+      <div class="card-header">
+        <div>
+          <h2>⚡ Rapid Order Entry</h2>
+          <p>Ultra-Fast Customer Sheet • Phone Order Mode</p>
+        </div>
+        <div style="font-size: 1.8rem;">🎙️</div>
+      </div>
+
+      <form id="order-form" autocomplete="off">
+        
+        <!-- SECTION 1: Customer Details -->
+        <div class="form-section-title">👤 Customer Information</div>
+        
+        <div class="grid-2">
+          <div class="input-group">
+            <label class="input-label" for="cust-name">Customer Name *</label>
+            <input type="text" id="cust-name" class="input-field" placeholder="কাস্টমারের নাম" required autofocus>
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="cust-phone">Phone Number *</label>
+            <input type="tel" id="cust-phone" class="input-field" placeholder="01XXXXXXXXX" required inputmode="tel">
+          </div>
+        </div>
+
+        <!-- SECTION 2: Shipping Destination -->
+        <div class="form-section-title">🚚 Delivery Destination</div>
+        
+        <div class="grid-2 grid-2-preserve">
+          <div class="input-group">
+            <label class="input-label" for="delivery-district">Select District *</label>
+            <input type="text" id="delivery-district" list="districts" class="input-field" placeholder="যেমন: ঢাকা বা dhaka..." required>
+            <datalist id="districts"></datalist>
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="delivery-thana">Select Thana/Upazila *</label>
+            <input type="text" id="delivery-thana" list="thanas" class="input-field" placeholder="থানা/উপজেলা..." required>
+            <datalist id="thanas"></datalist>
+          </div>
+        </div>
+
+        <div class="grid-2-address-shipping">
+          <div class="input-group">
+            <label class="input-label" for="cust-address">Detailed Shipping Address *</label>
+            <input type="text" id="cust-address" class="input-field" placeholder="গ্রাম, রোড, বাসা নং, ইউনিয়ন..." required>
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="shipping-cost">Delivery Charge (৳) *</label>
+            <input type="number" id="shipping-cost" class="input-field" value="0" min="0" required inputmode="numeric">
+          </div>
+        </div>
+
+        <!-- Hidden elements for compatibility -->
+        <input type="hidden" id="shipping-area" value="outside_dhaka">
+
+        <!-- SECTION 3: Product Info -->
+        <div class="form-section-title">🛍️ Product Quick Selector</div>
+        
+        <!-- visual grid selector instead of boring dropdown -->
+        <div id="product-grid" class="product-grid"></div>
+
+        <div class="grid-preserve-qty">
+          <div class="input-group">
+            <label class="input-label" for="prod-price">Selling Unit Price (৳) *</label>
+            <input type="number" id="prod-price" class="input-field" required inputmode="numeric">
+          </div>
+          <div class="input-group qty-row">
+            <label class="input-label">Quantity Ordered *</label>
+            <div class="qty-counter">
+              <button type="button" class="qty-btn" onclick="adjustQty(-1)">−</button>
+              <input type="number" id="prod-qty" class="qty-val-input" value="1" min="1" readonly>
+              <button type="button" class="qty-btn" onclick="adjustQty(1)">+</button>
+            </div>
+            <div class="qty-presets">
+              <button type="button" class="preset-pill active" onclick="setQtyPreset(1)">1 Pcs</button>
+              <button type="button" class="preset-pill" onclick="setQtyPreset(2)">2 Pcs</button>
+              <button type="button" class="preset-pill" onclick="setQtyPreset(3)">3 Pcs</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label" for="order-note">Order Notes / Instructions (Optional)</label>
+          <input type="text" id="order-note" class="input-field" placeholder="ডেলিভারি সংক্রান্ত নির্দেশনা, IMO, Messenger...">
+        </div>
+
+        <!-- Live Billing Summary -->
+        <div class="billing-summary">
+          <div class="bill-row">
+            <span>Subtotal:</span>
+            <span id="summary-subtotal">৳0</span>
+          </div>
+          <div class="bill-row">
+            <span>Shipping Cost (<span id="shipping-zone-label">Outside Dhaka</span>):</span>
+            <span id="summary-shipping">৳0</span>
+          </div>
+          <div class="bill-row total">
+            <span>Grand Total:</span>
+            <span id="summary-total">৳0</span>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="submit-action-container">
+          <button type="submit" class="btn-submit">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            <span>Confirm & Save Order (৳<span id="btn-total-val">0</span>)</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- Collapsible Recent Orders History -->
+    <div class="collapsible-container">
+      <button class="collapsible-trigger" onclick="toggleHistory()">
+        <span>📋 Show/Hide Today's Entries (আজকের অর্ডারের তালিকা)</span>
+        <span id="arrow-icon">▼</span>
+      </button>
+      <div id="history-content" class="collapsible-content">
+        <div id="orders-history-container" class="history-list">
+          <p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 20px 0; margin: 0;">প্রোফাইল সেট করে অর্ডার সেভ করলেই এখানে তালিকা চলে আসবে।</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Custom Beautiful Toast Elements -->
+  <div id="custom-toast" class="toast-popup">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <span id="toast-text">Order saved successfully!</span>
+  </div>
+
+  <!-- Realtime Script and Logic with Firebase Client SDK Integrations -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+    import { getDatabase, ref, onValue, push, update } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+
+    // 1. Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAdE8jMo0ZNqkK-JSERuY88i0cxAOlkA3w",
+      authDomain: "earphone-bd.firebaseapp.com",
+      projectId: "earphone-bd",
+      storageBucket: "earphone-bd.firebasestorage.app",
+      messagingSenderId: "561559779888",
+      appId: "1:561559779888:web:e135f613c914ad4ac4cbf5",
+      databaseURL: "https://earphone-bd-default-rtdb.asia-southeast1.firebasedatabase.app"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Bangladeshi Districts and Thana/Upazila database
+    const bdLocations = {
+      "কক্সবাজার": ["উখিয়া", "কক্সবাজার সদর", "কুতুবদিয়া", "চকরিয়া", "টেকনাফ", "পেকুয়া", "মহেশখালী", "রামু"],
+      "কিশোরগঞ্জ": ["অষ্টগ্রাম", "ইটনা", "কটিয়াদী", "করিমগঞ্জ", "কিশোরগঞ্জ সদর", "কুলিয়ারচর", "তাড়াইল", "নিকলী", "পাকুন্দিয়া", "বাজিতপুর", "ভৈরব", "মিঠামইন", "হোসেনপুর"],
+      "কুড়িগ্রাম": ["উলিপুর", "কুড়িগ্রাম সদর", "চিলমারী", "নাগেশ্বরী", "ফুলবাড়ী", "ভুরুঙ্গামারী", "রাজারহাট", "রাজিবপুর", "রৌমারী"],
+      "কুমিল্লা": ["কুমিল্লা সদর", "কুমিল্লা সদর দক্ষিণ", "চান্দিনা", "চৌদ্দগ্রাম", "তিতাস", "দাউদকান্দি", "দেবিদ্বার", "নাঙ্গলকোট", "বরুড়া", "বুড়িচং", "ব্রাহ্মণপাড়া", "মনোহরগঞ্জ", "মুরাদনগর", "মেঘনা", "লাকসাম", "হোমনা"],
+      "কুষ্টিয়া": ["कुमारখালী", "কুষ্টিয়া সদর", "খোকসা", "দৌলতপুর", "ভেড়ামারা", "মিরপুর"],
+      "খাগড়াছড়ি": ["খাগড়াছড়ি সদর", "দিঘীনালা", "পানছড়ি", "মহালছড়ি", "মাটিরাঙ্গা", "মানিকছড়ি", "রামগড়", "লক্ষ্মীছড়ি"],
+      "খুলনা": ["কয়রা", "ডুমুরিয়া", "তেরখাদা", "দাকোপ", "দিঘলিয়া", "পাইকগাছা", "ফুলতলা", "বটিয়াঘাটা", "রূপসা"],
+      "গাইবান্ধা": ["গাইবান্ধা সদর", "গোবিন্দগঞ্জ", "পলাশবাড়ী", "ফুলছড়ি", "সাঘাটা", "সাদুল্লাপুর", "সুন্দরগঞ্জ"],
+      "গোপালগঞ্জ": ["কাশিয়ানী", "কোটালীপাড়া", "গোপালগঞ্জ সদর", "টুংগীপাড়া", "مুকসুদপুর"],
+      "গাজীপুর": ["কাপাসিয়া", "কালিয়াকৈর", "কালীগঞ্জ", "গাজীপুর সদর", "টঙ্গী", "শ্রীপুর"],
+      "চট্টগ্রাম": ["আনোয়ারা", "চন্দনাইশ", "পটিয়া", "ফটিকছড়ি", "বাঁশখালী", "বোয়ালখালী", "মীরসরাই", "রাউজান", "রাঙ্গুনিয়া", "লোহাগড়া", "সন্দ্বীপ", "সাতকানিয়া", "সীতাকুন্ড", "হাটহাজারী"],
+      "চাঁদপুর": ["কচুয়া", "চাঁদপুর সদর", "ফریدগঞ্জ", "মতলব উত্তর", "মতলব দক্ষিণ", "शाहরাস্তি", "হাইমচর", "হাজীগঞ্জ"],
+      "চাঁপাইনবাবগঞ্জ": ["গোমস্তাপুর", "নবাবগঞ্জ সদর", "নাচোল", "ভোলাহাট", "শিবগঞ্জ"],
+      "চুয়াডাঙ্গা": ["আলমডাঙ্গা", "চুয়াডাঙ্গা সদর", "জীবননগর", "দামুড়হুদা"],
+      "জয়পুরহাট": ["আক্কেলপুর", "কালাই", "ক্ষেতলাল", "জয়পুরহাট সদর", "পাঁচবিবি"],
+      "জামালপুর": ["ইসলামপুর", "জামালপুর সদর", "দেওয়ানগঞ্জ", "নারুন্দি police IC", "বকশীগঞ্জ", "মাদারগঞ্জ", "মেলান্দহ", "সরিষাবাড়ী"],
+      "ঝালকাঠি": ["কাঠালিয়া", "ঝালকাঠি সদর", "নলছিটি", "রাজাপুর"],
+      "ঝিনাইদহ": ["কালীগঞ্জ", "কোটচাঁদপুর", "ঝিনাইদহ সদর", "মহেশপুর", "শৈলকুপা", "হরিণাকুণ্ড"],
+      "টাঙ্গাইল": ["কালিহাতী", "গোপালপুর", "ঘাটাইল", "টাঙ্গাইল সদর", "দেলদুয়ার", "ধনবাড়ী", "নাগরপুর", "বাসাইল", "ভুয়াপুর", "مধুপুর", "মির্জাপুর", "সখিপুর"],
+      "ঠাকুরগাঁও": ["ঠাকুরগাঁও সদর", "পীরগঞ্জ", "বালিয়াডাঙ্গী", "রাণীশংকৈল", "হরিপুর"],
+      "ঢাকা": ["আদাবর", "উত্তরা", "কেরাণীগঞ্জ", "ক্যান্টনমেন্ট", "খিলগাঁও", "গুলশান", "তেজগাঁও", "দোহার", "ধানমন্ডি", "ধামরাই", "নবাবগঞ্জ", "নিউ মার্কেট", "পল্লবী", "বাড্ডা", "মতিঝিল", "মিরপুর", "মোহাম্মদপুর", "যাত্রাবাড়ী", "রমনা", "শাহবাগ", "সবুজবাগ", "সাভার"],
+      "দিনাজপুর": ["কাহারোল", "খানسامা", "ঘোড়াঘাট", "চিরিরবন্দর", "দিনাজপুর সদর", "নবাবগঞ্জ", "পার্বতীপুর", "ফুলবাড়ী", "বিরল", "বিরামপুর", "বীরগঞ্জ", "বোচাগঞ্জ", "হাকিমপুর"],
+      "নওগাঁ": ["আত্রai", "ধামইরহাট", "নওগাঁ সদর", "নিয়ামতপুর", "পত্নিতলা", "পোরশা", "বদলগাছী", "মহাদেবপুর", "মান্দা", "রাণীনগর", "সাপাহার"],
+      "নড়াইল": ["কালিয়া", "নড়াইল সদর", "লোহাগড়া"],
+      "নরসিংদী": ["নরসীংদী সদর", "পলাশ", "বেলাবো", "মনোহরদী", "রায়পুরা", "শিবপুর"],
+      "নাটোর": ["নাটোর সদর", "বড়াইগ্রাম", "বাগাতিপাড়া", "লালপুর"],
+      "নারায়ণগঞ্জ": ["আড়াইহাজার", "নারায়ণগঞ্জ সদর", "বন্দর", "রূপগঞ্জ", "সিদ্ধিরগঞ্জ", "সোনারগাঁ"],
+      "নীলফামারী": ["কিশোরগঞ্জ", "জলঢাকা", "ডিমলা", "ডোমার", "নীলফামারী সদর", "সৈয়দপুর"],
+      "নেত্রকোণা": ["আটপাড়া", "কলমাকান্দা", "কেন্দুয়া", "খালিয়াজুরী", "দুর্গাপুর", "নেত্রকোণা সদর", "পূর্বধলা", "বারহাট্টা", "মদন", "মোহনগঞ্জ"],
+      "নোয়াখালী": ["কবিরহাট", "কোম্পানীগঞ্জ", "চাটখিল", "নোয়াখালী সদর", "বেগমগঞ্জ", "সুবর্ণচর", "সেনবাগ", "সোনাইমুড়ী", "হাতিয়া"],
+      "পঞ্চগড়": ["আটোয়ারী", "তেতুলিয়া", "দেবীগঞ্জ", "পঞ্চগড় সদর", "বোদা"],
+      "পটুয়াখালী": ["কলাপাড়া", "গলাচিপা", "দশমিনা", "দুমকি", "পটুয়াখালী সদর", "বাউফল", "মির্জাগঞ্জ", "রাঙ্গাবালী"],
+      "পাবনা": ["আটঘরিয়া", "ঈশ্বরদী", "চাটমোহর", "পাবনা সদর", "ফریدপুর", "বেড়া", "ভাঙ্গুড়া", "সাঁথিয়া", "সুজানগর"],
+      "পিরোজপুর": ["কাউখালী", "জিয়ানগর", "নাজিরপুর", "নেছারাবাদ", "পিরোজপুর সদর", "ভান্ডারিয়া", "মঠবাড়ীয়া"],
+      "ফریدপুর": ["আলফাডাঙ্গা", "চরভদ্রাসন", "নগরকান্দা", "ফریدপুর সদর", "বোয়ালমারী", "ভাঙ্গা", "মধুখালী", "সদরপুর", "সালथा"],
+      "ফেনী": ["ছাগলনাইয়া", "দাগনভূঞা", "পরশুরাম", "ফুলগাজী", "ফেনী সদর", "সোনাগাজী"],
+      "বরগুনা": ["আমতলী", "তালতলি", "পাথরঘাটা", "বরগুনা সদর", "বামনা", "বেতাগী"],
+      "বরিশাল": ["আগৈলঝাড়া", "উজিরপুর", "গৌরনদী", "বরিশাল সদর", "বাকেরগঞ্জ", "বানারীপাড়া", "বাবুগঞ্জ", "মুলাদী", "মেহেন্দিগঞ্জ", "হিজলা"],
+      "বাগেরহাট": ["কচুয়া", "চিতলমারী", "ফকিরহাট", "বাগেরহাট সদর", "মোংলা", "মোড়েলগঞ্জ", "মোল্লাহাট", "রামপাল", "শরণখোলা"],
+      "বান্দরবান": ["আলীকদম", "থানচি", "নাইক্ষ্যংছড়ি", "বান্দরবান সদর", "রুমা", "রোয়াংছড়ি", "লামা"],
+      "ব্রাহ্মণবাড়িয়া": ["আখাউড়া", "আশুগঞ্জ", "কসবা", "নবীনগর", "নাসিরনগর", "বাঞ্ছারামপুর", "বিজয়নগর", "ব্রাহ্মণবাড়িয়া সদর", "শাহবাজপুর টাউন", "সরাইল"],
+      "ভোলা": ["চরফ্যাশন", "তজুমদ্দিন", "দৌলতখান", "বোরহানউদ্দিন", "ভোলা সদর", "মনপুরা", "লালমোহন"],
+      "মাগুরা": ["মাগুরা সদর", "মোহাম্মদপুর", "শালিখা", "শ্রীপুর"],
+      "মাদারীপুর": ["কালকিনি", "মাদারীপুর সদর", "রাজৈর", "শিবচর"],
+      "মানিকগঞ্জ": ["ঘিওর", "দৌলতপুর", "মানিকগঞ্জ সদর", "শিবালয়", "সাটুরিয়া", "সিঙ্গাইর", "হরিরামপুর"],
+      "মুন্সীগঞ্জ": ["গজারিয়া", "টংগীবাড়ি", "মুন্সীগঞ্জ সদর", "লৌহজং", "শ্রীনগর", "সিরাজদিখান"],
+      "মেহেরপুর": ["গাংনী", "মুজিবনগর", "মেহেরপুর সদর"],
+      "مৌলভীবাজার": ["কমলগঞ্জ", "কুলাউড়া", "জুড়ী", "বড়লেখা", "মৌলভীবাজার সদর", "রাজনগর", "শ্রীমঙ্গল"],
+      "যশোর": ["অভয়নগর", "কেশবপুর", "চৌগাছা", "ঝিকরগাছা", "বাঘারপাড়া", "مণিরামপুর", "যশোর সদর", "শার্ষা"],
+      "রংপুর": ["কাউনিয়া", "গংগাচড়া", "তারাগঞ্জ", "পীরগঞ্জ", "পীরগাছা", "বদরগঞ্জ", "মিঠাপুকুর", "রংপুর সদর"],
+      "রাঙ্গামাটি": ["কাউখালী", "কাপ্তাই", "জুরাছড়ি", "নানিয়ারচর", "বরকল", "বাঘাইছড়ি", "বিলাইছড়ি", "রাঙ্গামাটি সদর", "রাজস্থলী", "লংগদু"],
+      "রাজবাড়ী": ["কালুখালী", "গোয়ালন্দ", "পাংশা", "বালিয়াকান্দি", "রাজবাড়ী সদর"],
+      "রাজশাহী": ["গোদাগাড়ী", "চারঘাট", "তানোর", "দুর্গাপুর", "পবা", "পুঠিয়া", "বাগমারা", "বাঘা", "মোহনপুর"],
+      "লক্ষ্মীপুর": ["কমলনগর", "রামগঞ্জ", "রামগতি", "রায়পুর", "লক্ষ্মীপুর সদর"],
+      "লালমনিরহাট": ["আদিতমারী", "কালীগঞ্জ", "পাটগ্রাম", "লালমনিরহাট সদর", "হাতীবান্ধা"],
+      "শরীয়তপুর": ["গোসাইরহাট", "জাজিরা", "ডামুড্যা", "নড়িয়া", "ভেদরগঞ্জ", "শরীয়তপুর সদর"],
+      "শেরপুর": ["ঝিনাইগাতী", "নকলা", "নালিতাবাড়ী", "শেরপুর সদর", "শ্রীবরদী"],
+      "সাতক্ষীরা": ["আশাশুনি", "কলারোয়া", "কালীগঞ্জ", "তালা", "দেবহাটা", "শ্যামনগর", "সাতক্ষীরা সদর"],
+      "সিরাজগঞ্জ": ["উল্লাপাড়া", "কাজীপুর", "কামারখন্দ", "চৌহালি", "তাড়াশ", "বেলকুচি", "রায়গঞ্জ", "শাহজাদপুর", "সিরাজগঞ্জ সদর"],
+      "সিলেট": ["কানাইঘাট", "কোম্পানীগঞ্জ", "গোয়াইনঘাট", "গোলাপগঞ্জ", "জکیগঞ্জ", "জৈنتাপুর", "দক্ষিণ সুরমা", "নবীগঞ্জ", "ফেঞ্চুগঞ্জ", "বালাগঞ্জ", "বিয়ানীবাজার", "বিশ্বনাথ", "সিলেট সদর"],
+      "সুনামগঞ্জ": ["ছাতক", "জগন্নাথপুর", "জামালগঞ্জ", "তাহিরপুর", "দিরাই", "দোয়ারাবাজার", "ধর্মপাশা", "বিশ্বম্ভরপুর", "শান্তিগঞ্জ", "শাল্লা", "সুনামগঞ্জ সদর"],
+      "হবিগঞ্জ": ["আজমিরীগঞ্জ", "চুনারুঘাট", "নবীগঞ্জ", "বানিয়াচং", "বাহুবল", "মাধবপুর", "লাখাই", "শায়েস্তাগঞ্জ", "হবিগঞ্জ সদর"]
+    };
+
+    // English to Bangla district conversion mapping for smart transliteration entry
+    const englishToBanglaDistricts = {
+      "dhaka": "ঢাকা", "gazipur": "গাজীপুর", "narayanganj": "নারায়ণগঞ্জ", "tangail": "টাঙ্গাইল",
+      "faridpur": "ফریدপুর", "gopalganj": "গোপালগঞ্জ", "kishoreganj": "কিশোরগঞ্জ", "madaripur": "মাদারীপুর",
+      "manikganj": "মানিকগঞ্জ", "munshiganj": "মুন্সীগঞ্জ", "narsingdi": "নরসিংদী", "rajbari": "রাজবাড়ী",
+      "shariatpur": "শরীয়তপুর", "chittagong": "চট্টগ্রাম", "coxsbazar": "কক্সবাজার", "cox's bazar": "কক্সবাজার",
+      "coxs bazar": "কক্সবাজার", "bandarban": "বান্দরবান", "brahmanbaria": "ব্রাহ্মণবাড়িয়া", "chandpur": "চাঁদপুর",
+      "comilla": "কুমিল্লা", "feni": "ফেনী", "khagrachhari": "খাগড়াছড়ি", "lakshmipur": "লক্ষ্মীপুর",
+      "noakhali": "নোয়াখালী", "rangamati": "রাঙ্গামাটি", "barisal": "বরিশাল", "barguna": "বরগুনা",
+      "bhola": "ভোলা", "jhalokati": "ঝালকাঠি", "patuakhali": "পটুয়াখালী", "pirojpur": "পিরোজপুর",
+      "khulna": "খুলনা", "bagerhat": "বাগেরহাট", "chuadanga": "চুয়াডাঙ্গা", "jessore": "যশোর",
+      "jhenaidah": "ঝিনাইদহ", "kushtia": "কুষ্টিয়া", "magura": "মাগুরা", "meherpur": "মেহেরপুর",
+      "narail": "নড়াইল", "satkhira": "সাতক্ষীরা", "rajshahi": "রাজশাহী", "bogra": "বগুড়া",
+      "bogura": "বগুড়া", "joypurhat": "জয়পুরহাট", "naogaon": "নওগাঁ", "natore": "নাটোর",
+      "chapainawabganj": "চাঁপাইনবাবগঞ্জ", "nawabganj": "চাঁপাইনবাবগঞ্জ", "pabna": "পাবনা", "sirajganj": "সিরাজগঞ্জ",
+      "rangpur": "রংপুর", "dinajpur": "দিনাজপুর", "gaibandha": "গাইবান্ধা", "kurigram": "কুড়িগ্রাম",
+      "lalmonirhat": "লালমনিরহাট", "nilphamari": "নীলফামারী", "panchagarh": "পঞ্চগড়", "thakurgaon": "ঠাকুরগাঁও",
+      "sylhet": "সিলেট", "habiganj": "হবিগঞ্জ", "moulvibazar": "মৌলভীবাজার", "sunamganj": "সুনামগঞ্জ",
+      "sherpur": "শেরপুর", "jamalpur": "জামালপুর", "netrokona": "নেত্রকোণা"
+    };
+
+    // Active product specifications
+    const products = [
+      { id: "p1_white", title: "AirPods Pro 2nd", edition: "Dubai Edition", color: "Classic White", price: 550, img: "assets/airpod_pro_2nd_generation_dubai_white.png" },
+      { id: "p1_black", title: "AirPods Pro 2nd", edition: "Dubai Edition", color: "Classic Black", price: 600, img: "assets/airpod_pro_2nd_generation_dubai_black.png" },
+      { id: "p2_white", title: "AirPods Pro 2nd", edition: "China Edition", color: "Classic White", price: 400, img: "assets/airpod_pro_2nd_generation_china_white.png" },
+      { id: "p2_black", title: "AirPods Pro 2nd", edition: "China Edition", color: "Classic Black", price: 450, img: "assets/airpod_pro_2nd_generation_china_black.png" },
+      { id: "p3", title: "AirPods Pro 2nd ANC", edition: "USA Premium ANC", color: "Classic White", price: 1200, img: "assets/airpod_pro_2nd_generation_premium_anc.png" },
+      { id: "p4", title: "AirPods Pro 3rd ANC", edition: "Dubai Premium ANC", color: "Classic White", price: 2000, img: "assets/airpod_pro_3rd_generation_premium_anc.png" }
+    ];
+
+    // State parameters
+    let currentModeratorName = "";
+    let selectedProductId = "p1_white";
+
+    // 2. Initialize Page
+    document.addEventListener("DOMContentLoaded", () => {
+      loadModeratorProfile();
+      populateDatalists();
+      renderProductGrid();
+      selectProduct(selectedProductId);
+      setupKeyboardNavigation();
+      
+      // Auto calculation triggers
+      document.getElementById("prod-price").addEventListener("input", calculateInvoiceSummary);
+      document.getElementById("shipping-cost").addEventListener("input", calculateInvoiceSummary);
+      document.getElementById("cust-phone").addEventListener("input", validatePhoneInput);
+      
+      // Location changes listener
+      document.getElementById("delivery-district").addEventListener("input", handleDistrictChange);
+      document.getElementById("delivery-district").addEventListener("change", handleDistrictChange);
+    });
+
+    // Render interactive product tiles
+    function renderProductGrid() {
+      const grid = document.getElementById("product-grid");
+      grid.innerHTML = "";
+      
+      products.forEach(p => {
+        const card = document.createElement("div");
+        card.className = `product-card ${p.id === selectedProductId ? 'active' : ''}`;
+        card.id = `tile-${p.id}`;
+        card.onclick = () => selectProduct(p.id);
+        
+        card.innerHTML = `
+          <div class="checkmark">✓</div>
+          <img src="${p.img}" alt="${p.title}">
+          <div class="prod-title">${p.title}</div>
+          <div class="prod-meta">${p.edition} • ${p.color.replace('Classic ', '')}</div>
+          <div class="prod-price">৳${p.price}</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Product Card Selection Action
+    window.selectProduct = (id) => {
+      selectedProductId = id;
+      
+      // Toggle CSS classes
+      document.querySelectorAll(".product-card").forEach(el => el.classList.remove("active"));
+      const activeCard = document.getElementById(`tile-${id}`);
+      if (activeCard) activeCard.classList.add("active");
+
+      // Auto update selling price input field
+      const p = products.find(prod => prod.id === id);
+      if (p) {
+        document.getElementById("prod-price").value = p.price;
+        calculateInvoiceSummary();
+      }
+    };
+
+    // Populate Datalists for Districts and Thanas
+    function populateDatalists() {
+      const distList = document.getElementById("districts");
+      distList.innerHTML = "";
+      Object.keys(bdLocations).sort().forEach(dist => {
+        const opt = document.createElement("option");
+        opt.value = dist;
+        distList.appendChild(opt);
+      });
+    }
+
+    // Smart phone validator
+    function validatePhoneInput() {
+      const phoneInput = document.getElementById("cust-phone");
+      const phone = phoneInput.value.trim();
+      const phoneRegex = /^01[3-9]\d{8}$/;
+      if (phoneRegex.test(phone)) {
+        phoneInput.classList.add("valid-phone");
+      } else {
+        phoneInput.classList.remove("valid-phone");
+      }
+    }
+
+    // Load saved Profile
+    function loadModeratorProfile() {
+      const savedName = localStorage.getItem("moderator_name");
+      if (savedName && savedName.trim() !== "") {
+        currentModeratorName = savedName.trim();
+        document.getElementById("bar-mod-name").textContent = currentModeratorName;
+        document.getElementById("status-bar").style.display = "flex";
+        document.getElementById("identity-prompt").style.display = "none";
+        loadSessionData();
+      } else {
+        currentModeratorName = "";
+        document.getElementById("status-bar").style.display = "none";
+        document.getElementById("identity-prompt").style.display = "flex";
+      }
+    }
+
+    // Save profile name
+    window.saveProfileName = () => {
+      const name = document.getElementById("setup-mod-name").value.trim();
+      if (name === "") {
+        alert("Please enter your name!");
+        return;
+      }
+      localStorage.setItem("moderator_name", name);
+      loadModeratorProfile();
+    };
+
+    // Edit profile name
+    window.editProfileName = () => {
+      const savedName = localStorage.getItem("moderator_name");
+      document.getElementById("setup-mod-name").value = savedName || "";
+      localStorage.removeItem("moderator_name");
+      loadModeratorProfile();
+      document.getElementById("setup-mod-name").focus();
+    };
+
+    // Smart Location Autocomplete & Price Syncing
+    function handleDistrictChange() {
+      const distInput = document.getElementById("delivery-district");
+      const value = distInput.value.trim().toLowerCase();
+      if (!value) return;
+
+      let matchedDistrict = "";
+
+      // 1. Direct or transliterated match
+      if (englishToBanglaDistricts[value]) {
+        matchedDistrict = englishToBanglaDistricts[value];
+      } else {
+        // Direct search in key names
+        for (const dist of Object.keys(bdLocations)) {
+          if (dist === value || dist.toLowerCase() === value) {
+            matchedDistrict = dist;
+            break;
+          }
+        }
+      }
+
+      // If matched, populate thanas and update shipping prices!
+      if (matchedDistrict) {
+        distInput.value = matchedDistrict;
+        
+        // Populate Thana datalist
+        const thanaList = document.getElementById("thanas");
+        thanaList.innerHTML = "";
+        bdLocations[matchedDistrict].sort().forEach(t => {
+          const opt = document.createElement("option");
+          opt.value = t;
+          thanaList.appendChild(opt);
+        });
+
+        // Determine inside / outside shipping parameters
+        const isDhaka = (matchedDistrict === "ঢাকা" || matchedDistrict === "Dhaka");
+        const cost = 0; // Customer delivery is completely free!
+        const areaVal = isDhaka ? "inside_dhaka" : "outside_dhaka";
+        const areaLabel = isDhaka ? "Inside Dhaka" : "Outside Dhaka";
+
+        document.getElementById("shipping-cost").value = cost;
+        document.getElementById("shipping-area").value = areaVal;
+        document.getElementById("shipping-zone-label").textContent = areaLabel;
+        
+        calculateInvoiceSummary();
+      }
+    }
+
+    // Keyboard-only navigation helper (progressive focus on Enter key)
+    function setupKeyboardNavigation() {
+      const orderFields = [
+        "cust-name",
+        "cust-phone",
+        "delivery-district",
+        "delivery-thana",
+        "cust-address",
+        "shipping-cost",
+        "order-note",
+        "prod-price"
+      ];
+
+      orderFields.forEach((fieldId, index) => {
+        const el = document.getElementById(fieldId);
+        if (!el) return;
+
+        el.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            
+            if (fieldId === "delivery-district") {
+              handleDistrictChange();
+            }
+
+            const nextId = orderFields[index + 1];
+            const nextEl = document.getElementById(nextId);
+            if (nextEl) {
+              nextEl.focus();
+            } else {
+              // Submit form when hitting enter on the last element or notes
+              document.getElementById("order-form").requestSubmit();
+            }
+          }
+        });
+      });
+    }
+
+    // Set Quantity Presets
+    window.setQtyPreset = (qty) => {
+      document.getElementById("prod-qty").value = qty;
+      
+      // Update UI active styling
+      document.querySelectorAll(".preset-pill").forEach((btn, index) => {
+        if (index + 1 === qty) btn.classList.add("active");
+        else btn.classList.remove("active");
+      });
+
+      calculateInvoiceSummary();
+    };
+
+    // Qty Adjusters
+    window.adjustQty = (change) => {
+      const qtyInput = document.getElementById("prod-qty");
+      let val = parseInt(qtyInput.value) || 1;
+      val += change;
+      if (val < 1) val = 1;
+      
+      qtyInput.value = val;
+
+      // Unselect presets if not 1, 2, or 3
+      document.querySelectorAll(".preset-pill").forEach((btn, index) => {
+        if (index + 1 === val) btn.classList.add("active");
+        else btn.classList.remove("active");
+      });
+
+      calculateInvoiceSummary();
+    };
+
+    // Invoice Computations
+    function calculateInvoiceSummary() {
+      const price = parseInt(document.getElementById("prod-price").value) || 0;
+      const qty = parseInt(document.getElementById("prod-qty").value) || 1;
+      const shipping = parseInt(document.getElementById("shipping-cost").value) || 0;
+
+      const subtotal = price * qty;
+      const grandTotal = subtotal + shipping;
+
+      document.getElementById("summary-subtotal").textContent = "৳" + subtotal.toLocaleString();
+      document.getElementById("summary-shipping").textContent = "৳" + shipping.toLocaleString();
+      document.getElementById("summary-total").textContent = "৳" + grandTotal.toLocaleString();
+      document.getElementById("btn-total-val").textContent = grandTotal.toLocaleString();
+    }
+
+    // Show Custom Alerts
+    function showNotification(msg) {
+      const toast = document.getElementById("custom-toast");
+      document.getElementById("toast-text").textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3500);
+    }
+
+    // Toggle today's sales drawer
+    window.toggleHistory = () => {
+      const content = document.getElementById("history-content");
+      const arrow = document.getElementById("arrow-icon");
+      if (content.classList.contains("expanded")) {
+        content.classList.remove("expanded");
+        arrow.textContent = "▼";
+      } else {
+        content.classList.add("expanded");
+        arrow.textContent = "▲";
+        loadSessionData(); // Fetch fresh entries
+      }
+    };
+
+    // Load metrics and active entries
+    function loadSessionData() {
+      if (!currentModeratorName) return;
+
+      const ordersRef = ref(db, 'orders');
+      onValue(ordersRef, (snapshot) => {
+        const val = snapshot.val();
+        if (!val) {
+          renderRecentHistory([]);
+          return;
+        }
+
+        const todayStart = new Date().setHours(0,0,0,0);
+        let countToday = 0;
+        let salesToday = 0;
+        const historyData = [];
+
+        Object.keys(val).forEach(id => {
+          const o = val[id];
+          const entryBy = o.metadata && o.metadata.entryBy ? o.metadata.entryBy.trim() : "";
+          
+          if (entryBy.toLowerCase() === currentModeratorName.toLowerCase()) {
+            historyData.push({ id, ...o });
+
+            const ts = o.metadata ? (o.metadata.timestamp || 0) : 0;
+            if (ts >= todayStart) {
+              countToday++;
+              const status = o.metadata ? (o.metadata.status || 'New Order') : 'New Order';
+              if (status !== 'Cancelled' && status !== 'Returned') {
+                const total = parseInt(String(o.order ? o.order.total_price : '0').replace(/[^\d]/g, '')) || 0;
+                salesToday += total;
+              }
+            }
+          }
+        });
+
+        // Update Top Strip Metrics
+        document.getElementById("stat-count").textContent = countToday;
+        document.getElementById("stat-sales").textContent = "৳" + salesToday.toLocaleString();
+
+        // Render recent orders
+        historyData.sort((a,b) => (b.metadata ? b.metadata.timestamp : 0) - (a.metadata ? a.metadata.timestamp : 0));
+        renderRecentHistory(historyData.slice(0, 10));
+      });
+    }
+
+    function renderRecentHistory(items) {
+      const container = document.getElementById("orders-history-container");
+      container.innerHTML = "";
+
+      if (items.length === 0) {
+        container.innerHTML = `<p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 20px 0; margin: 0;">কোনো অর্ডার যোগ করা হয়নি এখনো।</p>`;
+        return;
+      }
+
+      items.forEach(o => {
+        const div = document.createElement("div");
+        div.className = "history-item";
+        
+        const customerName = o.customer ? o.customer.name : "Unknown Customer";
+        const prodName = o.order ? o.order.product : "Unknown Product";
+        const price = o.order ? o.order.total_price : "৳0";
+        const status = o.metadata ? (o.metadata.status || "New Order") : "New Order";
+
+        let statusColor = "var(--accent)";
+        if (status === "Completed") statusColor = "var(--success)";
+        else if (status === "Cancelled") statusColor = "var(--danger)";
+        else if (status === "Returned") statusColor = "var(--warning)";
+
+        div.innerHTML = `
+          <div class="history-meta">
+            <h5>${customerName}</h5>
+            <p>${prodName} • <span style="color: ${statusColor}; font-weight: 800; font-size: 0.72rem;">${status}</span></p>
+          </div>
+          <div class="history-price">${price}</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Submit Order Sheet Handler
+    document.getElementById("order-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      if (currentModeratorName === "") {
+        alert("দয়া করে প্রথমে প্রোফাইল নাম সেট করুন!");
+        document.getElementById("setup-mod-name").focus();
+        return;
+      }
+
+      // Force location parsing in case change events didn't trigger
+      handleDistrictChange();
+
+      const name = document.getElementById("cust-name").value.trim();
+      const phone = document.getElementById("cust-phone").value.trim();
+      const district = document.getElementById("delivery-district").value.trim();
+      const thana = document.getElementById("delivery-thana").value.trim();
+      const address = document.getElementById("cust-address").value.trim();
+      const prodPrice = parseInt(document.getElementById("prod-price").value) || 0;
+      const qty = parseInt(document.getElementById("prod-qty").value) || 1;
+      const note = document.getElementById("order-note").value.trim();
+
+      const shippingCost = parseInt(document.getElementById("shipping-cost").value) || 0;
+      const shippingArea = document.getElementById("shipping-area").value;
+      const shippingAreaText = shippingArea === "inside_dhaka" ? "ঢাকার ভিতরে" : "ঢাকার বাহিরে";
+
+      // Match selected product card configurations
+      const p = products.find(prod => prod.id === selectedProductId);
+      if (!p) {
+        alert("Please select a product variant first!");
+        return;
+      }
+
+      const subtotal = prodPrice * qty;
+      const totalPrice = subtotal + shippingCost;
+
+      const orderData = {
+        customer: {
+          name: name,
+          phone: phone,
+          email: "",
+          address: address,
+          note: note || ""
+        },
+        order: {
+          district: district,
+          thana: thana,
+          shipping_area: shippingAreaText,
+          shipping_cost: "৳" + shippingCost,
+          subtotal: "৳" + subtotal,
+          total_price: "৳" + totalPrice,
+          product: p.title,
+          quantity: qty,
+          variation: p.edition,
+          color: p.color,
+          items: [
+            {
+              title: p.title,
+              price: prodPrice,
+              qty: qty,
+              edition: p.edition,
+              color: p.color,
+              image: p.img
+            }
+          ]
+        },
+        metadata: {
+          date: new Date().toLocaleString('bn-BD'),
+          timestamp: Date.now(),
+          status: "New Order",
+          entryBy: currentModeratorName,
+          source: "Moderator"
+        }
+      };
+
+      const ordersRef = ref(db, 'orders');
+      const newOrderRef = push(ordersRef);
+
+      update(newOrderRef, orderData)
+        .then(() => {
+          showNotification(`অর্ডারটি সফলভাবে সেভ হয়েছে! (৳${totalPrice.toLocaleString()})`);
+          
+          // Clear only customer inputs to keep quick repetition smooth
+          document.getElementById("cust-name").value = "";
+          document.getElementById("cust-phone").value = "";
+          document.getElementById("cust-phone").classList.remove("valid-phone");
+          document.getElementById("cust-address").value = "";
+          document.getElementById("order-note").value = "";
+          
+          // Reset quantity and recalculate
+          setQtyPreset(1);
+          
+          // Re-focus on Customer Name instantly for rapid sequence entry
+          document.getElementById("cust-name").focus();
+        })
+        .catch((err) => {
+          alert("Error saving manual order: " + err.message);
+        });
+    });
+
+  </script>
+</body>
+</html>

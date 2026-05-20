@@ -28,9 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const products = {
     'p1_white': {
       title: 'AirPods Pro 2nd',
-      price: '599 TK',
+      price: '550 TK',
       regularPrice: '950 TK',
-      discount: '37% OFF',
+      discount: '42% OFF',
       image: 'assets/airpod_pro_2nd_generation_dubai_white.png',
       edition: 'Dubai Edition',
       color: 'Classic White',
@@ -50,9 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     'p1_black': {
       title: 'AirPods Pro 2nd',
-      price: '649 TK',
+      price: '600 TK',
       regularPrice: '1,050 TK',
-      discount: '38% OFF',
+      discount: '43% OFF',
       image: 'assets/airpod_pro_2nd_generation_dubai_black.png',
       edition: 'Dubai Edition',
       color: 'Classic Black',
@@ -72,9 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     'p2_white': {
       title: 'AirPods Pro 2nd',
-      price: '399 TK',
+      price: '400 TK',
       regularPrice: '650 TK',
-      discount: '39% OFF',
+      discount: '38% OFF',
       image: 'assets/airpod_pro_2nd_generation_china_white.png',
       edition: 'China Edition',
       color: 'Classic White',
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     'p2_black': {
       title: 'AirPods Pro 2nd',
-      price: '449 TK',
+      price: '450 TK',
       regularPrice: '750 TK',
       discount: '40% OFF',
       image: 'assets/airpod_pro_2nd_generation_china_black.png',
@@ -103,12 +103,12 @@ document.addEventListener('DOMContentLoaded', () => {
       features: ['এডিশন: চায়না', 'কালার: ম্যাট ব্ল্যাক', 'টাচ কন্ট্রোল ও স্টাইলিশ লুক', 'ভালো সাউন্ড ও বাজেট ফ্রেন্ডলি', 'ব্যাটারি: 2.5-3 ঘণ্টা', 'কেস চার্জ: 4 বার'],
       reviews: [
         { name: "Farhan Ahmed", text: "প্যাকিং খুব ভালো ছিল। কালারটা খুব সুন্দর।" },
-        { name: "Imran Khan", text: "অবিশ্বাস্য সাউন্ড এই দামে! অনেক ভালো সার্ভিস।" },
+        { name: "Imran Khan", text: "অবিশ্বসনীয় সাউন্ড এই দামে! অনেক ভালো সার্ভিস।" },
         { name: "Sayed Ali", text: "খুব দ্রুত হাতে পেয়েছি। কোয়ালিটি ও অনেক ভালো।" },
         { name: "Mitu Akter", text: "অল্প দামে ভালো একটা জিনিস পেলাম।" },
         { name: "Nayeem Islam", text: "ভালোই সার্ভিস দিচ্ছে।" },
         { name: "Shamim Reza", text: "কালো রং টা ম্যাট ফিনিশ, দেখতে খুব সুন্দর লাগে।" },
-        { name: "Lata Mondal", text: "চার্জ ভালোই থাকে। সাউন্ড একদম ক্লিয়ার।" },
+        { name: "Lata Mondal", text: "चार्ज ভালোই থাকে। সাউন্ড একদম ক্লিয়ার।" },
         { name: "Kamrul Hasan", text: "কম বাজেটে সেরা চয়েস।" },
         { name: "Rehana Parvin", text: "পণ্যটি সত্যিই দারুণ। চেক করে নিতে পেরেছি।" },
         { name: "Saiful Bari", text: "ধন্যবাদ Earphone BD!" }
@@ -116,9 +116,9 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     'p3': {
       title: 'AirPods Pro 2nd ANC',
-      price: '1,190 TK',
+      price: '1,200 TK',
       regularPrice: '1,850 TK',
-      discount: '36% OFF',
+      discount: '35% OFF',
       image: 'assets/airpod_pro_2nd_generation_premium_anc.png',
       edition: 'USA Premium ANC',
       color: 'Classic White',
@@ -138,9 +138,9 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     'p4': {
       title: 'AirPods Pro 3rd ANC',
-      price: '1,990 TK',
+      price: '2,000 TK',
       regularPrice: '2,950 TK',
-      discount: '33% OFF',
+      discount: '32% OFF',
       image: 'assets/airpod_pro_3rd_generation_premium_anc.png',
       edition: 'Dubai Premium ANC',
       color: 'Classic White',
@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Order Page Logic ---
   window.orderItems = [];
-  let currentShipping = 49;
+  let currentShipping = 0; // Delivery is free for the customer!
 
   // --- District & Thana Data ---
   const bdLocations = {
@@ -1036,14 +1036,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (area === 'inside') {
       if (options[0]) options[0].classList.add('selected');
-      currentShipping = 29;
     } else {
       if (options[1]) options[1].classList.add('selected');
-      currentShipping = 49;
     }
+    currentShipping = 0; // Delivery charge is completely free!
     
     const summaryShipping = document.getElementById('summary-shipping');
-    if (summaryShipping) summaryShipping.innerText = `৳${currentShipping}`;
+    if (summaryShipping) summaryShipping.innerText = `Free`;
     
     const subtotal = orderItems.reduce((sum, item) => sum + (item.price * item.qty), 0);
     calculateOrderTotals(subtotal);
