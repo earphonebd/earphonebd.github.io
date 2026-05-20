@@ -2405,3 +2405,104 @@ footer {
     border-radius: 10px !important;
   }
 }
+
+/* ==========================================================================
+   Ultra-Responsive Spacing & Mobile Viewport Polish
+   ========================================================================== */
+
+@media (max-width: 360px) {
+  .logo {
+    font-size: 1.45rem !important;
+    gap: 6px !important;
+  }
+  .logo-img {
+    height: 40px !important;
+  }
+  .header-actions {
+    gap: 8px !important;
+  }
+  .header-action-item {
+    width: 35px !important;
+    height: 35px !important;
+  }
+  .cart-drawer-header h3, .account-drawer-header h3 {
+    font-size: 0.95rem !important;
+  }
+  .close-cart, .close-account {
+    font-size: 0.85rem !important;
+  }
+  .section-title {
+    font-size: 1.7rem !important;
+  }
+  .hero-text h1 {
+    font-size: 2.2rem !important;
+    letter-spacing: -1px !important;
+  }
+  .hero-text p {
+    font-size: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .address-section {
+    padding: 16px !important;
+    border-radius: 12px !important;
+  }
+  .form-group {
+    margin-bottom: 14px !important;
+  }
+  .form-group label {
+    font-size: 0.8rem !important;
+    margin-bottom: 6px !important;
+  }
+  .form-group input, .form-group select {
+    padding: 11px 14px !important;
+    font-size: 0.9rem !important;
+    border-radius: 10px !important;
+  }
+  .delivery-option {
+    padding: 12px !important;
+    font-size: 0.85rem !important;
+    border-radius: 12px !important;
+  }
+  .summary-card {
+    padding: 16px !important;
+    border-radius: 14px !important;
+  }
+  .btn-confirm-order {
+    padding: 14px !important;
+    font-size: 1rem !important;
+    border-radius: 10px !important;
+  }
+  .sticky-mobile-order {
+    left: 10px !important;
+    right: 10px !important;
+    bottom: 10px !important;
+    padding: 8px 12px !important;
+    border-radius: 16px !important;
+  }
+  .sticky-mobile-order .btn-confirm-order {
+    padding: 10px 16px !important;
+    font-size: 0.88rem !important;
+    border-radius: 12px !important;
+  }
+  .floating-whatsapp {
+    bottom: 16px !important;
+    right: 16px !important;
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .floating-cta {
+    bottom: 74px !important;
+    right: 16px !important;
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .sticky-mobile-order ~ .floating-whatsapp {
+    bottom: 84px !important;
+  }
+  .sticky-mobile-order ~ .floating-cta {
+    bottom: 142px !important;
+  }
+}
+

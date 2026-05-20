@@ -593,6 +593,37 @@
         font-size: 0.85rem;
         flex-shrink: 0;
       }
+      @media (max-width: 480px) {
+        .admin-container {
+          margin: 10px auto !important;
+          padding: 0 10px !important;
+        }
+        .table-card {
+          padding: 16px !important;
+          border-radius: 18px !important;
+        }
+        .chart-wrapper {
+          min-height: 220px !important;
+        }
+      }
+    }
+
+    #custom-date-container input[type="date"] {
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      background-color: white;
+      outline: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    #custom-date-container input[type="date"]:hover,
+    #custom-date-container input[type="date"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
   </style>
 </head>
@@ -654,6 +685,18 @@
           <button onclick="setFilter('7days')" id="filter-7days" class="btn-filter">7 Days</button>
           <button onclick="setFilter('30days')" id="filter-30days" class="btn-filter">30 Days</button>
           <button onclick="setFilter('all')" id="filter-all" class="btn-filter active">All Time</button>
+          <button onclick="setFilter('custom')" id="filter-custom" class="btn-filter">Custom Range</button>
+        </div>
+        <!-- Custom Date Picker Panel -->
+        <div id="custom-date-container" style="display: none; align-items: center; gap: 10px; flex-wrap: wrap; margin-left: 10px;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);">Start:</span>
+            <input type="date" id="start-date" onchange="window.handleCustomDateChange()">
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);">End:</span>
+            <input type="date" id="end-date" onchange="window.handleCustomDateChange()">
+          </div>
         </div>
       </div>
 
@@ -1012,6 +1055,74 @@
     let allOrders = [];
     let currentFilter = 'all'; // 'today', 'yesterday', '7days', '30days', 'all'
     let currentStatusFilter = 'all'; // 'all', 'Completed', 'Shipped', 'processing', 'Cancelled', 'Returned'
+    let customStartDate = '';
+    let customEndDate = '';
+
+    function parseBanglaNumerals(str) {
+      if (!str) return '';
+      const banglaDigits = {'০':'0','১':'1','২':'2','৩':'3','৪':'4','৫':'5','৬':'6','৭':'7','৮':'8','৯':'9'};
+      return str.replace(/[০-৯]/g, d => banglaDigits[d]);
+    }
+
+    function parseOrderDateToTimestamp(o) {
+      if (o.metadata && o.metadata.timestamp) {
+        return o.metadata.timestamp;
+      }
+      if (o.metadata && o.metadata.date) {
+        try {
+          let cleanDate = parseBanglaNumerals(o.metadata.date);
+          let datePart = cleanDate.split(',')[0].trim();
+          let parts = datePart.split('/');
+          if (parts.length === 3) {
+            let day = parseInt(parts[0], 10);
+            let month = parseInt(parts[1], 10) - 1;
+            let year = parseInt(parts[2], 10);
+            let d = new Date(year, month, day);
+            return d.getTime();
+          }
+        } catch(e) {
+          console.error("Failed to parse date string: ", o.metadata.date, e);
+        }
+      }
+      return 0;
+    }
+
+    function matchDate(o) {
+      if (currentFilter === 'all') return true;
+      
+      const timestamp = parseOrderDateToTimestamp(o);
+      if (!timestamp) return false;
+      
+      const now = new Date();
+      const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+      const todayEnd = todayStart + 24 * 60 * 60 * 1000 - 1;
+      
+      if (currentFilter === 'today') {
+        return timestamp >= todayStart && timestamp <= todayEnd;
+      }
+      if (currentFilter === 'yesterday') {
+        const yesterdayStart = todayStart - 24 * 60 * 60 * 1000;
+        const yesterdayEnd = todayStart - 1;
+        return timestamp >= yesterdayStart && timestamp <= yesterdayEnd;
+      }
+      if (currentFilter === '7days') {
+        const sevenDaysAgoStart = todayStart - 6 * 24 * 60 * 60 * 1000;
+        return timestamp >= sevenDaysAgoStart && timestamp <= todayEnd;
+      }
+      if (currentFilter === '30days') {
+        const thirtyDaysAgoStart = todayStart - 29 * 24 * 60 * 60 * 1000;
+        return timestamp >= thirtyDaysAgoStart && timestamp <= todayEnd;
+      }
+      if (currentFilter === 'custom') {
+        if (!customStartDate || !customEndDate) return true;
+        const startParts = customStartDate.split('-');
+        const endParts = customEndDate.split('-');
+        const startDate = new Date(parseInt(startParts[0]), parseInt(startParts[1]) - 1, parseInt(startParts[2]), 0, 0, 0, 0).getTime();
+        const endDate = new Date(parseInt(endParts[0]), parseInt(endParts[1]) - 1, parseInt(endParts[2]), 23, 59, 59, 999).getTime();
+        return timestamp >= startDate && timestamp <= endDate;
+      }
+      return true;
+    }
     
     // Chart instances references
     let trendChartInstance = null;
@@ -1131,6 +1242,26 @@
       });
       document.getElementById('filter-' + filterName).classList.add('active');
 
+      const customContainer = document.getElementById('custom-date-container');
+      if (filterName === 'custom') {
+        customContainer.style.display = 'flex';
+        const todayStr = new Date().toISOString().split('T')[0];
+        document.getElementById('start-date').value = todayStr;
+        document.getElementById('end-date').value = todayStr;
+        customStartDate = todayStr;
+        customEndDate = todayStr;
+      } else {
+        customContainer.style.display = 'none';
+        customStartDate = '';
+        customEndDate = '';
+      }
+
+      updateUIElements();
+    };
+
+    window.handleCustomDateChange = () => {
+      customStartDate = document.getElementById('start-date').value;
+      customEndDate = document.getElementById('end-date').value;
       updateUIElements();
     };
 
@@ -1149,40 +1280,10 @@
 
     // Filter calculations and UI rendering
     function updateUIElements() {
-      // Calculate date thresholds
-      const now = Date.now();
-      const todayStart = new Date().setHours(0,0,0,0);
-      const yesterdayStart = todayStart - 24 * 60 * 60 * 1000;
-      const sevenDaysStart = now - 7 * 24 * 60 * 60 * 1000;
-      const thirtyDaysStart = now - 30 * 24 * 60 * 60 * 1000;
-
       // Filter orders array
       const filteredOrders = allOrders.filter(o => {
         // 1. Date filter match
-        const ts = o.metadata ? (o.metadata.timestamp || 0) : 0;
-        let dateMatch = true;
-        if (!ts) {
-          dateMatch = currentFilter === 'all';
-        } else {
-          switch (currentFilter) {
-            case 'today':
-              dateMatch = ts >= todayStart;
-              break;
-            case 'yesterday':
-              dateMatch = ts >= yesterdayStart && ts < todayStart;
-              break;
-            case '7days':
-              dateMatch = ts >= sevenDaysStart;
-              break;
-            case '30days':
-              dateMatch = ts >= thirtyDaysStart;
-              break;
-            default:
-              dateMatch = true;
-          }
-        }
-
-        if (!dateMatch) return false;
+        if (!matchDate(o)) return false;
 
         // 2. Status filter match
         const status = o.metadata ? (o.metadata.status || 'New Order') : 'New Order';
@@ -1581,7 +1682,7 @@
       }
 
       // 1. Calculate active history span in days
-      const timestamps = allOrders.map(o => o.metadata ? o.metadata.timestamp : null).filter(t => t);
+      const timestamps = allOrders.map(o => parseOrderDateToTimestamp(o)).filter(t => t > 0);
       const minTimestamp = timestamps.length > 0 ? Math.min(...timestamps) : (Date.now() - 14 * 24 * 60 * 60 * 1000);
       const maxTimestamp = Date.now();
       const historyDays = Math.max(1, Math.ceil((maxTimestamp - minTimestamp) / (24 * 60 * 60 * 1000)));
@@ -1685,7 +1786,7 @@
       }
       const bufferPercent = parseFloat(document.getElementById('projection-buffer').value) || 0.1;
       
-      const timestamps = allOrders.map(o => o.metadata ? o.metadata.timestamp : null).filter(t => t);
+      const timestamps = allOrders.map(o => parseOrderDateToTimestamp(o)).filter(t => t > 0);
       const minTimestamp = timestamps.length > 0 ? Math.min(...timestamps) : (Date.now() - 14 * 24 * 60 * 60 * 1000);
       const maxTimestamp = Date.now();
       const historyDays = Math.max(1, Math.ceil((maxTimestamp - minTimestamp) / (24 * 60 * 60 * 1000)));
@@ -2070,40 +2171,10 @@
 
     // CSV Utility Export
     window.exportToCSV = () => {
-      // Calculate date ranges for filters
-      const now = Date.now();
-      const todayStart = new Date().setHours(0,0,0,0);
-      const yesterdayStart = todayStart - 24 * 60 * 60 * 1000;
-      const sevenDaysStart = now - 7 * 24 * 60 * 60 * 1000;
-      const thirtyDaysStart = now - 30 * 24 * 60 * 60 * 1000;
-
       // Filter based on active date and status filters
       const filtered = allOrders.filter(o => {
         // 1. Date filter match
-        const ts = o.metadata ? (o.metadata.timestamp || 0) : 0;
-        let dateMatch = true;
-        if (!ts) {
-          dateMatch = currentFilter === 'all';
-        } else {
-          switch (currentFilter) {
-            case 'today':
-              dateMatch = ts >= todayStart;
-              break;
-            case 'yesterday':
-              dateMatch = ts >= yesterdayStart && ts < todayStart;
-              break;
-            case '7days':
-              dateMatch = ts >= sevenDaysStart;
-              break;
-            case '30days':
-              dateMatch = ts >= thirtyDaysStart;
-              break;
-            default:
-              dateMatch = true;
-          }
-        }
-
-        if (!dateMatch) return false;
+        if (!matchDate(o)) return false;
 
         // 2. Status filter match
         const status = o.metadata ? (o.metadata.status || 'New Order') : 'New Order';

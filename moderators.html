@@ -407,9 +407,17 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      max-height: 90vh;
+      max-height: min(90vh, calc(100dvh - 40px));
       border: 1px solid #e2e8f0;
       animation: scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-content form {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: hidden;
     }
 
     .modal-header {
@@ -456,10 +464,19 @@
     .modal-body {
       padding: 24px;
       overflow-y: auto;
+      flex: 1 1 auto;
+      min-height: 0;
+      -webkit-overflow-scrolling: touch;
     }
 
     .form-group {
       margin-bottom: 18px;
+    }
+
+    .payment-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+      gap: 12px;
     }
 
     .form-group label {
@@ -498,6 +515,7 @@
       display: flex;
       justify-content: flex-end;
       gap: 12px;
+      flex-shrink: 0;
     }
 
     .btn-submit {
@@ -580,11 +598,15 @@
     #login-overlay {
       position: fixed;
       inset: 0;
-      background: #fff;
+      background: rgba(248, 250, 252, 0.65);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       z-index: 10000;
       display: flex;
       align-items: center;
       justify-content: center;
+      background-image: radial-gradient(circle at top right, rgba(37, 99, 235, 0.05), transparent 600px),
+                        radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.04), transparent 600px);
     }
 
     @keyframes fadeIn {
@@ -635,6 +657,132 @@
       .btn-row {
         justify-content: center;
       }
+      .payment-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+    }
+    @media (max-width: 480px) {
+      .admin-container {
+        margin: 10px auto !important;
+        padding: 0 10px !important;
+      }
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+        margin-bottom: 20px !important;
+      }
+      .kpi-card {
+        padding: 15px 12px !important;
+        border-radius: 14px !important;
+      }
+      .kpi-card .value {
+        font-size: 1.3rem !important;
+      }
+      .kpi-card h3 {
+        font-size: 0.7rem !important;
+        margin-bottom: 6px !important;
+      }
+      .kpi-card .sub-value {
+        font-size: 0.68rem !important;
+      }
+      .modal-content {
+        width: calc(100vw - 20px) !important;
+        max-height: calc(100dvh - 20px) !important;
+        border-radius: 16px !important;
+      }
+      .modal-overlay {
+        padding: 10px !important;
+        align-items: center;
+      }
+      .modal-header {
+        padding: 16px !important;
+        gap: 12px;
+      }
+      .modal-header h3 {
+        font-size: 1rem;
+        line-height: 1.25;
+      }
+      .modal-body {
+        padding: 16px !important;
+      }
+      .modal-footer {
+        padding: 12px 16px 16px !important;
+        flex-direction: column-reverse;
+        gap: 10px;
+      }
+      .modal-footer .btn-submit,
+      .modal-footer .btn-cancel {
+        width: 100%;
+      }
+    }
+
+    /* Filter Bar Styles */
+    .filter-label {
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-group {
+      display: flex;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 12px;
+      gap: 2px;
+    }
+    .btn-filter {
+      background: transparent;
+      border: none;
+      padding: 8px 16px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 10px;
+      transition: all 0.2s;
+    }
+    .btn-filter:hover {
+      color: var(--text-main);
+    }
+    .btn-filter.active {
+      background: white;
+      color: var(--accent);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    #custom-date-container input[type="date"] {
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      background-color: white;
+      outline: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    #custom-date-container input[type="date"]:hover,
+    #custom-date-container input[type="date"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    
+    @media (max-width: 480px) {
+      .btn-group {
+        width: 100% !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        padding-bottom: 6px !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+      .btn-filter {
+        flex: 0 0 auto !important;
+        padding: 6px 12px !important;
+        font-size: 0.8rem !important;
+      }
     }
   </style>
 </head>
@@ -642,11 +790,11 @@
 
   <!-- Lock Screen Authentication Gate -->
   <div id="login-overlay">
-    <div style="background: white; padding: 40px; border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.08); width: 100%; max-width: 380px; text-align: center; border: 1px solid #f1f5f9;">
-      <h2 style="font-weight: 900; margin-bottom: 10px; color: #1e293b; font-family: 'Outfit';">Earphone BD</h2>
+    <div style="background: rgba(255, 255, 255, 0.85); padding: 45px 35px; border-radius: 28px; box-shadow: 0 30px 70px -10px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.04); width: 100%; max-width: 380px; text-align: center; border: 1px solid rgba(255,255,255,0.7); box-sizing: border-box; backdrop-filter: blur(10px);">
+      <h2 style="font-weight: 900; margin-bottom: 10px; color: #1e293b; font-family: 'Outfit'; letter-spacing: -0.5px;">Earphone BD</h2>
       <p style="color: #64748b; margin-bottom: 30px; font-size: 0.95rem; font-weight: 600;">Payouts & Performance Console</p>
       <input type="password" id="admin-pass" style="width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 15px; margin-bottom: 20px; text-align: center; font-size: 1.2rem; box-sizing: border-box; font-weight: 800;" placeholder="Password">
-      <button onclick="checkPass()" style="width: 100%; background: var(--accent); color: white; border: none; padding: 16px; border-radius: 15px; font-weight: 800; cursor: pointer; font-size: 1rem; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.15);">Unlock Console</button>
+      <button onclick="checkPass()" style="width: 100%; background: var(--accent); color: white; border: none; padding: 16px; border-radius: 15px; font-weight: 800; cursor: pointer; font-size: 1rem; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.15); transition: all 0.2s;" onmouseover="this.style.background='var(--accent-hover)'" onmouseout="this.style.background='var(--accent)'">Unlock Console</button>
     </div>
   </div>
 
@@ -702,6 +850,38 @@
       </div>
     </div>
 
+    <!-- Date Range Filter Bar -->
+    <div class="filters-bar" style="margin-bottom: 25px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+          <div class="filter-label">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            Date Range:
+          </div>
+          <div class="btn-group" style="flex-wrap: wrap;">
+            <button onclick="setDateFilter('all')" id="date-filter-all" class="btn-filter active">All Time</button>
+            <button onclick="setDateFilter('today')" id="date-filter-today" class="btn-filter">Today</button>
+            <button onclick="setDateFilter('yesterday')" id="date-filter-yesterday" class="btn-filter">Yesterday</button>
+            <button onclick="setDateFilter('7days')" id="date-filter-7days" class="btn-filter">7 Days</button>
+            <button onclick="setDateFilter('30days')" id="date-filter-30days" class="btn-filter">30 Days</button>
+            <button onclick="setDateFilter('custom')" id="date-filter-custom" class="btn-filter">Custom Range</button>
+          </div>
+        </div>
+
+        <!-- Custom Date Picker Panel -->
+        <div id="custom-date-container" style="display: none; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);">Start:</span>
+            <input type="date" id="start-date" onchange="window.handleCustomDateChange()">
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);">End:</span>
+            <input type="date" id="end-date" onchange="window.handleCustomDateChange()">
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Filters & Configuration Bar -->
     <div class="filters-bar">
       <div style="display: flex; gap: 15px; flex-wrap: wrap; flex-grow: 1;">
@@ -739,7 +919,7 @@
 
         <!-- Commission Configurator -->
         <div class="config-box">
-          <label for="commission-rate">৳ Commission Rate / Order:</label>
+          <label for="commission-rate">৳ Commission Rate / Product Pcs:</label>
           <input type="number" id="commission-rate" value="20" min="0" oninput="changeCommissionRate(this.value)">
         </div>
       </div>
@@ -796,7 +976,7 @@
             <label>Moderator Name</label>
             <input type="text" id="pay-mod-display" disabled style="background: #f1f5f9; border-color: #e2e8f0; color: var(--text-muted);">
           </div>
-          <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 12px;">
+          <div class="payment-grid">
             <div class="form-group">
               <label>Pending Balance (৳)</label>
               <input type="text" id="pay-mod-balance" disabled style="background: #fffbeb; border-color: #fef3c7; color: var(--warning); font-weight: 800;">
@@ -905,6 +1085,144 @@
     let cachedConfigs = {};
     let currentCommissionRate = 20;
 
+    // Date filter state
+    let currentDateFilter = 'all';
+    let customStartDate = '';
+    let customEndDate = '';
+
+    function parseBanglaNumerals(str) {
+      if (!str) return '';
+      const banglaDigits = {'০':'0','১':'1','২':'2','৩':'3','৪':'4','৫':'5','৬':'6','৭':'7','৮':'8','৯':'9'};
+      return str.replace(/[০-৯]/g, d => banglaDigits[d]);
+    }
+
+    function parseOrderDateToTimestamp(o) {
+      if (o.metadata && o.metadata.timestamp) {
+        return o.metadata.timestamp;
+      }
+      if (o.metadata && o.metadata.date) {
+        try {
+          let cleanDate = parseBanglaNumerals(o.metadata.date);
+          let datePart = cleanDate.split(',')[0].trim();
+          let parts = datePart.split('/');
+          if (parts.length === 3) {
+            let day = parseInt(parts[0], 10);
+            let month = parseInt(parts[1], 10) - 1;
+            let year = parseInt(parts[2], 10);
+            let d = new Date(year, month, day);
+            return d.getTime();
+          }
+        } catch(e) {
+          console.error("Failed to parse date string: ", o.metadata.date, e);
+        }
+      }
+      return 0;
+    }
+
+    function matchDate(o) {
+      if (currentDateFilter === 'all') return true;
+      
+      const timestamp = parseOrderDateToTimestamp(o);
+      if (!timestamp) return false;
+      
+      const now = new Date();
+      const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+      const todayEnd = todayStart + 24 * 60 * 60 * 1000 - 1;
+      
+      if (currentDateFilter === 'today') {
+        return timestamp >= todayStart && timestamp <= todayEnd;
+      }
+      if (currentDateFilter === 'yesterday') {
+        const yesterdayStart = todayStart - 24 * 60 * 60 * 1000;
+        const yesterdayEnd = todayStart - 1;
+        return timestamp >= yesterdayStart && timestamp <= yesterdayEnd;
+      }
+      if (currentDateFilter === '7days') {
+        const sevenDaysAgoStart = todayStart - 6 * 24 * 60 * 60 * 1000;
+        return timestamp >= sevenDaysAgoStart && timestamp <= todayEnd;
+      }
+      if (currentDateFilter === '30days') {
+        const thirtyDaysAgoStart = todayStart - 29 * 24 * 60 * 60 * 1000;
+        return timestamp >= thirtyDaysAgoStart && timestamp <= todayEnd;
+      }
+      if (currentDateFilter === 'custom') {
+        if (!customStartDate || !customEndDate) return true;
+        const startParts = customStartDate.split('-');
+        const endParts = customEndDate.split('-');
+        const startDate = new Date(parseInt(startParts[0]), parseInt(startParts[1]) - 1, parseInt(startParts[2]), 0, 0, 0, 0).getTime();
+        const endDate = new Date(parseInt(endParts[0]), parseInt(endParts[1]) - 1, parseInt(endParts[2]), 23, 59, 59, 999).getTime();
+        return timestamp >= startDate && timestamp <= endDate;
+      }
+      return true;
+    }
+
+    function matchPayoutDate(p) {
+      if (currentDateFilter === 'all') return true;
+      
+      const timestamp = p.timestamp || (p.date ? new Date(p.date).getTime() : 0);
+      if (!timestamp) return false;
+      
+      const now = new Date();
+      const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+      const todayEnd = todayStart + 24 * 60 * 60 * 1000 - 1;
+      
+      if (currentDateFilter === 'today') {
+        return timestamp >= todayStart && timestamp <= todayEnd;
+      }
+      if (currentDateFilter === 'yesterday') {
+        const yesterdayStart = todayStart - 24 * 60 * 60 * 1000;
+        const yesterdayEnd = todayStart - 1;
+        return timestamp >= yesterdayStart && timestamp <= yesterdayEnd;
+      }
+      if (currentDateFilter === '7days') {
+        const sevenDaysAgoStart = todayStart - 6 * 24 * 60 * 60 * 1000;
+        return timestamp >= sevenDaysAgoStart && timestamp <= todayEnd;
+      }
+      if (currentDateFilter === '30days') {
+        const thirtyDaysAgoStart = todayStart - 29 * 24 * 60 * 60 * 1000;
+        return timestamp >= thirtyDaysAgoStart && timestamp <= todayEnd;
+      }
+      if (currentDateFilter === 'custom') {
+        if (!customStartDate || !customEndDate) return true;
+        const startParts = customStartDate.split('-');
+        const endParts = customEndDate.split('-');
+        const startDate = new Date(parseInt(startParts[0]), parseInt(startParts[1]) - 1, parseInt(startParts[2]), 0, 0, 0, 0).getTime();
+        const endDate = new Date(parseInt(endParts[0]), parseInt(endParts[1]) - 1, parseInt(endParts[2]), 23, 59, 59, 999).getTime();
+        return timestamp >= startDate && timestamp <= endDate;
+      }
+      return true;
+    }
+
+    window.setDateFilter = (preset) => {
+      currentDateFilter = preset;
+      document.querySelectorAll('[id^="date-filter-"]').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      const btn = document.getElementById('date-filter-' + preset);
+      if (btn) btn.classList.add('active');
+
+      const customContainer = document.getElementById('custom-date-container');
+      if (preset === 'custom') {
+        customContainer.style.display = 'flex';
+        const todayStr = new Date().toISOString().split('T')[0];
+        document.getElementById('start-date').value = todayStr;
+        document.getElementById('end-date').value = todayStr;
+        customStartDate = todayStr;
+        customEndDate = todayStr;
+      } else {
+        customContainer.style.display = 'none';
+        customStartDate = '';
+        customEndDate = '';
+      }
+      calculateAndRender();
+    };
+
+    window.handleCustomDateChange = () => {
+      customStartDate = document.getElementById('start-date').value;
+      customEndDate = document.getElementById('end-date').value;
+      calculateAndRender();
+    };
+
     // Load initial commission rate config from localstorage
     if (localStorage.getItem('global_commission_rate')) {
       currentCommissionRate = parseFloat(localStorage.getItem('global_commission_rate')) || 20;
@@ -992,11 +1310,17 @@
           return;
         }
 
+        // Apply Date Range Filter here
+        if (!matchDate(orderObj)) {
+          return;
+        }
+
         if (!modStats[entryBy]) {
           modStats[entryBy] = {
             name: entryBy,
             totalSaved: 0,
             completed: 0,
+            completedProducts: 0,
             cancelled: 0,
             returned: 0,
             revenue: 0,
@@ -1013,6 +1337,22 @@
 
         if (status === 'Completed') {
           modStats[entryBy].completed++;
+          let itemQty = 1;
+          if (orderObj.order) {
+            if (orderObj.order.quantity !== undefined && orderObj.order.quantity !== null) {
+              const q = parseInt(orderObj.order.quantity);
+              if (!isNaN(q) && q > 0) itemQty = q;
+            }
+            if (orderObj.order.items && Array.isArray(orderObj.order.items) && orderObj.order.items.length > 0) {
+              let sum = 0;
+              orderObj.order.items.forEach(item => {
+                const q = parseInt(item.qty || item.quantity);
+                if (!isNaN(q) && q > 0) sum += q;
+              });
+              if (sum > itemQty) itemQty = sum;
+            }
+          }
+          modStats[entryBy].completedProducts += itemQty;
           modStats[entryBy].revenue += billAmount;
         } else if (status === 'Cancelled') {
           modStats[entryBy].cancelled++;
@@ -1039,7 +1379,10 @@
         const modPayouts = cachedPayouts[modName] || {};
         let paidAmount = 0;
         Object.keys(modPayouts).forEach(pid => {
-          paidAmount += parseFloat(modPayouts[pid].amount) || 0;
+          const p = modPayouts[pid];
+          if (matchPayoutDate(p)) {
+            paidAmount += parseFloat(p.amount) || 0;
+          }
         });
 
         // Config checks
@@ -1049,7 +1392,7 @@
         const successDenominator = stats.totalSaved - stats.cancelled - stats.returned;
         const successRate = successDenominator > 0 ? (stats.completed / successDenominator) * 100 : 0;
         
-        const earned = excludeFromPayout ? 0 : (stats.completed * currentCommissionRate);
+        const earned = excludeFromPayout ? 0 : (stats.completedProducts * currentCommissionRate);
         const balance = excludeFromPayout ? 0 : (earned - paidAmount);
 
         totalOrders += stats.totalSaved;
@@ -1062,6 +1405,7 @@
           name: modName,
           totalSaved: stats.totalSaved,
           completed: stats.completed,
+          completedProducts: stats.completedProducts,
           successRate: successRate,
           revenue: stats.revenue,
           earned: earned,
@@ -1077,8 +1421,24 @@
       document.getElementById('kpi-total-orders').innerText = totalOrders.toLocaleString();
       document.getElementById('kpi-total-completed').innerText = `${totalCompleted.toLocaleString()} Completed orders`;
       document.getElementById('kpi-total-earned').innerText = '৳' + globalEarned.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
-      document.getElementById('kpi-total-paid').innerText = '৳' + globalPaid.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + ' Total Paid';
+      
+      let periodLabel = 'All Time';
+      if (currentDateFilter === 'today') periodLabel = 'Today';
+      else if (currentDateFilter === 'yesterday') periodLabel = 'Yesterday';
+      else if (currentDateFilter === '7days') periodLabel = 'Last 7 Days';
+      else if (currentDateFilter === '30days') periodLabel = 'Last 30 Days';
+      else if (currentDateFilter === 'custom') {
+        periodLabel = `${customStartDate} to ${customEndDate}`;
+      }
+
+      document.getElementById('kpi-total-paid').innerText = '৳' + globalPaid.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + ` Total Paid (${periodLabel})`;
       document.getElementById('kpi-total-outstanding').innerText = '৳' + globalOutstanding.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+      
+      // Update outstanding balance label
+      const outstandingLabel = document.querySelector('.kpi-card.warning .sub-value');
+      if (outstandingLabel) {
+        outstandingLabel.innerHTML = `৳${globalPaid.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })} Paid <span style="opacity:0.8; font-weight:normal;">(${periodLabel})</span>`;
+      }
 
       // 3. Apply Filtering
       const statusFilter = document.getElementById('status-filter') ? document.getElementById('status-filter').value : 'all';
@@ -1169,7 +1529,7 @@
             </div>
           </td>
           <td><b>${m.totalSaved}</b> orders</td>
-          <td><b style="color: var(--success);">${m.completed}</b> delivered</td>
+          <td><b style="color: var(--success);">${m.completed}</b> orders (${m.completedProducts} pcs)</td>
           <td>
             <div style="display:flex; align-items:center; gap:6px;">
               <span style="font-weight: 800; color: ${m.successRate >= 80 ? 'var(--success)' : (m.successRate >= 50 ? 'var(--warning)' : 'var(--danger)')};">
@@ -1179,7 +1539,7 @@
           </td>
           <td><b>৳${m.revenue.toLocaleString()}</b></td>
           <td style="color: var(--accent); font-weight:800;">
-            ${m.excludeFromPayout ? '<span style="color: var(--text-muted); font-size: 0.82rem; font-weight: 700; text-decoration: line-through;">৳' + (m.completed * currentCommissionRate).toLocaleString() + '</span> <span style="font-size:0.85rem; color:var(--purple);">৳0</span>' : '৳' + m.earned.toLocaleString(undefined, { maximumFractionDigits: 1 })}
+            ${m.excludeFromPayout ? '<span style="color: var(--text-muted); font-size: 0.82rem; font-weight: 700; text-decoration: line-through;">৳' + (m.completedProducts * currentCommissionRate).toLocaleString() + '</span> <span style="font-size:0.85rem; color:var(--purple);">৳0</span>' : '৳' + m.earned.toLocaleString(undefined, { maximumFractionDigits: 1 })}
           </td>
           <td style="color: var(--success); font-weight:800;">৳${m.paid.toLocaleString(undefined, { maximumFractionDigits: 1 })}</td>
           <td style="color: ${m.excludeFromPayout ? 'var(--text-muted)' : (m.balance > 0 ? 'var(--warning)' : 'var(--text-muted)')}; font-weight:900; font-size:1.05rem;">
@@ -1220,13 +1580,32 @@
 
         if (!entryBy || entryBy.toLowerCase() === 'organic website checkout') return;
 
+        // Apply Date Range Filter
+        if (!matchDate(orderObj)) return;
+
         if (!modStats[entryBy]) {
-          modStats[entryBy] = { name: entryBy, total: 0, completed: 0, cancelled: 0, returned: 0, revenue: 0 };
+          modStats[entryBy] = { name: entryBy, total: 0, completed: 0, completedProducts: 0, cancelled: 0, returned: 0, revenue: 0 };
         }
 
         modStats[entryBy].total++;
         if (status === 'Completed') {
           modStats[entryBy].completed++;
+          let itemQty = 1;
+          if (orderObj.order) {
+            if (orderObj.order.quantity !== undefined && orderObj.order.quantity !== null) {
+              const q = parseInt(orderObj.order.quantity);
+              if (!isNaN(q) && q > 0) itemQty = q;
+            }
+            if (orderObj.order.items && Array.isArray(orderObj.order.items) && orderObj.order.items.length > 0) {
+              let sum = 0;
+              orderObj.order.items.forEach(item => {
+                const q = parseInt(item.qty || item.quantity);
+                if (!isNaN(q) && q > 0) sum += q;
+              });
+              if (sum > itemQty) itemQty = sum;
+            }
+          }
+          modStats[entryBy].completedProducts += itemQty;
           const priceVal = orderObj.order ? orderObj.order.total_price : '0';
           modStats[entryBy].revenue += parseInt(String(priceVal).replace(/[^\d]/g, '')) || 0;
         } else if (status === 'Cancelled') {
@@ -1236,21 +1615,24 @@
         }
       });
 
-      let csv = 'Moderator Name,Total Saved,Delivered (Completed),Cancelled,Returned,Success Rate %,Sales Volume (৳),Commission Earned (৳),Amount Paid (৳),Outstanding Balance (৳),Status\n';
+      let csv = 'Moderator Name,Total Saved,Delivered Orders,Delivered Products (Pcs),Cancelled,Returned,Success Rate %,Sales Volume (৳),Commission Earned (৳),Amount Paid (৳),Outstanding Balance (৳),Status\n';
 
       Object.keys(modStats).sort().forEach(name => {
         const stats = modStats[name];
         const modPayouts = cachedPayouts[name] || {};
         let paid = 0;
         Object.keys(modPayouts).forEach(pid => {
-          paid += parseFloat(modPayouts[pid].amount) || 0;
+          const p = modPayouts[pid];
+          if (matchPayoutDate(p)) {
+            paid += parseFloat(p.amount) || 0;
+          }
         });
 
         const excludeFromPayout = (cachedConfigs[name] && cachedConfigs[name].excludeFromPayout) ? true : false;
 
         const successDenominator = stats.total - stats.cancelled - stats.returned;
         const successRate = successDenominator > 0 ? (stats.completed / successDenominator) * 100 : 0;
-        const earned = excludeFromPayout ? 0 : (stats.completed * currentCommissionRate);
+        const earned = excludeFromPayout ? 0 : (stats.completedProducts * currentCommissionRate);
         const balance = excludeFromPayout ? 0 : (earned - paid);
 
         let statusText = 'UNPAID';
@@ -1258,7 +1640,7 @@
         else if (balance <= 0) statusText = 'PAID';
         else if (paid > 0) statusText = 'PARTIALLY PAID';
 
-        csv += `"${name.replace(/"/g, '""')}",${stats.total},${stats.completed},${stats.cancelled},${stats.returned},${successRate.toFixed(1)}%,${stats.revenue},${earned},${paid},${balance},"${statusText}"\n`;
+        csv += `"${name.replace(/"/g, '""')}",${stats.total},${stats.completed},${stats.completedProducts},${stats.cancelled},${stats.returned},${successRate.toFixed(1)}%,${stats.revenue},${earned},${paid},${balance},"${statusText}"\n`;
       });
 
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -1388,7 +1770,10 @@
         const o = cachedOrders[id];
         const entryBy = (o.metadata && o.metadata.entryBy) ? o.metadata.entryBy.trim() : '';
         if (entryBy.toLowerCase() === name.toLowerCase()) {
-          matchedOrders.push({ id, ...o });
+          // Check date filter here
+          if (matchDate(o)) {
+            matchedOrders.push({ id, ...o });
+          }
         }
       });
 
