@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+function initEarphoneBDSite() {
   // --- Global Toast Logic ---
   window.showToast = (msg) => {
     const container = document.getElementById('toast-container');
@@ -270,6 +270,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Order Page Logic ---
   window.orderItems = [];
+  window.appliedPromo = window.appliedPromo || null;
+  window.checkoutSubtotal = 0;
+  window.checkoutShipping = 0;
   let currentShipping = 0; // Delivery is free for the customer!
 
   // --- District & Thana Data ---
@@ -1019,16 +1022,40 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function calculateOrderTotals(subtotal) {
-    const total = subtotal + currentShipping;
+    window.checkoutSubtotal = subtotal;
+    window.checkoutShipping = currentShipping;
+
+    if (window.appliedPromo && window.appliedPromo.minOrder && subtotal < window.appliedPromo.minOrder) {
+      const promoMessage = document.getElementById('promo-message');
+      if (promoMessage) {
+        promoMessage.textContent = `Promo removed. Minimum order is ৳${window.appliedPromo.minOrder.toLocaleString()}.`;
+        promoMessage.className = 'promo-message error';
+      }
+      window.appliedPromo = null;
+    }
+
+    const discount = window.calculatePromoDiscount ? window.calculatePromoDiscount(subtotal) : 0;
+    const total = Math.max(0, subtotal + currentShipping - discount);
     
     const subtotalEl = document.getElementById('summary-subtotal');
+    const discountRow = document.getElementById('discount-row');
+    const discountEl = document.getElementById('summary-discount');
+    const discountCodeLabel = document.getElementById('discount-code-label');
     const totalEl = document.getElementById('summary-total');
     const mobileStickyTotal = document.getElementById('mobile-sticky-total');
     
     if (subtotalEl) subtotalEl.innerText = `৳${subtotal.toLocaleString()}`;
+    if (discountRow) discountRow.style.display = discount > 0 ? 'flex' : 'none';
+    if (discountEl) discountEl.innerText = `-৳${discount.toLocaleString()}`;
+    if (discountCodeLabel) discountCodeLabel.innerText = window.appliedPromo ? `(${window.appliedPromo.code})` : '';
     if (totalEl) totalEl.innerText = `৳${total.toLocaleString()}`;
     if (mobileStickyTotal) mobileStickyTotal.innerText = `৳${total.toLocaleString()}`;
   }
+
+  window.refreshOrderTotals = () => {
+    const subtotal = orderItems.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    calculateOrderTotals(subtotal);
+  };
 
   window.updateShipping = (area) => {
     const options = document.querySelectorAll('.delivery-option');
@@ -1657,4 +1684,10 @@ document.addEventListener('DOMContentLoaded', () => {
   updateCartUI();
   updateAccountUI();
   handleHashRouting();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initEarphoneBDSite);
+} else {
+  initEarphoneBDSite();
+}

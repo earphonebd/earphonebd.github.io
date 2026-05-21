@@ -1118,6 +1118,85 @@ footer {
   color: var(--text-primary);
 }
 
+.promo-code-box {
+  margin: 14px 0 6px;
+  padding: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.promo-code-box label {
+  display: block;
+  margin-bottom: 8px;
+  color: #475569;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.promo-code-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.promo-code-row input {
+  width: 100%;
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 750;
+  text-transform: uppercase;
+  outline: none;
+}
+
+.promo-code-row input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.promo-code-row button {
+  border: none;
+  border-radius: 10px;
+  padding: 0 14px;
+  background: #1e293b;
+  color: white;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.promo-code-row button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.promo-message {
+  min-height: 18px;
+  margin-top: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.promo-message.success {
+  color: #059669;
+}
+
+.promo-message.error {
+  color: #dc2626;
+}
+
+.discount-row {
+  color: #059669;
+}
+
+.discount-row small {
+  font-weight: 800;
+  color: #059669;
+}
+
 @media (max-width: 768px) {
   .section-title {
     font-size: 1.8rem;
@@ -2505,4 +2584,3 @@ footer {
     bottom: 142px !important;
   }
 }
-
