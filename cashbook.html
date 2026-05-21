@@ -749,13 +749,26 @@
 </head>
 <body>
 
-  <!-- Password Guard Overlay -->
+  <!-- Google Auth Overlay -->
   <div id="login-overlay">
-    <div class="login-box">
-      <h2>Earphone BD</h2>
-      <p>Secure Ledger Portal</p>
-      <input type="password" id="admin-pass" class="login-input" placeholder="Password" onkeydown="if(event.key === 'Enter') checkPass()">
-      <button onclick="checkPass()" class="login-btn">Verify and Access</button>
+    <div style="background: white; padding: 40px; border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); width: 100%; max-width: 380px; text-align: center; border: 1px solid #f1f5f9;">
+      <div style="font-size: 3rem; margin-bottom: 15px;">🔐</div>
+      <h2 style="font-weight: 900; margin-bottom: 10px; color: #1e293b; font-family: 'Outfit', sans-serif;">Earphone BD</h2>
+      <p style="color: #64748b; margin-bottom: 30px; font-size: 0.95rem; font-family: 'Outfit', sans-serif;">Secure Ledger Portal</p>
+      
+      <div id="admin-login-error" style="display: none; background: #fef2f2; color: #ef4444; border: 1px solid #fca5a5; padding: 12px; border-radius: 12px; font-size: 0.88rem; font-weight: 600; margin-bottom: 20px; text-align: center; line-height: 1.4;">
+        Access Denied: Your Google Account is not authorized to access this panel.
+      </div>
+      
+      <button onclick="window.signInWithGoogle()" style="display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; background: white; color: #1e293b; border: 2px solid #e2e8f0; padding: 15px; border-radius: 15px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.02); outline: none;" onmouseover="this.style.borderColor='#cbd5e1'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.02)';">
+        <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+        </svg>
+        <span>Sign in with Google</span>
+      </button>
     </div>
   </div>
 
@@ -793,6 +806,10 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
         Manage Payouts
       </a>
+      <button onclick="window.adminSignOut()" class="nav-tab" style="background: none; border: none; font-family: inherit; font-size: inherit; color: #ef4444; margin-left: auto; display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 10px 20px; border-radius: 12px; font-weight: 700; transition: all 0.2s;" onmouseover="this.style.background='#fef2f2';" onmouseout="this.style.background='none';">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        Sign Out
+      </button>
     </div>
 
     <!-- Date Range & Search Filters -->
@@ -1012,7 +1029,8 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-    import { getDatabase, ref, onValue, push, remove } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+    import { getDatabase, ref, onValue, push, remove, update } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
     // Firebase Configurations
     const firebaseConfig = {
@@ -1024,6 +1042,381 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
+
+    // Embedded historical cashbook transactions from Cash Book.csv
+    const historicalTransactions = [
+      {
+        "amount": 1260,
+        "category": "Investment Capital (বিনিয়োগ)",
+        "description": "Card Funding: Dual Carrency Card",
+        "type": "income",
+        "timestamp": 1777960800000,
+        "date": "2026-05-05"
+      },
+      {
+        "amount": 1260,
+        "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+        "description": "Dual Carrency Card",
+        "type": "expense",
+        "timestamp": 1777960800000,
+        "date": "2026-05-05"
+      },
+      {
+        "amount": 3260,
+        "category": "Investment Capital (বিনিয়োগ)",
+        "description": "Card Funding: Ad Cost",
+        "type": "income",
+        "timestamp": 1777960800000,
+        "date": "2026-05-05"
+      },
+      {
+        "amount": 3260,
+        "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+        "description": "Ad Cost",
+        "type": "expense",
+        "timestamp": 1777960800000,
+        "date": "2026-05-05"
+      },
+      {
+        "amount": 720,
+        "category": "Investment Capital (বিনিয়োগ)",
+        "description": "Card Funding: Buy Followers",
+        "type": "income",
+        "timestamp": 1777960800000,
+        "date": "2026-05-05"
+      },
+      {
+        "amount": 720,
+        "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+        "description": "Buy Followers",
+        "type": "expense",
+        "timestamp": 1777960800000,
+        "date": "2026-05-05"
+      },
+      {
+        "amount": 2450,
+        "category": "Investment Capital (বিনিয়োগ)",
+        "description": "Card Funding: Sample Product",
+        "type": "income",
+        "timestamp": 1777960800000,
+        "date": "2026-05-05"
+      },
+      {
+        "amount": 2450,
+        "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+        "description": "Sample Product",
+        "type": "expense",
+        "timestamp": 1777960800000,
+        "date": "2026-05-05"
+      },
+      {
+        "amount": 500,
+        "category": "Investment Capital (বিনিয়োগ)",
+        "description": "Imported historical income entry for Deposit",
+        "type": "income",
+        "timestamp": 1778047200000,
+        "date": "2026-05-06"
+      },
+      {
+        "amount": 400,
+        "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+        "description": "Imported historical expense entry for Products",
+        "type": "expense",
+        "timestamp": 1778047200000,
+        "date": "2026-05-06"
+      },
+      {
+        "amount": 1000,
+        "category": "Investment Capital (বিনিয়োগ)",
+        "description": "Imported historical income entry for Deposit",
+        "type": "income",
+        "timestamp": 1778133600000,
+        "date": "2026-05-07"
+      },
+      {
+        "amount": 750,
+        "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+        "description": "Imported historical expense entry for Products",
+        "type": "expense",
+        "timestamp": 1778133600000,
+        "date": "2026-05-07"
+      },
+      {
+        "amount": 2000,
+        "category": "Investment Capital (বিনিয়োগ)",
+        "description": "Imported historical income entry for Deposit",
+        "type": "income",
+        "timestamp": 1778306400000,
+        "date": "2026-05-09"
+      },
+      {
+        "amount": 1890,
+        "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+        "description": "Imported historical expense entry for Products",
+        "type": "expense",
+        "timestamp": 1778306400000,
+        "date": "2026-05-09"
+      },
+      {
+        "amount": 2000,
+        "category": "Investment Capital (বিনিয়োগ)",
+        "description": "Imported historical income entry for Deposit",
+        "type": "income",
+        "timestamp": 1778392800000,
+        "date": "2026-05-10"
+      },
+      {
+        "amount": 1138,
+        "category": "Sales Revenue (বিক্রয় আয়)",
+        "description": "Imported historical income entry for Sales",
+        "type": "income",
+        "timestamp": 1778392800000,
+        "date": "2026-05-10"
+      },
+      {
+        "amount": 2000,
+        "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+        "description": "Imported historical expense entry for Ad Cost",
+        "type": "expense",
+        "timestamp": 1778392800000,
+        "date": "2026-05-10"
+      },
+      {
+        "amount": 2570,
+        "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+        "description": "Imported historical expense entry for Products",
+        "type": "expense",
+        "timestamp": 1778392800000,
+        "date": "2026-05-10"
+      },
+      {
+        "amount": 3384,
+        "category": "Sales Revenue (বিক্রয় আয়)",
+        "description": "Imported historical income entry for Sales",
+        "type": "income",
+        "timestamp": 1778479200000,
+        "date": "2026-05-11"
+      },
+      {
+        "amount": 1500,
+        "category": "Investment Capital (বিনিয়োগ)",
+        "description": "Imported historical income entry for Deposit",
+        "type": "income",
+        "timestamp": 1778565600000,
+        "date": "2026-05-12"
+      },
+      {
+        "amount": 441,
+        "category": "Sales Revenue (বিক্রয় আয়)",
+        "description": "Imported historical income entry for Sales",
+        "type": "income",
+        "timestamp": 1778565600000,
+        "date": "2026-05-12"
+      },
+      {
+        "amount": 3420,
+        "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+        "description": "Imported historical expense entry for Products",
+        "type": "expense",
+        "timestamp": 1778565600000,
+        "date": "2026-05-12"
+      },
+      {
+        "amount": 713,
+        "category": "Sales Revenue (বিক্রয় আয়)",
+        "description": "Imported historical income entry for Sales",
+        "type": "income",
+        "timestamp": 1778652000000,
+        "date": "2026-05-13"
+      },
+      {
+        "amount": 1910,
+        "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+        "description": "Imported historical expense entry for Products",
+        "type": "expense",
+        "timestamp": 1778652000000,
+        "date": "2026-05-13"
+      },
+      {
+        "amount": 3614,
+        "category": "Sales Revenue (বিক্রয় আয়)",
+        "description": "Imported historical income entry for Sales",
+        "type": "income",
+        "timestamp": 1778738400000,
+        "date": "2026-05-14"
+      },
+      {
+        "amount": 100,
+        "category": "Investment Capital (বিনিয়োগ)",
+        "description": "Imported historical income entry for Deposit",
+        "type": "income",
+        "timestamp": 1778738400000,
+        "date": "2026-05-14"
+      },
+      {
+        "amount": 1900,
+        "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+        "description": "Imported historical expense entry for Ad Cost",
+        "type": "expense",
+        "timestamp": 1778738400000,
+        "date": "2026-05-14"
+      },
+      {
+        "amount": 1330,
+        "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+        "description": "Imported historical expense entry for Products",
+        "type": "expense",
+        "timestamp": 1778738400000,
+        "date": "2026-05-14"
+      },
+      {
+        "amount": 220,
+        "category": "Other Expenses (অন্যান্য ব্যয়)",
+        "description": "Imported historical expense entry for Others",
+        "type": "expense",
+        "timestamp": 1778738400000,
+        "date": "2026-05-14"
+      },
+      {
+        "amount": 1933,
+        "category": "Sales Revenue (বিক্রয় আয়)",
+        "description": "Imported historical income entry for Sales",
+        "type": "income",
+        "timestamp": 1778824800000,
+        "date": "2026-05-15"
+      },
+      {
+        "amount": 1067,
+        "category": "Sales Revenue (বিক্রয় আয়)",
+        "description": "Imported historical income entry for Sales",
+        "type": "income",
+        "timestamp": 1778997600000,
+        "date": "2026-05-17"
+      },
+      {
+        "amount": 650,
+        "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+        "description": "Imported historical expense entry for Ad Cost",
+        "type": "expense",
+        "timestamp": 1779084000000,
+        "date": "2026-05-18"
+      },
+      {
+        "amount": 530,
+        "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+        "description": "Imported historical expense entry for Products",
+        "type": "expense",
+        "timestamp": 1779084000000,
+        "date": "2026-05-18"
+      },
+      {
+        "amount": 1700,
+        "category": "Loan Received (ঋণ গ্রহণ)",
+        "description": "Imported historical income entry for Borrow",
+        "type": "income",
+        "timestamp": 1779170400000,
+        "date": "2026-05-19"
+      },
+      {
+        "amount": 3345,
+        "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+        "description": "Imported historical expense entry for Products",
+        "type": "expense",
+        "timestamp": 1779170400000,
+        "date": "2026-05-19"
+      },
+      {
+        "amount": 800,
+        "category": "Sales Revenue (বিক্রয় আয়)",
+        "description": "Imported historical income entry for Sales",
+        "type": "income",
+        "timestamp": 1779170400000,
+        "date": "2026-05-19"
+      },
+      {
+        "amount": 130,
+        "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+        "description": "Imported historical expense entry for Marketing",
+        "type": "expense",
+        "timestamp": 1779256800000,
+        "date": "2026-05-20"
+      },
+      {
+        "amount": 210,
+        "category": "Other Expenses (অন্যান্য ব্যয়)",
+        "description": "Imported historical expense entry for Sales",
+        "type": "expense",
+        "timestamp": 1779256800000,
+        "date": "2026-05-20"
+      },
+      {
+        "amount": 500,
+        "category": "Loan Received (ঋণ গ্রহণ)",
+        "description": "Imported historical income entry for Borrow",
+        "type": "income",
+        "timestamp": 1779256800000,
+        "date": "2026-05-20"
+      },
+      {
+        "amount": 500,
+        "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+        "description": "Imported historical expense entry for Ad Cost",
+        "type": "expense",
+        "timestamp": 1779256800000,
+        "date": "2026-05-20"
+      },
+      {
+        "amount": 820,
+        "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+        "description": "Imported historical expense entry for Products",
+        "type": "expense",
+        "timestamp": 1779256800000,
+        "date": "2026-05-20"
+      },
+      {
+        "amount": 100,
+        "category": "Other Expenses (অন্যান্য ব্যয়)",
+        "description": "Imported historical expense entry for Others",
+        "type": "expense",
+        "timestamp": 1779256800000,
+        "date": "2026-05-20"
+      },
+      {
+        "amount": 285,
+        "category": "Loan Received (ঋণ গ্রহণ)",
+        "description": "Imported historical income entry for Borrow",
+        "type": "income",
+        "timestamp": 1779256800000,
+        "date": "2026-05-20"
+      },
+      {
+        "amount": 1381,
+        "category": "Sales Revenue (বিক্রয় আয়)",
+        "description": "Imported historical income entry for Sales",
+        "type": "income",
+        "timestamp": 1779256800000,
+        "date": "2026-05-20"
+      }
+    ];
+
+    // HTML Entity escaping to secure against Stored XSS
+    const escapeHTML = (str) => {
+      if (str === null || str === undefined) return '';
+      if (typeof str !== 'string') return String(str);
+      return str.replace(/[&<>"']/g, (match) => {
+        const entityMap = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#x27;'
+        };
+        return entityMap[match];
+      });
+    };
+
+    // Attribute escaping to secure against inline event attribute XSS
+    const escapeAttr = (value) => String(value || '').replace(/'/g, "\\\\'").replace(/"/g, '&quot;');
 
     // Categories Presets
     const categories = {
@@ -1039,19 +1432,80 @@
     let chartInstance = null;
     let trendChartInstance = null;
 
-    // Password Access Control
-    window.checkPass = () => {
-      if (document.getElementById('admin-pass').value === 'admin123') {
-        sessionStorage.setItem('admin_authenticated', 'true');
-        document.getElementById('login-overlay').style.display = 'none';
-        initLedger();
-      } else alert('Access Denied!');
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    const adminWhitelist = [
+      "husainahmedshisir@gmail.com",
+      "manik60543396@gmail.com",
+      "isajidul707@gmail.com",
+      "bdearphone@gmail.com",
+      "sajidtechsolutions@gmail.com",
+      "mdsajidulbd@gmail.com"
+    ];
+
+    window.signInWithGoogle = () => {
+      const errBox = document.getElementById('admin-login-error');
+      if (errBox) errBox.style.display = 'none';
+      
+      signInWithPopup(auth, provider)
+        .then(() => {
+          console.log("Successfully authenticated with Google");
+        })
+        .catch((error) => {
+          console.error("Google Sign-In Error:", error);
+          alert("Sign-in failed: " + error.message);
+        });
     };
 
+    window.adminSignOut = () => {
+      signOut(auth).then(() => {
+        sessionStorage.removeItem('admin_authenticated');
+        location.reload();
+      }).catch(err => {
+        alert("Sign-out failed: " + err.message);
+      });
+    };
+
+    let isInitialized = false;
+
+    onAuthStateChanged(auth, (user) => {
+      const overlay = document.getElementById('login-overlay');
+      const errBox = document.getElementById('admin-login-error');
+      
+      if (user) {
+        const userEmail = user.email ? user.email.toLowerCase().trim() : '';
+        if (adminWhitelist.includes(userEmail)) {
+          sessionStorage.setItem('admin_authenticated', 'true');
+          if (overlay) overlay.style.display = 'none';
+          if (errBox) errBox.style.display = 'none';
+          
+          if (!isInitialized) {
+            isInitialized = true;
+            initLedger();
+          }
+        } else {
+          if (errBox) {
+            errBox.textContent = `Access Denied: ${user.email} is not authorized.`;
+            errBox.style.display = 'block';
+          } else {
+            alert(`Access Denied: ${user.email} is not authorized.`);
+          }
+          signOut(auth).then(() => {
+            sessionStorage.removeItem('admin_authenticated');
+            if (overlay) overlay.style.display = 'flex';
+          });
+        }
+      } else {
+        sessionStorage.removeItem('admin_authenticated');
+        if (overlay) overlay.style.display = 'flex';
+      }
+    });
+
+    // Rapid initial check to avoid visual flicker for active sessions
     if (sessionStorage.getItem('admin_authenticated') === 'true') {
       const overlay = document.getElementById('login-overlay');
       if (overlay) overlay.style.display = 'none';
-      initLedger();
     }
 
     // Set dynamic transaction categories based on type
@@ -1088,16 +1542,35 @@
       const ledgerRef = ref(db, 'cashbook_transactions');
       onValue(ledgerRef, (snapshot) => {
         const data = snapshot.val();
-        if (!data) {
-          transactions = [];
-          updateDashboard();
+        
+        // Background migration check
+        if (!data || !data._migration_done) {
+          console.log("Migration flag _migration_done not detected. Initializing client-side background migration...");
+          const migrationPayload = {};
+          historicalTransactions.forEach((tx, idx) => {
+            migrationPayload[`hist_${idx}`] = tx;
+          });
+          migrationPayload['_migration_done'] = true;
+          
+          update(ledgerRef, migrationPayload)
+            .then(() => {
+              console.log("Successfully migrated historical cashbook transactions to Firebase.");
+            })
+            .catch(err => {
+              console.error("Migration failed:", err);
+            });
+          
+          // The update will trigger another onValue event. We can return early.
           return;
         }
 
-        transactions = Object.keys(data).map(key => ({
-          key: key,
-          ...data[key]
-        })).sort((a, b) => b.timestamp - a.timestamp); // Chronological desc (latest first)
+        // Filter out the _migration_done flag
+        transactions = Object.keys(data)
+          .filter(key => key !== '_migration_done')
+          .map(key => ({
+            key: key,
+            ...data[key]
+          })).sort((a, b) => b.timestamp - a.timestamp); // Chronological desc (latest first)
 
         updateDashboard();
       });
@@ -1231,15 +1704,15 @@
         });
 
         tr.innerHTML = `
-          <td style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); white-space: nowrap;">${formattedDate}</td>
-          <td><span class="badge-status ${badgeType}">${typeLabel}</span></td>
-          <td><span style="font-weight: 800; font-size: 0.85rem;">${tx.category}</span></td>
-          <td><div style="font-size: 0.85rem; color: var(--text-muted); max-width: 250px; line-height: 1.4;">${tx.description}</div></td>
+          <td style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); white-space: nowrap;">${escapeHTML(formattedDate)}</td>
+          <td><span class="badge-status ${badgeType}">${escapeHTML(typeLabel)}</span></td>
+          <td><span style="font-weight: 800; font-size: 0.85rem;">${escapeHTML(tx.category)}</span></td>
+          <td><div style="font-size: 0.85rem; color: var(--text-muted); max-width: 250px; line-height: 1.4;">${escapeHTML(tx.description)}</div></td>
           <td style="text-align: right; font-weight: 900; color: ${tx.type === 'income' ? 'var(--success)' : 'var(--danger)'};">
             ${tx.type === 'income' ? '+' : '-'}৳${parseFloat(tx.amount).toLocaleString()}
           </td>
           <td style="text-align: center;">
-            <button class="btn-delete" onclick="voidTransaction('${tx.key}')">
+            <button class="btn-delete" onclick="voidTransaction('${escapeAttr(tx.key)}')">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
             </button>
           </td>

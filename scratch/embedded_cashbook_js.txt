@@ -1,0 +1,355 @@
+// Embedded historical cashbook transactions from Cash Book.csv
+const historicalTransactions = [
+  {
+    "amount": 1260,
+    "category": "Investment Capital (বিনিয়োগ)",
+    "description": "Card Funding: Dual Carrency Card",
+    "type": "income",
+    "timestamp": 1777960800000,
+    "date": "2026-05-05"
+  },
+  {
+    "amount": 1260,
+    "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+    "description": "Dual Carrency Card",
+    "type": "expense",
+    "timestamp": 1777960800000,
+    "date": "2026-05-05"
+  },
+  {
+    "amount": 3260,
+    "category": "Investment Capital (বিনিয়োগ)",
+    "description": "Card Funding: Ad Cost",
+    "type": "income",
+    "timestamp": 1777960800000,
+    "date": "2026-05-05"
+  },
+  {
+    "amount": 3260,
+    "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+    "description": "Ad Cost",
+    "type": "expense",
+    "timestamp": 1777960800000,
+    "date": "2026-05-05"
+  },
+  {
+    "amount": 720,
+    "category": "Investment Capital (বিনিয়োগ)",
+    "description": "Card Funding: Buy Followers",
+    "type": "income",
+    "timestamp": 1777960800000,
+    "date": "2026-05-05"
+  },
+  {
+    "amount": 720,
+    "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+    "description": "Buy Followers",
+    "type": "expense",
+    "timestamp": 1777960800000,
+    "date": "2026-05-05"
+  },
+  {
+    "amount": 2450,
+    "category": "Investment Capital (বিনিয়োগ)",
+    "description": "Card Funding: Sample Product",
+    "type": "income",
+    "timestamp": 1777960800000,
+    "date": "2026-05-05"
+  },
+  {
+    "amount": 2450,
+    "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+    "description": "Sample Product",
+    "type": "expense",
+    "timestamp": 1777960800000,
+    "date": "2026-05-05"
+  },
+  {
+    "amount": 500,
+    "category": "Investment Capital (বিনিয়োগ)",
+    "description": "Imported historical income entry for Deposit",
+    "type": "income",
+    "timestamp": 1778047200000,
+    "date": "2026-05-06"
+  },
+  {
+    "amount": 400,
+    "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+    "description": "Imported historical expense entry for Products",
+    "type": "expense",
+    "timestamp": 1778047200000,
+    "date": "2026-05-06"
+  },
+  {
+    "amount": 1000,
+    "category": "Investment Capital (বিনিয়োগ)",
+    "description": "Imported historical income entry for Deposit",
+    "type": "income",
+    "timestamp": 1778133600000,
+    "date": "2026-05-07"
+  },
+  {
+    "amount": 750,
+    "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+    "description": "Imported historical expense entry for Products",
+    "type": "expense",
+    "timestamp": 1778133600000,
+    "date": "2026-05-07"
+  },
+  {
+    "amount": 2000,
+    "category": "Investment Capital (বিনিয়োগ)",
+    "description": "Imported historical income entry for Deposit",
+    "type": "income",
+    "timestamp": 1778306400000,
+    "date": "2026-05-09"
+  },
+  {
+    "amount": 1890,
+    "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+    "description": "Imported historical expense entry for Products",
+    "type": "expense",
+    "timestamp": 1778306400000,
+    "date": "2026-05-09"
+  },
+  {
+    "amount": 2000,
+    "category": "Investment Capital (বিনিয়োগ)",
+    "description": "Imported historical income entry for Deposit",
+    "type": "income",
+    "timestamp": 1778392800000,
+    "date": "2026-05-10"
+  },
+  {
+    "amount": 1138,
+    "category": "Sales Revenue (বিক্রয় আয়)",
+    "description": "Imported historical income entry for Sales",
+    "type": "income",
+    "timestamp": 1778392800000,
+    "date": "2026-05-10"
+  },
+  {
+    "amount": 2000,
+    "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+    "description": "Imported historical expense entry for Ad Cost",
+    "type": "expense",
+    "timestamp": 1778392800000,
+    "date": "2026-05-10"
+  },
+  {
+    "amount": 2570,
+    "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+    "description": "Imported historical expense entry for Products",
+    "type": "expense",
+    "timestamp": 1778392800000,
+    "date": "2026-05-10"
+  },
+  {
+    "amount": 3384,
+    "category": "Sales Revenue (বিক্রয় আয়)",
+    "description": "Imported historical income entry for Sales",
+    "type": "income",
+    "timestamp": 1778479200000,
+    "date": "2026-05-11"
+  },
+  {
+    "amount": 1500,
+    "category": "Investment Capital (বিনিয়োগ)",
+    "description": "Imported historical income entry for Deposit",
+    "type": "income",
+    "timestamp": 1778565600000,
+    "date": "2026-05-12"
+  },
+  {
+    "amount": 441,
+    "category": "Sales Revenue (বিক্রয় আয়)",
+    "description": "Imported historical income entry for Sales",
+    "type": "income",
+    "timestamp": 1778565600000,
+    "date": "2026-05-12"
+  },
+  {
+    "amount": 3420,
+    "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+    "description": "Imported historical expense entry for Products",
+    "type": "expense",
+    "timestamp": 1778565600000,
+    "date": "2026-05-12"
+  },
+  {
+    "amount": 713,
+    "category": "Sales Revenue (বিক্রয় আয়)",
+    "description": "Imported historical income entry for Sales",
+    "type": "income",
+    "timestamp": 1778652000000,
+    "date": "2026-05-13"
+  },
+  {
+    "amount": 1910,
+    "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+    "description": "Imported historical expense entry for Products",
+    "type": "expense",
+    "timestamp": 1778652000000,
+    "date": "2026-05-13"
+  },
+  {
+    "amount": 3614,
+    "category": "Sales Revenue (বিক্রয় আয়)",
+    "description": "Imported historical income entry for Sales",
+    "type": "income",
+    "timestamp": 1778738400000,
+    "date": "2026-05-14"
+  },
+  {
+    "amount": 100,
+    "category": "Investment Capital (বিনিয়োগ)",
+    "description": "Imported historical income entry for Deposit",
+    "type": "income",
+    "timestamp": 1778738400000,
+    "date": "2026-05-14"
+  },
+  {
+    "amount": 1900,
+    "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+    "description": "Imported historical expense entry for Ad Cost",
+    "type": "expense",
+    "timestamp": 1778738400000,
+    "date": "2026-05-14"
+  },
+  {
+    "amount": 1330,
+    "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+    "description": "Imported historical expense entry for Products",
+    "type": "expense",
+    "timestamp": 1778738400000,
+    "date": "2026-05-14"
+  },
+  {
+    "amount": 220,
+    "category": "Other Expenses (অন্যান্য ব্যয়)",
+    "description": "Imported historical expense entry for Others",
+    "type": "expense",
+    "timestamp": 1778738400000,
+    "date": "2026-05-14"
+  },
+  {
+    "amount": 1933,
+    "category": "Sales Revenue (বিক্রয় আয়)",
+    "description": "Imported historical income entry for Sales",
+    "type": "income",
+    "timestamp": 1778824800000,
+    "date": "2026-05-15"
+  },
+  {
+    "amount": 1067,
+    "category": "Sales Revenue (বিক্রয় আয়)",
+    "description": "Imported historical income entry for Sales",
+    "type": "income",
+    "timestamp": 1778997600000,
+    "date": "2026-05-17"
+  },
+  {
+    "amount": 650,
+    "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+    "description": "Imported historical expense entry for Ad Cost",
+    "type": "expense",
+    "timestamp": 1779084000000,
+    "date": "2026-05-18"
+  },
+  {
+    "amount": 530,
+    "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+    "description": "Imported historical expense entry for Products",
+    "type": "expense",
+    "timestamp": 1779084000000,
+    "date": "2026-05-18"
+  },
+  {
+    "amount": 1700,
+    "category": "Loan Received (ঋণ গ্রহণ)",
+    "description": "Imported historical income entry for Borrow",
+    "type": "income",
+    "timestamp": 1779170400000,
+    "date": "2026-05-19"
+  },
+  {
+    "amount": 3345,
+    "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+    "description": "Imported historical expense entry for Products",
+    "type": "expense",
+    "timestamp": 1779170400000,
+    "date": "2026-05-19"
+  },
+  {
+    "amount": 800,
+    "category": "Sales Revenue (বিক্রয় আয়)",
+    "description": "Imported historical income entry for Sales",
+    "type": "income",
+    "timestamp": 1779170400000,
+    "date": "2026-05-19"
+  },
+  {
+    "amount": 130,
+    "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+    "description": "Imported historical expense entry for Marketing",
+    "type": "expense",
+    "timestamp": 1779256800000,
+    "date": "2026-05-20"
+  },
+  {
+    "amount": 210,
+    "category": "Other Expenses (অন্যান্য ব্যয়)",
+    "description": "Imported historical expense entry for Sales",
+    "type": "expense",
+    "timestamp": 1779256800000,
+    "date": "2026-05-20"
+  },
+  {
+    "amount": 500,
+    "category": "Loan Received (ঋণ গ্রহণ)",
+    "description": "Imported historical income entry for Borrow",
+    "type": "income",
+    "timestamp": 1779256800000,
+    "date": "2026-05-20"
+  },
+  {
+    "amount": 500,
+    "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+    "description": "Imported historical expense entry for Ad Cost",
+    "type": "expense",
+    "timestamp": 1779256800000,
+    "date": "2026-05-20"
+  },
+  {
+    "amount": 820,
+    "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+    "description": "Imported historical expense entry for Products",
+    "type": "expense",
+    "timestamp": 1779256800000,
+    "date": "2026-05-20"
+  },
+  {
+    "amount": 100,
+    "category": "Other Expenses (অন্যান্য ব্যয়)",
+    "description": "Imported historical expense entry for Others",
+    "type": "expense",
+    "timestamp": 1779256800000,
+    "date": "2026-05-20"
+  },
+  {
+    "amount": 285,
+    "category": "Loan Received (ঋণ গ্রহণ)",
+    "description": "Imported historical income entry for Borrow",
+    "type": "income",
+    "timestamp": 1779256800000,
+    "date": "2026-05-20"
+  },
+  {
+    "amount": 1381,
+    "category": "Sales Revenue (বিক্রয় আয়)",
+    "description": "Imported historical income entry for Sales",
+    "type": "income",
+    "timestamp": 1779256800000,
+    "date": "2026-05-20"
+  }
+];

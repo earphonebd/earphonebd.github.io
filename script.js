@@ -1,4 +1,20 @@
 function initEarphoneBDSite() {
+  // HTML Entity escaping to secure against Stored XSS
+  const escapeHTML = (str) => {
+    if (str === null || str === undefined) return '';
+    if (typeof str !== 'string') return String(str);
+    return str.replace(/[&<>"']/g, (match) => {
+      const entityMap = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#x27;'
+      };
+      return entityMap[match];
+    });
+  };
+
   // --- Global Toast Logic ---
   window.showToast = (msg) => {
     const container = document.getElementById('toast-container');
@@ -244,14 +260,14 @@ function initEarphoneBDSite() {
           <div class="review-item" style="padding: 16px; background: white; border-radius: 16px; border: 1px solid #f1f5f9; margin-bottom: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.01);">
             <div style="display: flex; align-items: center; margin-bottom: 8px;">
               <strong style="font-size: 1.05rem; color: #1e293b; display: inline-flex; align-items: center;">
-                ${rev.name}
+                ${escapeHTML(rev.name)}
                 <svg viewBox="0 0 24 24" width="16" height="16" style="display: inline-block; vertical-align: middle; margin-left: 6px; flex-shrink: 0;" title="Verified Buyer">
                   <circle cx="12" cy="12" r="10" fill="#1877f2"/>
                   <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="#ffffff"/>
                 </svg>
               </strong>
             </div>
-            <p style="font-size: 0.95rem; color: #475569; line-height: 1.5; margin: 0;">${rev.text}</p>
+            <p style="font-size: 0.95rem; color: #475569; line-height: 1.5; margin: 0;">${escapeHTML(rev.text)}</p>
           </div>
         `).join('');
       }
@@ -1195,13 +1211,16 @@ function initEarphoneBDSite() {
   };
 
   window.addReview = () => {
-    const name = document.getElementById('rev-name').value;
-    const text = document.getElementById('rev-text').value;
+    const rawName = document.getElementById('rev-name').value;
+    const rawText = document.getElementById('rev-text').value;
 
-    if (!name || !text) {
+    if (!rawName || !rawText) {
       window.showToast('দয়া করে আপনার নাম এবং মতামত লিখুন।');
       return;
     }
+
+    const name = escapeHTML(rawName);
+    const text = escapeHTML(rawText);
 
     const reviewList = document.getElementById('review-list');
     const newReview = document.createElement('div');
@@ -1525,14 +1544,17 @@ function initEarphoneBDSite() {
       userOrders.forEach(order => {
         // Formulate a premium Order ID
         const shortId = order.id ? order.id.substring(order.id.length - 6).toUpperCase() : 'N/A';
+        const escShortId = escapeHTML(shortId);
         
         // Formulate Date
         const rawDate = order.metadata?.date || '';
         const orderDate = rawDate || new Date(order.metadata?.timestamp || Date.now()).toLocaleString('bn-BD');
+        const escOrderDate = escapeHTML(orderDate);
         
         // Translate status dynamically
         const status = order.metadata?.status || 'New Order';
         const statusClass = 'status-' + status.toLowerCase().replace(/\s+/g, '-');
+        const escStatusClass = escapeHTML(statusClass);
         
         let statusBn = status;
         if (status === 'New Order' || status === 'ordered' || status === 'order-placed') statusBn = 'নতুন অর্ডার';
@@ -1541,6 +1563,7 @@ function initEarphoneBDSite() {
         else if (status === 'Shipped' || status === 'shipped' || status === 'sent') statusBn = 'ডেলিভারি চলছে';
         else if (status === 'Completed' || status === 'Delivered' || status === 'delivered') statusBn = 'ডেলিভারড';
         else if (status === 'Cancelled' || status === 'cancelled') statusBn = 'বাতিল';
+        const escStatusBn = escapeHTML(statusBn);
 
         // Compile items list beautifully
         const items = order.order?.items || [];
@@ -1549,17 +1572,17 @@ function initEarphoneBDSite() {
           itemsHtml = items.map(item => `
             <div class="user-order-item-row" style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #475569; margin-bottom: 4px; gap: 10px;">
               <span class="item-name" style="font-weight: 600; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
-                📦 ${item.title} ${item.edition ? `(${item.edition})` : ''} ${item.color ? `(${item.color})` : ''}
+                📦 ${escapeHTML(item.title)} ${item.edition ? `(${escapeHTML(item.edition)})` : ''} ${item.color ? `(${escapeHTML(item.color)})` : ''}
               </span>
               <span class="item-qty-price" style="font-weight: 700; color: #1e293b; flex-shrink: 0;">
-                ${item.qty}টি × ${item.price}
+                ${escapeHTML(item.qty)}টি × ${escapeHTML(item.price)}
               </span>
             </div>
           `).join('');
         } else {
           itemsHtml = `
             <div style="font-size: 0.85rem; color: #475569; font-weight: 600;">
-              📦 ${order.order?.product || 'প্রোডাক্ট বিবরণ পাওয়া যায়নি'}
+              📦 ${escapeHTML(order.order?.product || 'প্রোডাক্ট বিবরণ পাওয়া যায়নি')}
             </div>
           `;
         }
@@ -1568,10 +1591,10 @@ function initEarphoneBDSite() {
           <div class="user-order-card" style="background: white; border-radius: 14px; border: 1px solid #e2e8f0; padding: 14px; margin-bottom: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.01), 0 2px 4px -1px rgba(0,0,0,0.01); display: flex; flex-direction: column; gap: 10px; transition: all 0.2s;">
             <div class="user-order-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #e2e8f0; padding-bottom: 8px; margin-bottom: 2px;">
               <span class="user-order-id" style="font-size: 0.78rem; font-weight: 800; color: #2563eb; background: #eff6ff; padding: 4px 8px; border-radius: 6px;">
-                #EBD-${shortId}
+                #EBD-${escShortId}
               </span>
-              <span class="user-order-status ${statusClass}" style="padding: 4px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; text-transform: capitalize;">
-                ${statusBn}
+              <span class="user-order-status ${escStatusClass}" style="padding: 4px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; text-transform: capitalize;">
+                ${escStatusBn}
               </span>
             </div>
             
@@ -1581,11 +1604,11 @@ function initEarphoneBDSite() {
             
             <div class="user-order-footer" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #e2e8f0; padding-top: 8px; font-size: 0.8rem; color: #64748b; margin-top: 2px;">
               <span class="user-order-date" style="font-weight: 500; font-size: 0.75rem;">
-                📅 ${orderDate}
+                📅 ${escOrderDate}
               </span>
               <div class="user-order-total" style="font-size: 0.85rem; flex-shrink: 0;">
                 <span style="color: #64748b; font-weight: 500;">মোট:</span>
-                <strong style="color: #1e293b; font-size: 0.95rem; font-weight: 800; margin-left: 2px;">${order.order?.total_price || '৳০'}</strong>
+                <strong style="color: #1e293b; font-size: 0.95rem; font-weight: 800; margin-left: 2px;">${escapeHTML(order.order?.total_price || '৳০')}</strong>
               </div>
             </div>
           </div>

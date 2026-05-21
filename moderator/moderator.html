@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>⚡ Rapid Moderator Workspace | Earphone BD</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
   <style>
     :root {
       --bg: #f8fafc;
@@ -28,7 +30,7 @@
     body {
       background: var(--bg);
       background-image: radial-gradient(circle at top right, rgba(37, 99, 235, 0.04), transparent 400px),
-                        radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.02), transparent 450px);
+        radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.02), transparent 450px);
       color: var(--text-main);
       font-family: 'Outfit', sans-serif;
       margin: 0;
@@ -552,7 +554,7 @@
       border-radius: 12px;
       font-size: 0.9rem;
       font-weight: 700;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
       display: flex;
       align-items: center;
       gap: 10px;
@@ -593,7 +595,8 @@
 
     @media (max-width: 600px) {
       .input-field {
-        font-size: 16px !important; /* Force 16px to prevent iOS Safari auto-zoom behavior */
+        font-size: 16px !important;
+        /* Force 16px to prevent iOS Safari auto-zoom behavior */
         padding: 10px 14px;
         border-radius: 10px;
       }
@@ -605,7 +608,8 @@
       }
 
       .wrapper {
-        margin: 5px auto 95px auto; /* 95px bottom margin to clear the floating/sticky bottom bar */
+        margin: 5px auto 95px auto;
+        /* 95px bottom margin to clear the floating/sticky bottom bar */
       }
 
       .form-card {
@@ -789,7 +793,8 @@
       }
 
       .toast-popup {
-        bottom: 75px; /* Shift up to clear mobile sticky submit footer */
+        bottom: 75px;
+        /* Shift up to clear mobile sticky submit footer */
         left: 15px;
         right: 15px;
         padding: 12px 20px;
@@ -805,43 +810,57 @@
         font-size: 0.78rem !important;
         margin-bottom: 10px !important;
       }
+
       .session-stats-bar {
         gap: 8px !important;
         padding-top: 4px !important;
       }
+
       .grid-preserve-qty {
         grid-template-columns: 1.15fr 0.85fr !important;
         gap: 6px !important;
       }
+
       .qty-presets {
         gap: 3px !important;
       }
+
       .preset-pill {
         padding: 5px 0 !important;
         font-size: 0.65rem !important;
       }
+
       .qty-counter {
         height: 36px !important;
       }
+
       .qty-btn {
         width: 34px !important;
         font-size: 1rem !important;
       }
+
       .qty-val-input {
         font-size: 0.95rem !important;
       }
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
+
     .loader-spinner {
       border: 4px solid var(--border-color);
       border-top-color: var(--accent);
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
+
     .google-signin-btn {
       width: 100%;
       max-width: 280px;
@@ -861,33 +880,44 @@
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       outline: none;
     }
+
     .google-signin-btn:hover {
       border-color: #cbd5e1;
       background: #f8fafc;
       transform: translateY(-1px);
       box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
     }
+
     .google-signin-btn:active {
       transform: translateY(0);
     }
   </style>
 </head>
+
 <body>
 
   <!-- Beautiful Loading Overlay -->
-  <div id="auth-loading-overlay" style="position: fixed; inset: 0; background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); z-index: 100000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.4s ease, transform 0.4s ease;">
-    <div class="loader-spinner" style="width: 50px; height: 50px; border: 4px solid var(--border-color); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px;"></div>
-    <span style="font-weight: 700; color: var(--text-main); font-size: 1.1rem; letter-spacing: 0.5px;">Authenticating Workspace...</span>
+  <div id="auth-loading-overlay"
+    style="position: fixed; inset: 0; background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); z-index: 100000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.4s ease, transform 0.4s ease;">
+    <div class="loader-spinner"
+      style="width: 50px; height: 50px; border: 4px solid var(--border-color); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px;">
+    </div>
+    <span style="font-weight: 700; color: var(--text-main); font-size: 1.1rem; letter-spacing: 0.5px;">Authenticating
+      Workspace...</span>
   </div>
 
   <div class="wrapper">
-    
+
     <!-- Top Greeting Status Strip (Shown when logged-in) -->
     <div id="status-bar" class="top-status-bar" style="display: none;">
       <div class="mod-greet" style="display: flex; align-items: center; gap: 10px;">
-        <img id="bar-mod-avatar" src="" alt="Avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-light); display: none;">
-        <span>👋 Hello, <strong id="bar-mod-name" style="color: var(--accent);">-</strong><span id="bar-mod-badge" class="badge" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.25); font-size: 0.72rem; padding: 2px 8px; border-radius: 6px; font-weight: 800; display: none; margin-left: 6px; vertical-align: middle;">Staff</span></span>
-        <button onclick="signOutModerator()" class="btn-edit-name" style="background: var(--danger); color: white; border-color: rgba(239, 68, 68, 0.15); display: flex; align-items: center; gap: 4px;">
+        <img id="bar-mod-avatar" src="" alt="Avatar"
+          style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-light); display: none;">
+        <span>👋 Hello, <strong id="bar-mod-name" style="color: var(--accent);">-</strong><span id="bar-mod-badge"
+            class="badge"
+            style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.25); font-size: 0.72rem; padding: 2px 8px; border-radius: 6px; font-weight: 800; display: none; margin-left: 6px; vertical-align: middle;">Staff</span></span>
+        <button onclick="signOutModerator()" class="btn-edit-name"
+          style="background: var(--danger); color: white; border-color: rgba(239, 68, 68, 0.15); display: flex; align-items: center; gap: 4px;">
           <span>🚪 Sign Out</span>
         </button>
       </div>
@@ -898,17 +928,29 @@
     </div>
 
     <!-- Identity Config Prompt (Shown only when NO profile is set) -->
-    <div id="identity-prompt" class="identity-prompt-bar" style="display: none; background: #ffffff; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04); border-radius: 24px; padding: 30px 20px; text-align: center; flex-direction: column; align-items: center; justify-content: center; gap: 20px; box-sizing: border-box; width: 100%;">
+    <div id="identity-prompt" class="identity-prompt-bar"
+      style="display: none; background: #ffffff; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04); border-radius: 24px; padding: 30px 20px; text-align: center; flex-direction: column; align-items: center; justify-content: center; gap: 20px; box-sizing: border-box; width: 100%;">
       <div style="font-size: 3rem; margin-bottom: 5px;">🎙️</div>
-      <h3 style="margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--text-main);">Welcome to Moderator Workspace</h3>
-      <p style="margin: 0; color: var(--text-muted); font-size: 0.88rem; max-width: 340px; line-height: 1.5; font-weight: 500;">Sign in with your Google Account to automatically sync orders, calculate earnings, and manage your payments.</p>
-      
+      <h3 style="margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--text-main);">Welcome to Moderator
+        Workspace</h3>
+      <p
+        style="margin: 0; color: var(--text-muted); font-size: 0.88rem; max-width: 340px; line-height: 1.5; font-weight: 500;">
+        Sign in with your Google Account to automatically sync orders, calculate earnings, and manage your payments.</p>
+
       <button onclick="signInWithGoogle()" class="google-signin-btn">
         <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
-          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+          <path
+            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+            fill="#4285F4" />
+          <path
+            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+            fill="#34A853" />
+          <path
+            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+            fill="#FBBC05" />
+          <path
+            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+            fill="#EA4335" />
         </svg>
         <span>Sign in with Google</span>
       </button>
@@ -924,39 +966,64 @@
         </button>
         <div id="payout-account-content" class="collapsible-content">
           <!-- Account statistics summary -->
-          <div class="payout-summary-card" style="padding: 15px; border-bottom: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; background: #ffffff;">
+          <div class="payout-summary-card"
+            style="padding: 15px; border-bottom: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; background: #ffffff;">
             <div class="grid-2 grid-2-preserve" style="gap: 10px; margin-bottom: 0;">
-              <div style="background: var(--accent-light); border: 1px solid rgba(37, 99, 235, 0.1); border-radius: 12px; padding: 12px 10px; text-align: center;">
-                <span style="font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Delivered Products (পিস)</span>
-                <strong id="payout-stat-delivered" style="font-size: 1.1rem; color: var(--text-main); font-weight: 850;">0</strong>
+              <div
+                style="background: var(--accent-light); border: 1px solid rgba(37, 99, 235, 0.1); border-radius: 12px; padding: 12px 10px; text-align: center;">
+                <span
+                  style="font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Delivered
+                  Products (পিস)</span>
+                <strong id="payout-stat-delivered"
+                  style="font-size: 1.1rem; color: var(--text-main); font-weight: 850;">0</strong>
               </div>
-              <div style="background: var(--success-light); border: 1px solid rgba(16, 185, 129, 0.15); border-radius: 12px; padding: 12px 10px; text-align: center;" id="payout-stat-earned-card">
-                <span style="font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;" id="payout-stat-earned-label">Earned Commission</span>
-                <strong id="payout-stat-earned" style="font-size: 1.1rem; color: var(--success); font-weight: 850;">৳0</strong>
+              <div
+                style="background: var(--success-light); border: 1px solid rgba(16, 185, 129, 0.15); border-radius: 12px; padding: 12px 10px; text-align: center;"
+                id="payout-stat-earned-card">
+                <span
+                  style="font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;"
+                  id="payout-stat-earned-label">Earned Commission</span>
+                <strong id="payout-stat-earned"
+                  style="font-size: 1.1rem; color: var(--success); font-weight: 850;">৳0</strong>
               </div>
             </div>
-            
+
             <div class="grid-2 grid-2-preserve" style="gap: 10px; margin-bottom: 0;">
-              <div style="background: var(--accent-light); border: 1px solid rgba(37, 99, 235, 0.1); border-radius: 12px; padding: 12px 10px; text-align: center;">
-                <span style="font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Paid Commission</span>
-                <strong id="payout-stat-paid" style="font-size: 1.1rem; color: var(--accent); font-weight: 850;">৳0</strong>
+              <div
+                style="background: var(--accent-light); border: 1px solid rgba(37, 99, 235, 0.1); border-radius: 12px; padding: 12px 10px; text-align: center;">
+                <span
+                  style="font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Paid
+                  Commission</span>
+                <strong id="payout-stat-paid"
+                  style="font-size: 1.1rem; color: var(--accent); font-weight: 850;">৳0</strong>
               </div>
-              <div style="background: var(--warning-light); border: 1px solid rgba(245, 158, 11, 0.15); border-radius: 12px; padding: 12px 10px; text-align: center;" id="payout-stat-balance-card">
-                <span style="font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;" id="payout-stat-balance-label">Pending Balance</span>
-                <strong id="payout-stat-balance" style="font-size: 1.1rem; color: var(--warning); font-weight: 850;">৳0</strong>
+              <div
+                style="background: var(--warning-light); border: 1px solid rgba(245, 158, 11, 0.15); border-radius: 12px; padding: 12px 10px; text-align: center;"
+                id="payout-stat-balance-card">
+                <span
+                  style="font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;"
+                  id="payout-stat-balance-label">Pending Balance</span>
+                <strong id="payout-stat-balance"
+                  style="font-size: 1.1rem; color: var(--warning); font-weight: 850;">৳0</strong>
               </div>
             </div>
           </div>
-          
+
           <!-- Transaction ledger head -->
-          <div style="padding: 10px 18px; background: #f1f5f9; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
-            <span style="font-weight: 800; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">পেমেন্ট হিসেব খাতা (Payment Ledger History)</span>
-            <span id="payout-ledger-count" class="badge" style="font-size: 0.62rem; padding: 2px 8px; border-radius: 6px; font-weight: 800; background: var(--success-light); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.15);">0 Payments</span>
+          <div
+            style="padding: 10px 18px; background: #f1f5f9; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
+            <span
+              style="font-weight: 800; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">পেমেন্ট
+              হিসেব খাতা (Payment Ledger History)</span>
+            <span id="payout-ledger-count" class="badge"
+              style="font-size: 0.62rem; padding: 2px 8px; border-radius: 6px; font-weight: 800; background: var(--success-light); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.15);">0
+              Payments</span>
           </div>
-          
+
           <!-- Ledger list -->
           <div id="payout-ledger-container" class="history-list">
-            <p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 20px 0; margin: 0;">কোনো পেমেন্ট হিসেব পাওয়া যায়নি।</p>
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 20px 0; margin: 0;">কোনো
+              পেমেন্ট হিসেব পাওয়া যায়নি।</p>
           </div>
         </div>
       </div>
@@ -969,124 +1036,134 @@
         </button>
         <div id="history-content" class="collapsible-content">
           <div id="orders-history-container" class="history-list">
-            <p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 20px 0; margin: 0;">প্রোফাইল সেট করে অর্ডার সেভ করলেই এখানে তালিকা চলে আসবে।</p>
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 20px 0; margin: 0;">
+              প্রোফাইল সেট করে অর্ডার সেভ করলেই এখানে তালিকা চলে আসবে।</p>
           </div>
         </div>
       </div>
 
       <!-- Main Order Entry Card -->
       <div class="form-card">
-      <div class="card-header">
-        <div>
-          <h2>⚡ Rapid Order Entry</h2>
-          <p>Ultra-Fast Customer Sheet • Phone Order Mode</p>
+        <div class="card-header">
+          <div>
+            <h2>⚡ Rapid Order Entry</h2>
+            <p>Ultra-Fast Customer Sheet • Phone Order Mode</p>
+          </div>
+          <div style="font-size: 1.8rem;">🎙️</div>
         </div>
-        <div style="font-size: 1.8rem;">🎙️</div>
+
+        <form id="order-form" autocomplete="off">
+
+          <!-- SECTION 1: Customer Details -->
+          <div class="form-section-title">👤 Customer Information</div>
+
+          <div class="grid-2">
+            <div class="input-group">
+              <label class="input-label" for="cust-name">Customer Name *</label>
+              <input type="text" id="cust-name" class="input-field" placeholder="কাস্টমারের নাম" required autofocus>
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="cust-phone">Phone Number *</label>
+              <input type="tel" id="cust-phone" class="input-field" placeholder="01XXXXXXXXX" required inputmode="tel">
+            </div>
+          </div>
+
+          <!-- SECTION 2: Shipping Destination -->
+          <div class="form-section-title">🚚 Delivery Destination</div>
+
+          <div class="grid-2 grid-2-preserve">
+            <div class="input-group">
+              <label class="input-label" for="delivery-district">Select District *</label>
+              <input type="text" id="delivery-district" list="districts" class="input-field"
+                placeholder="যেমন: ঢাকা বা dhaka..." required>
+              <datalist id="districts"></datalist>
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="delivery-thana">Select Thana/Upazila *</label>
+              <input type="text" id="delivery-thana" list="thanas" class="input-field" placeholder="থানা/উপজেলা..."
+                required>
+              <datalist id="thanas"></datalist>
+            </div>
+          </div>
+
+          <div class="grid-2-address-shipping">
+            <div class="input-group">
+              <label class="input-label" for="cust-address">Detailed Shipping Address *</label>
+              <input type="text" id="cust-address" class="input-field" placeholder="গ্রাম, রোড, বাসা নং, ইউনিয়ন..."
+                required>
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="shipping-cost">Delivery Charge (৳) *</label>
+              <input type="number" id="shipping-cost" class="input-field" value="0" min="0" required
+                inputmode="numeric">
+            </div>
+          </div>
+
+          <!-- Hidden elements for compatibility -->
+          <input type="hidden" id="shipping-area" value="outside_dhaka">
+
+          <!-- SECTION 3: Product Info -->
+          <div class="form-section-title">🛍️ Product Quick Selector</div>
+
+          <!-- visual grid selector instead of boring dropdown -->
+          <div id="product-grid" class="product-grid"></div>
+
+          <div class="grid-preserve-qty">
+            <div class="input-group">
+              <label class="input-label" for="prod-price">Selling Unit Price (৳) *</label>
+              <input type="number" id="prod-price" class="input-field" required inputmode="numeric">
+            </div>
+            <div class="input-group qty-row">
+              <label class="input-label">Quantity Ordered *</label>
+              <div class="qty-counter">
+                <button type="button" class="qty-btn" onclick="adjustQty(-1)">−</button>
+                <input type="number" id="prod-qty" class="qty-val-input" value="1" min="1" readonly>
+                <button type="button" class="qty-btn" onclick="adjustQty(1)">+</button>
+              </div>
+              <div class="qty-presets">
+                <button type="button" class="preset-pill active" onclick="setQtyPreset(1)">1 Pcs</button>
+                <button type="button" class="preset-pill" onclick="setQtyPreset(2)">2 Pcs</button>
+                <button type="button" class="preset-pill" onclick="setQtyPreset(3)">3 Pcs</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label" for="order-note">Order Notes / Instructions (Optional)</label>
+            <input type="text" id="order-note" class="input-field"
+              placeholder="ডেলিভারি সংক্রান্ত নির্দেশনা, IMO, Messenger...">
+          </div>
+
+          <!-- Live Billing Summary -->
+          <div class="billing-summary">
+            <div class="bill-row">
+              <span>Subtotal:</span>
+              <span id="summary-subtotal">৳0</span>
+            </div>
+            <div class="bill-row">
+              <span>Shipping Cost (<span id="shipping-zone-label">Outside Dhaka</span>):</span>
+              <span id="summary-shipping">৳0</span>
+            </div>
+            <div class="bill-row total">
+              <span>Grand Total:</span>
+              <span id="summary-total">৳0</span>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="submit-action-container">
+            <button type="submit" class="btn-submit">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>Confirm & Save Order (৳<span id="btn-total-val">0</span>)</span>
+            </button>
+          </div>
+
+        </form>
       </div>
-
-      <form id="order-form" autocomplete="off">
-        
-        <!-- SECTION 1: Customer Details -->
-        <div class="form-section-title">👤 Customer Information</div>
-        
-        <div class="grid-2">
-          <div class="input-group">
-            <label class="input-label" for="cust-name">Customer Name *</label>
-            <input type="text" id="cust-name" class="input-field" placeholder="কাস্টমারের নাম" required autofocus>
-          </div>
-          <div class="input-group">
-            <label class="input-label" for="cust-phone">Phone Number *</label>
-            <input type="tel" id="cust-phone" class="input-field" placeholder="01XXXXXXXXX" required inputmode="tel">
-          </div>
-        </div>
-
-        <!-- SECTION 2: Shipping Destination -->
-        <div class="form-section-title">🚚 Delivery Destination</div>
-        
-        <div class="grid-2 grid-2-preserve">
-          <div class="input-group">
-            <label class="input-label" for="delivery-district">Select District *</label>
-            <input type="text" id="delivery-district" list="districts" class="input-field" placeholder="যেমন: ঢাকা বা dhaka..." required>
-            <datalist id="districts"></datalist>
-          </div>
-          <div class="input-group">
-            <label class="input-label" for="delivery-thana">Select Thana/Upazila *</label>
-            <input type="text" id="delivery-thana" list="thanas" class="input-field" placeholder="থানা/উপজেলা..." required>
-            <datalist id="thanas"></datalist>
-          </div>
-        </div>
-
-        <div class="grid-2-address-shipping">
-          <div class="input-group">
-            <label class="input-label" for="cust-address">Detailed Shipping Address *</label>
-            <input type="text" id="cust-address" class="input-field" placeholder="গ্রাম, রোড, বাসা নং, ইউনিয়ন..." required>
-          </div>
-          <div class="input-group">
-            <label class="input-label" for="shipping-cost">Delivery Charge (৳) *</label>
-            <input type="number" id="shipping-cost" class="input-field" value="0" min="0" required inputmode="numeric">
-          </div>
-        </div>
-
-        <!-- Hidden elements for compatibility -->
-        <input type="hidden" id="shipping-area" value="outside_dhaka">
-
-        <!-- SECTION 3: Product Info -->
-        <div class="form-section-title">🛍️ Product Quick Selector</div>
-        
-        <!-- visual grid selector instead of boring dropdown -->
-        <div id="product-grid" class="product-grid"></div>
-
-        <div class="grid-preserve-qty">
-          <div class="input-group">
-            <label class="input-label" for="prod-price">Selling Unit Price (৳) *</label>
-            <input type="number" id="prod-price" class="input-field" required inputmode="numeric">
-          </div>
-          <div class="input-group qty-row">
-            <label class="input-label">Quantity Ordered *</label>
-            <div class="qty-counter">
-              <button type="button" class="qty-btn" onclick="adjustQty(-1)">−</button>
-              <input type="number" id="prod-qty" class="qty-val-input" value="1" min="1" readonly>
-              <button type="button" class="qty-btn" onclick="adjustQty(1)">+</button>
-            </div>
-            <div class="qty-presets">
-              <button type="button" class="preset-pill active" onclick="setQtyPreset(1)">1 Pcs</button>
-              <button type="button" class="preset-pill" onclick="setQtyPreset(2)">2 Pcs</button>
-              <button type="button" class="preset-pill" onclick="setQtyPreset(3)">3 Pcs</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="input-group">
-          <label class="input-label" for="order-note">Order Notes / Instructions (Optional)</label>
-          <input type="text" id="order-note" class="input-field" placeholder="ডেলিভারি সংক্রান্ত নির্দেশনা, IMO, Messenger...">
-        </div>
-
-        <!-- Live Billing Summary -->
-        <div class="billing-summary">
-          <div class="bill-row">
-            <span>Subtotal:</span>
-            <span id="summary-subtotal">৳0</span>
-          </div>
-          <div class="bill-row">
-            <span>Shipping Cost (<span id="shipping-zone-label">Outside Dhaka</span>):</span>
-            <span id="summary-shipping">৳0</span>
-          </div>
-          <div class="bill-row total">
-            <span>Grand Total:</span>
-            <span id="summary-total">৳0</span>
-          </div>
-        </div>
-
-        <!-- Submit Button -->
-        <div class="submit-action-container">
-          <button type="submit" class="btn-submit">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-            <span>Confirm & Save Order (৳<span id="btn-total-val">0</span>)</span>
-          </button>
-        </div>
-
-      </form>
-    </div>
 
     </div>
 
@@ -1094,7 +1171,10 @@
 
   <!-- Custom Beautiful Toast Elements -->
   <div id="custom-toast" class="toast-popup">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+      stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
     <span id="toast-text">Order saved successfully!</span>
   </div>
 
@@ -1250,12 +1330,12 @@
       renderProductGrid();
       selectProduct(selectedProductId);
       setupKeyboardNavigation();
-      
+
       // Auto calculation triggers
       document.getElementById("prod-price").addEventListener("input", calculateInvoiceSummary);
       document.getElementById("shipping-cost").addEventListener("input", calculateInvoiceSummary);
       document.getElementById("cust-phone").addEventListener("input", validatePhoneInput);
-      
+
       // Location changes listener
       document.getElementById("delivery-district").addEventListener("input", handleDistrictChange);
       document.getElementById("delivery-district").addEventListener("change", handleDistrictChange);
@@ -1268,13 +1348,13 @@
     function renderProductGrid() {
       const grid = document.getElementById("product-grid");
       grid.innerHTML = "";
-      
+
       products.forEach(p => {
         const card = document.createElement("div");
         card.className = `product-card ${p.id === selectedProductId ? 'active' : ''}`;
         card.id = `tile-${p.id}`;
         card.onclick = () => selectProduct(p.id);
-        
+
         card.innerHTML = `
           <div class="checkmark">✓</div>
           <img src="${p.img}" alt="${p.title}">
@@ -1289,7 +1369,7 @@
     // Product Card Selection Action
     window.selectProduct = (id) => {
       selectedProductId = id;
-      
+
       // Toggle CSS classes
       document.querySelectorAll(".product-card").forEach(el => el.classList.remove("active"));
       const activeCard = document.getElementById(`tile-${id}`);
@@ -1329,11 +1409,11 @@
     // Firebase Auth State Tracking
     function initAuthTracking() {
       const loadingOverlay = document.getElementById("auth-loading-overlay");
-      
+
       onAuthStateChanged(auth, (user) => {
         if (user) {
           currentModeratorName = user.displayName || user.email.split('@')[0];
-          
+
           // Save profile details to LocalStorage for consistency with other parts of the site
           const userData = {
             name: currentModeratorName,
@@ -1342,10 +1422,10 @@
             photo: user.photoURL
           };
           localStorage.setItem("earphone_bd_user", JSON.stringify(userData));
-          
+
           // Populate status bar UI
           document.getElementById("bar-mod-name").textContent = currentModeratorName;
-          
+
           const avatarImg = document.getElementById("bar-mod-avatar");
           if (avatarImg && user.photoURL) {
             avatarImg.src = user.photoURL;
@@ -1353,34 +1433,34 @@
           } else if (avatarImg) {
             avatarImg.style.display = "none";
           }
-          
+
           // Toggle interface components
           document.getElementById("status-bar").style.display = "flex";
           document.getElementById("identity-prompt").style.display = "none";
           document.getElementById("workspace-container").style.display = "block";
-          
+
           // Load specific metrics & databases for this moderator
           loadSessionData();
         } else {
           currentModeratorName = "";
           localStorage.removeItem("earphone_bd_user");
-          
+
           // Reset UI elements
           document.getElementById("status-bar").style.display = "none";
           document.getElementById("identity-prompt").style.display = "flex";
           document.getElementById("workspace-container").style.display = "none";
-          
+
           // Unsubscribe current database listeners
           if (unsubscribeOrders) { unsubscribeOrders(); unsubscribeOrders = null; }
           if (unsubscribePayouts) { unsubscribePayouts(); unsubscribePayouts = null; }
           if (unsubscribeConfig) { unsubscribeConfig(); unsubscribeConfig = null; }
           isExcludedFromPayout = false;
           cachedCompletedProductsCount = 0;
-          
+
           const badge = document.getElementById("bar-mod-badge");
           if (badge) badge.style.display = "none";
         }
-        
+
         // Hide loading state overlay nicely
         if (loadingOverlay) {
           loadingOverlay.style.opacity = "0";
@@ -1398,7 +1478,7 @@
         loadingOverlay.style.display = "flex";
         loadingOverlay.style.opacity = "1";
       }
-      
+
       signInWithPopup(auth, provider)
         .then(() => {
           showNotification("Successfully authenticated!");
@@ -1422,7 +1502,7 @@
         loadingOverlay.style.display = "flex";
         loadingOverlay.style.opacity = "1";
       }
-      
+
       signOut(auth)
         .then(() => {
           showNotification("Signed out successfully!");
@@ -1463,7 +1543,7 @@
       // If matched, populate thanas and update shipping prices!
       if (matchedDistrict) {
         distInput.value = matchedDistrict;
-        
+
         // Populate Thana datalist
         const thanaList = document.getElementById("thanas");
         thanaList.innerHTML = "";
@@ -1482,7 +1562,7 @@
         document.getElementById("shipping-cost").value = cost;
         document.getElementById("shipping-area").value = areaVal;
         document.getElementById("shipping-zone-label").textContent = areaLabel;
-        
+
         calculateInvoiceSummary();
       }
     }
@@ -1507,7 +1587,7 @@
         el.addEventListener("keydown", (e) => {
           if (e.key === "Enter") {
             e.preventDefault();
-            
+
             if (fieldId === "delivery-district") {
               handleDistrictChange();
             }
@@ -1528,7 +1608,7 @@
     // Set Quantity Presets
     window.setQtyPreset = (qty) => {
       document.getElementById("prod-qty").value = qty;
-      
+
       // Update UI active styling
       document.querySelectorAll(".preset-pill").forEach((btn, index) => {
         if (index + 1 === qty) btn.classList.add("active");
@@ -1544,7 +1624,7 @@
       let val = parseInt(qtyInput.value) || 1;
       val += change;
       if (val < 1) val = 1;
-      
+
       qtyInput.value = val;
 
       // Unselect presets if not 1, 2, or 3
@@ -1610,12 +1690,12 @@
       unsubscribeConfig = onValue(configRef, (snapshot) => {
         const configVal = snapshot.val();
         isExcludedFromPayout = (configVal && configVal.excludeFromPayout) ? true : false;
-        
+
         const badge = document.getElementById("bar-mod-badge");
         if (badge) {
           badge.style.display = isExcludedFromPayout ? "inline-block" : "none";
         }
-        
+
         loadPayoutsAndRender(cachedCompletedProductsCount);
       });
 
@@ -1628,7 +1708,7 @@
           return;
         }
 
-        const todayStart = new Date().setHours(0,0,0,0);
+        const todayStart = new Date().setHours(0, 0, 0, 0);
         let countToday = 0;
         let salesToday = 0;
         let completedOrdersCount = 0;
@@ -1638,7 +1718,7 @@
         Object.keys(val).forEach(id => {
           const o = val[id];
           const entryBy = o.metadata && o.metadata.entryBy ? o.metadata.entryBy.trim() : "";
-          
+
           if (entryBy.toLowerCase() === currentModeratorName.toLowerCase()) {
             historyData.push({ id, ...o });
 
@@ -1680,7 +1760,7 @@
         document.getElementById("stat-sales").textContent = "৳" + salesToday.toLocaleString();
 
         // Render recent orders
-        historyData.sort((a,b) => (b.metadata ? b.metadata.timestamp : 0) - (a.metadata ? a.metadata.timestamp : 0));
+        historyData.sort((a, b) => (b.metadata ? b.metadata.timestamp : 0) - (a.metadata ? a.metadata.timestamp : 0));
         renderRecentHistory(historyData.slice(0, 10));
 
         // Load payouts and render
@@ -1717,7 +1797,7 @@
         document.getElementById("payout-stat-delivered").textContent = completedProductsCount;
         document.getElementById("payout-stat-earned").textContent = "৳" + earned.toLocaleString();
         document.getElementById("payout-stat-paid").textContent = "৳" + totalPaid.toLocaleString();
-        
+
         const balanceField = document.getElementById("payout-stat-balance");
         balanceField.textContent = "৳" + outstanding.toLocaleString();
 
@@ -1783,7 +1863,7 @@
         // Render payout ledger list
         const ledgerContainer = document.getElementById("payout-ledger-container");
         const countBadge = document.getElementById("payout-ledger-count");
-        
+
         countBadge.textContent = `${payoutList.length} Payment${payoutList.length !== 1 ? 's' : ''}`;
         ledgerContainer.innerHTML = "";
 
@@ -1853,7 +1933,7 @@
       items.forEach(o => {
         const div = document.createElement("div");
         div.className = "history-item";
-        
+
         const customerName = o.customer ? o.customer.name : "Unknown Customer";
         const prodName = o.order ? o.order.product : "Unknown Product";
         const price = o.order ? o.order.total_price : "৳0";
@@ -1956,17 +2036,17 @@
       update(newOrderRef, orderData)
         .then(() => {
           showNotification(`অর্ডারটি সফলভাবে সেভ হয়েছে! (৳${totalPrice.toLocaleString()})`);
-          
+
           // Clear only customer inputs to keep quick repetition smooth
           document.getElementById("cust-name").value = "";
           document.getElementById("cust-phone").value = "";
           document.getElementById("cust-phone").classList.remove("valid-phone");
           document.getElementById("cust-address").value = "";
           document.getElementById("order-note").value = "";
-          
+
           // Reset quantity and recalculate
           setQtyPreset(1);
-          
+
           // Re-focus on Customer Name instantly for rapid sequence entry
           document.getElementById("cust-name").focus();
         })
@@ -1977,4 +2057,5 @@
 
   </script>
 </body>
+
 </html>

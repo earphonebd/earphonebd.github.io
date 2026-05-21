@@ -1,0 +1,2238 @@
+{
+  "cashTransactions": [
+    {
+      "amount": 1260,
+      "category": "Investment Capital (বিনিয়োগ)",
+      "description": "Card Funding: Dual Carrency Card",
+      "type": "income",
+      "timestamp": 1777960800000,
+      "date": "2026-05-05"
+    },
+    {
+      "amount": 1260,
+      "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+      "description": "Dual Carrency Card",
+      "type": "expense",
+      "timestamp": 1777960800000,
+      "date": "2026-05-05"
+    },
+    {
+      "amount": 3260,
+      "category": "Investment Capital (বিনিয়োগ)",
+      "description": "Card Funding: Ad Cost",
+      "type": "income",
+      "timestamp": 1777960800000,
+      "date": "2026-05-05"
+    },
+    {
+      "amount": 3260,
+      "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+      "description": "Ad Cost",
+      "type": "expense",
+      "timestamp": 1777960800000,
+      "date": "2026-05-05"
+    },
+    {
+      "amount": 720,
+      "category": "Investment Capital (বিনিয়োগ)",
+      "description": "Card Funding: Buy Followers",
+      "type": "income",
+      "timestamp": 1777960800000,
+      "date": "2026-05-05"
+    },
+    {
+      "amount": 720,
+      "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+      "description": "Buy Followers",
+      "type": "expense",
+      "timestamp": 1777960800000,
+      "date": "2026-05-05"
+    },
+    {
+      "amount": 2450,
+      "category": "Investment Capital (বিনিয়োগ)",
+      "description": "Card Funding: Sample Product",
+      "type": "income",
+      "timestamp": 1777960800000,
+      "date": "2026-05-05"
+    },
+    {
+      "amount": 2450,
+      "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+      "description": "Sample Product",
+      "type": "expense",
+      "timestamp": 1777960800000,
+      "date": "2026-05-05"
+    },
+    {
+      "amount": 500,
+      "category": "Investment Capital (বিনিয়োগ)",
+      "description": "Imported historical income entry for Deposit",
+      "type": "income",
+      "timestamp": 1778047200000,
+      "date": "2026-05-06"
+    },
+    {
+      "amount": 400,
+      "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+      "description": "Imported historical expense entry for Products",
+      "type": "expense",
+      "timestamp": 1778047200000,
+      "date": "2026-05-06"
+    },
+    {
+      "amount": 1000,
+      "category": "Investment Capital (বিনিয়োগ)",
+      "description": "Imported historical income entry for Deposit",
+      "type": "income",
+      "timestamp": 1778133600000,
+      "date": "2026-05-07"
+    },
+    {
+      "amount": 750,
+      "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+      "description": "Imported historical expense entry for Products",
+      "type": "expense",
+      "timestamp": 1778133600000,
+      "date": "2026-05-07"
+    },
+    {
+      "amount": 2000,
+      "category": "Investment Capital (বিনিয়োগ)",
+      "description": "Imported historical income entry for Deposit",
+      "type": "income",
+      "timestamp": 1778306400000,
+      "date": "2026-05-09"
+    },
+    {
+      "amount": 1890,
+      "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+      "description": "Imported historical expense entry for Products",
+      "type": "expense",
+      "timestamp": 1778306400000,
+      "date": "2026-05-09"
+    },
+    {
+      "amount": 2000,
+      "category": "Investment Capital (বিনিয়োগ)",
+      "description": "Imported historical income entry for Deposit",
+      "type": "income",
+      "timestamp": 1778392800000,
+      "date": "2026-05-10"
+    },
+    {
+      "amount": 1138,
+      "category": "Sales Revenue (বিক্রয় আয়)",
+      "description": "Imported historical income entry for Sales",
+      "type": "income",
+      "timestamp": 1778392800000,
+      "date": "2026-05-10"
+    },
+    {
+      "amount": 2000,
+      "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+      "description": "Imported historical expense entry for Ad Cost",
+      "type": "expense",
+      "timestamp": 1778392800000,
+      "date": "2026-05-10"
+    },
+    {
+      "amount": 2570,
+      "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+      "description": "Imported historical expense entry for Products",
+      "type": "expense",
+      "timestamp": 1778392800000,
+      "date": "2026-05-10"
+    },
+    {
+      "amount": 3384,
+      "category": "Sales Revenue (বিক্রয় আয়)",
+      "description": "Imported historical income entry for Sales",
+      "type": "income",
+      "timestamp": 1778479200000,
+      "date": "2026-05-11"
+    },
+    {
+      "amount": 1500,
+      "category": "Investment Capital (বিনিয়োগ)",
+      "description": "Imported historical income entry for Deposit",
+      "type": "income",
+      "timestamp": 1778565600000,
+      "date": "2026-05-12"
+    },
+    {
+      "amount": 441,
+      "category": "Sales Revenue (বিক্রয় আয়)",
+      "description": "Imported historical income entry for Sales",
+      "type": "income",
+      "timestamp": 1778565600000,
+      "date": "2026-05-12"
+    },
+    {
+      "amount": 3420,
+      "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+      "description": "Imported historical expense entry for Products",
+      "type": "expense",
+      "timestamp": 1778565600000,
+      "date": "2026-05-12"
+    },
+    {
+      "amount": 713,
+      "category": "Sales Revenue (বিক্রয় আয়)",
+      "description": "Imported historical income entry for Sales",
+      "type": "income",
+      "timestamp": 1778652000000,
+      "date": "2026-05-13"
+    },
+    {
+      "amount": 1910,
+      "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+      "description": "Imported historical expense entry for Products",
+      "type": "expense",
+      "timestamp": 1778652000000,
+      "date": "2026-05-13"
+    },
+    {
+      "amount": 3614,
+      "category": "Sales Revenue (বিক্রয় আয়)",
+      "description": "Imported historical income entry for Sales",
+      "type": "income",
+      "timestamp": 1778738400000,
+      "date": "2026-05-14"
+    },
+    {
+      "amount": 100,
+      "category": "Investment Capital (বিনিয়োগ)",
+      "description": "Imported historical income entry for Deposit",
+      "type": "income",
+      "timestamp": 1778738400000,
+      "date": "2026-05-14"
+    },
+    {
+      "amount": 1900,
+      "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+      "description": "Imported historical expense entry for Ad Cost",
+      "type": "expense",
+      "timestamp": 1778738400000,
+      "date": "2026-05-14"
+    },
+    {
+      "amount": 1330,
+      "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+      "description": "Imported historical expense entry for Products",
+      "type": "expense",
+      "timestamp": 1778738400000,
+      "date": "2026-05-14"
+    },
+    {
+      "amount": 220,
+      "category": "Other Expenses (অন্যান্য ব্যয়)",
+      "description": "Imported historical expense entry for Others",
+      "type": "expense",
+      "timestamp": 1778738400000,
+      "date": "2026-05-14"
+    },
+    {
+      "amount": 1933,
+      "category": "Sales Revenue (বিক্রয় আয়)",
+      "description": "Imported historical income entry for Sales",
+      "type": "income",
+      "timestamp": 1778824800000,
+      "date": "2026-05-15"
+    },
+    {
+      "amount": 1067,
+      "category": "Sales Revenue (বিক্রয় আয়)",
+      "description": "Imported historical income entry for Sales",
+      "type": "income",
+      "timestamp": 1778997600000,
+      "date": "2026-05-17"
+    },
+    {
+      "amount": 650,
+      "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+      "description": "Imported historical expense entry for Ad Cost",
+      "type": "expense",
+      "timestamp": 1779084000000,
+      "date": "2026-05-18"
+    },
+    {
+      "amount": 530,
+      "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+      "description": "Imported historical expense entry for Products",
+      "type": "expense",
+      "timestamp": 1779084000000,
+      "date": "2026-05-18"
+    },
+    {
+      "amount": 1700,
+      "category": "Loan Received (ঋণ গ্রহণ)",
+      "description": "Imported historical income entry for Borrow",
+      "type": "income",
+      "timestamp": 1779170400000,
+      "date": "2026-05-19"
+    },
+    {
+      "amount": 3345,
+      "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+      "description": "Imported historical expense entry for Products",
+      "type": "expense",
+      "timestamp": 1779170400000,
+      "date": "2026-05-19"
+    },
+    {
+      "amount": 800,
+      "category": "Sales Revenue (বিক্রয় আয়)",
+      "description": "Imported historical income entry for Sales",
+      "type": "income",
+      "timestamp": 1779170400000,
+      "date": "2026-05-19"
+    },
+    {
+      "amount": 130,
+      "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+      "description": "Imported historical expense entry for Marketing",
+      "type": "expense",
+      "timestamp": 1779256800000,
+      "date": "2026-05-20"
+    },
+    {
+      "amount": 210,
+      "category": "Other Expenses (অন্যান্য ব্যয়)",
+      "description": "Imported historical expense entry for Sales",
+      "type": "expense",
+      "timestamp": 1779256800000,
+      "date": "2026-05-20"
+    },
+    {
+      "amount": 500,
+      "category": "Loan Received (ঋণ গ্রহণ)",
+      "description": "Imported historical income entry for Borrow",
+      "type": "income",
+      "timestamp": 1779256800000,
+      "date": "2026-05-20"
+    },
+    {
+      "amount": 500,
+      "category": "Marketing & Ads (ফেসবুক বিজ্ঞাপন)",
+      "description": "Imported historical expense entry for Ad Cost",
+      "type": "expense",
+      "timestamp": 1779256800000,
+      "date": "2026-05-20"
+    },
+    {
+      "amount": 820,
+      "category": "Product Procurement (প্রোডাক্ট ক্রয়)",
+      "description": "Imported historical expense entry for Products",
+      "type": "expense",
+      "timestamp": 1779256800000,
+      "date": "2026-05-20"
+    },
+    {
+      "amount": 100,
+      "category": "Other Expenses (অন্যান্য ব্যয়)",
+      "description": "Imported historical expense entry for Others",
+      "type": "expense",
+      "timestamp": 1779256800000,
+      "date": "2026-05-20"
+    },
+    {
+      "amount": 285,
+      "category": "Loan Received (ঋণ গ্রহণ)",
+      "description": "Imported historical income entry for Borrow",
+      "type": "income",
+      "timestamp": 1779256800000,
+      "date": "2026-05-20"
+    },
+    {
+      "amount": 1381,
+      "category": "Sales Revenue (বিক্রয় আয়)",
+      "description": "Imported historical income entry for Sales",
+      "type": "income",
+      "timestamp": 1779256800000,
+      "date": "2026-05-20"
+    }
+  ],
+  "firebaseOrders": [
+    {
+      "key": "1001",
+      "customer": {
+        "name": "Tanvir Islam",
+        "phone": "01798-089864",
+        "address": "কুতুবখালী বড় মাদরাসা, যাত্রাবাড়ী",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "485",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Inside Dhaka",
+        "district": "Dhaka",
+        "thana": "",
+        "subtotal": "৳485",
+        "shipping_cost": "৳65",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳550"
+      },
+      "metadata": {
+        "date": "6/5/2026, 12:00:00 PM",
+        "timestamp": 1778047200000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1002",
+      "customer": {
+        "name": "বিথী সুলতানা",
+        "phone": "01788-163380",
+        "address": "মহিষখোলা, নড়াইল সদর",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "525",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳525",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳650"
+      },
+      "metadata": {
+        "date": "7/5/2026, 12:00:00 PM",
+        "timestamp": 1778133600000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1003",
+      "customer": {
+        "name": "মোশাররফ হুসাইন",
+        "phone": "01755748841",
+        "address": "কুতুবখালি যাত্রাবাড়ী বড় মাদ্রাসা",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Chaina)",
+            "qty": 1,
+            "price": "325",
+            "edition": "China Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_china_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Chaina) (1 Pcs)",
+        "quantity": 1,
+        "variation": "China Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳325",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳450"
+      },
+      "metadata": {
+        "date": "7/5/2026, 12:00:00 PM",
+        "timestamp": 1778133600000,
+        "status": "Cancelled"
+      }
+    },
+    {
+      "key": "1004",
+      "customer": {
+        "name": "মনজুরুল",
+        "phone": "01940547042",
+        "address": "মহেশখালী, শাপলাপুর কক্সবাজার",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "275",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳275",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳400"
+      },
+      "metadata": {
+        "date": "7/5/2026, 12:00:00 PM",
+        "timestamp": 1778133600000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1005",
+      "customer": {
+        "name": "রবিউল",
+        "phone": "01795453311",
+        "address": "ঢাকা কল্যানপুর, দারুসসালাম,  মিরপুর রোড",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "485",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Inside Dhaka",
+        "district": "Dhaka",
+        "thana": "",
+        "subtotal": "৳485",
+        "shipping_cost": "৳65",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳550"
+      },
+      "metadata": {
+        "date": "8/5/2026, 12:00:00 PM",
+        "timestamp": 1778220000000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1006",
+      "customer": {
+        "name": "ইব্রাহিম",
+        "phone": "01338980917",
+        "address": "গাজীপুর মৌচাক",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 2,
+            "price": "1035",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (2 Pcs)",
+        "quantity": 2,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Inside Dhaka",
+        "district": "Dhaka",
+        "thana": "",
+        "subtotal": "৳2070",
+        "shipping_cost": "৳65",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳1100"
+      },
+      "metadata": {
+        "date": "8/5/2026, 12:00:00 PM",
+        "timestamp": 1778220000000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1007",
+      "customer": {
+        "name": "Md. Ruman Islam",
+        "phone": "01719688760",
+        "address": "Galaxy House (2420-2422), Road: 25/A, Block: M, Dhaka",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation Premium ANC",
+            "qty": 1,
+            "price": "935",
+            "edition": "Premium ANC",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_premium_anc.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation Premium ANC (1 Pcs)",
+        "quantity": 1,
+        "variation": "Premium ANC",
+        "color": "Classic White",
+        "shipping_area": "Inside Dhaka",
+        "district": "Dhaka",
+        "thana": "",
+        "subtotal": "৳935",
+        "shipping_cost": "৳65",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳1000"
+      },
+      "metadata": {
+        "date": "8/5/2026, 12:00:00 PM",
+        "timestamp": 1778220000000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1008",
+      "customer": {
+        "name": "হাফিজুর রহমান",
+        "phone": "01633028294",
+        "address": "রোড: ৫, ব্লক: ই, ফরাজি এভিনিউ, বনশ্রী",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "535",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Inside Dhaka",
+        "district": "Dhaka",
+        "thana": "",
+        "subtotal": "৳535",
+        "shipping_cost": "৳65",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳600"
+      },
+      "metadata": {
+        "date": "10/5/2026, 12:00:00 PM",
+        "timestamp": 1778392800000,
+        "status": "Returned"
+      }
+    },
+    {
+      "key": "1009",
+      "customer": {
+        "name": "রাসেল",
+        "phone": "01630898575",
+        "address": "সিদ্ধীরগজ্য, নারায়নগঞ্জ",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "425",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳425",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳550"
+      },
+      "metadata": {
+        "date": "10/5/2026, 12:00:00 PM",
+        "timestamp": 1778392800000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1010",
+      "customer": {
+        "name": "আরিয়ান আহমেদ তুরজো",
+        "phone": "01949764623",
+        "address": "গাওয়াই বাজার, দক্ষিণ খাঁন, উত্তরা, ঢাকা",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "465",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Inside Dhaka",
+        "district": "Dhaka",
+        "thana": "",
+        "subtotal": "৳465",
+        "shipping_cost": "৳65",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳530"
+      },
+      "metadata": {
+        "date": "10/5/2026, 12:00:00 PM",
+        "timestamp": 1778392800000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1011",
+      "customer": {
+        "name": "Antor",
+        "phone": "01701507054",
+        "address": "সাতক্ষীরা সদর, সাতক্ষীরা",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "425",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳425",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳550"
+      },
+      "metadata": {
+        "date": "10/5/2026, 12:00:00 PM",
+        "timestamp": 1778392800000,
+        "status": "Cancelled"
+      }
+    },
+    {
+      "key": "1012",
+      "customer": {
+        "name": "ফাহাদ হুসাইন",
+        "phone": "01617183012",
+        "address": "চরমোনাই, থানা: কোতয়ালি, জেলা: বরিশাল",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "425",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳425",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳550"
+      },
+      "metadata": {
+        "date": "10/5/2026, 12:00:00 PM",
+        "timestamp": 1778392800000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1013",
+      "customer": {
+        "name": "মিনহাজ",
+        "phone": "০১৯৬৯০০৭৮৬০",
+        "address": "গ্রাম: কামালদিয়া, থানা: মধুখালী, জেলা: ফরিদপুর",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "425",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳425",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳550"
+      },
+      "metadata": {
+        "date": "10/5/2026, 12:00:00 PM",
+        "timestamp": 1778392800000,
+        "status": "Cancelled"
+      }
+    },
+    {
+      "key": "1014",
+      "customer": {
+        "name": "সিদ্দিক",
+        "phone": "01924770806",
+        "address": "আনসার ক্লাব, বক্তুলি, জেলা: দিনাজপুর",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 2,
+            "price": "905",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (2 Pcs)",
+        "quantity": 2,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳1810",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳1030"
+      },
+      "metadata": {
+        "date": "10/5/2026, 12:00:00 PM",
+        "timestamp": 1778392800000,
+        "status": "Returned"
+      }
+    },
+    {
+      "key": "1015",
+      "customer": {
+        "name": "আব্দুল্লাহ",
+        "phone": "01792153213",
+        "address": "চায়না প্রজেক্টর গেটের সামনে, বরাট বাজার, থানা: ভালুকা, জেলা: ময়মনসিংহ",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Chaina)",
+            "qty": 1,
+            "price": "375",
+            "edition": "China Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_china_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Chaina) (1 Pcs)",
+        "quantity": 1,
+        "variation": "China Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳375",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳500"
+      },
+      "metadata": {
+        "date": "10/5/2026, 12:00:00 PM",
+        "timestamp": 1778392800000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1016",
+      "customer": {
+        "name": "রনি আহমেদ",
+        "phone": "01921354232",
+        "address": "বাঘের বাজার , গাজীপুর",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 3rd Generation Premium ANC",
+            "qty": 1,
+            "price": "1475",
+            "edition": "Dubai Premium ANC",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_3rd_generation_premium_anc.png"
+          }
+        ],
+        "product": "AirPods Pro 3rd Generation Premium ANC (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Premium ANC",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳1475",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳1600"
+      },
+      "metadata": {
+        "date": "11/5/2026, 12:00:00 PM",
+        "timestamp": 1778479200000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1017",
+      "customer": {
+        "name": "পপি",
+        "phone": "01885659416",
+        "address": "উত্তর নলবিলা বড়ুয়া পাড়া, ১ নং ওয়ার্ড, কালারমারছাড়া, মহেশখালী, কক্সবাজার",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Chaina)",
+            "qty": 1,
+            "price": "305",
+            "edition": "China Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_china_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Chaina) (1 Pcs)",
+        "quantity": 1,
+        "variation": "China Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳305",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳430"
+      },
+      "metadata": {
+        "date": "11/5/2026, 12:00:00 PM",
+        "timestamp": 1778479200000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1018",
+      "customer": {
+        "name": "Sagor",
+        "phone": "01837770361",
+        "address": "গাজীপুর হাই স্কুল, থানা: মতলব (উত্তর), জেলা: চাঁদপুর",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "425",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳425",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳550"
+      },
+      "metadata": {
+        "date": "11/5/2026, 12:00:00 PM",
+        "timestamp": 1778479200000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1019",
+      "customer": {
+        "name": "শুভ",
+        "phone": "01867074121",
+        "address": "মাদিলাহাট, থানা: ফুলবাড়ি, জেলা: দিনাজপুর",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "475",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳475",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳600"
+      },
+      "metadata": {
+        "date": "11/5/2026, 12:00:00 PM",
+        "timestamp": 1778479200000,
+        "status": "Returned"
+      }
+    },
+    {
+      "key": "1020",
+      "customer": {
+        "name": "মো: নাদিম",
+        "phone": "01864031569",
+        "address": "ইকরাম সোয়েটার লিমিটেড, কাঁঠালি ইউনিয়ন, উপজেলা: ভালুকা, জেলা: ময়মনসিংহ",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "475",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳475",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳600"
+      },
+      "metadata": {
+        "date": "11/5/2026, 12:00:00 PM",
+        "timestamp": 1778479200000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1021",
+      "customer": {
+        "name": "মো: ওমর ফারুক",
+        "phone": "01825792077",
+        "address": "কমলাপুর মাটিয়া গোরস্থান, জেলা: ফরিদপুর",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "425",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳425",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳550"
+      },
+      "metadata": {
+        "date": "11/5/2026, 12:00:00 PM",
+        "timestamp": 1778479200000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1022",
+      "customer": {
+        "name": "Muhammad Amir",
+        "phone": "01645593855",
+        "address": "১১৪, পিয়াসী রেস্টুরেন্ট এন্ড বার, শহীদ তাজ উদ্দিন আহমেদ স্মরণী, বড় মগবাজার, ঢাকা-১২১৭",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "535",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Inside Dhaka",
+        "district": "Dhaka",
+        "thana": "",
+        "subtotal": "৳535",
+        "shipping_cost": "৳65",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳600"
+      },
+      "metadata": {
+        "date": "11/5/2026, 12:00:00 PM",
+        "timestamp": 1778479200000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1023",
+      "customer": {
+        "name": "জাহেদ আহমদ",
+        "phone": "01731663670",
+        "address": "জালালাবাদ ক্যান্টনমেন্ট, বটেশ্বর, সিলেট",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "475",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳475",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳600"
+      },
+      "metadata": {
+        "date": "11/5/2026, 12:00:00 PM",
+        "timestamp": 1778479200000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1024",
+      "customer": {
+        "name": "সাকিব",
+        "phone": "01743053388",
+        "address": "পপুলার ডায়াগনস্টিক সেন্টার, চরপাড়া, জেলা: ময়মনসিংহ",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "395",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳395",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳520"
+      },
+      "metadata": {
+        "date": "11/5/2026, 12:00:00 PM",
+        "timestamp": 1778479200000,
+        "status": "Returned"
+      }
+    },
+    {
+      "key": "1025",
+      "customer": {
+        "name": "আরাফাত চৌধুরী",
+        "phone": "01850815793",
+        "address": "বড় কমলদা, থানা: মিরেশ্বরাই, জেলা: চট্টগ্রাম",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Chaina)",
+            "qty": 1,
+            "price": "325",
+            "edition": "China Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_china_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Chaina) (1 Pcs)",
+        "quantity": 1,
+        "variation": "China Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳325",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳450"
+      },
+      "metadata": {
+        "date": "11/5/2026, 12:00:00 PM",
+        "timestamp": 1778479200000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1026",
+      "customer": {
+        "name": "মোঃ তরিকুল ইসলাম",
+        "phone": "০১৯৬৭৪৫৩৯৯২",
+        "address": "জামালের গেরেজ, মিম্তিবাগ, মাসদাইল",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "425",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳425",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳550"
+      },
+      "metadata": {
+        "date": "11/5/2026, 12:00:00 PM",
+        "timestamp": 1778479200000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1027",
+      "customer": {
+        "name": "Rakib",
+        "phone": "01701588368",
+        "address": "রুইয়ের ভাগ, তেবাড়িয়া, নাটোর সদর, নাটোর",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "325",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳325",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳450"
+      },
+      "metadata": {
+        "date": "12/5/2026, 12:00:00 PM",
+        "timestamp": 1778565600000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1028",
+      "customer": {
+        "name": "হাফেজ ফয়সাল আহমেদ",
+        "phone": "01605359397\n01314905641",
+        "address": "পশ্চিম পাড়া মসজিদ, ধীরুয়াইল, নিকলী, কিশোরগঞ্জ",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "475",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳475",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳600"
+      },
+      "metadata": {
+        "date": "12/5/2026, 12:00:00 PM",
+        "timestamp": 1778565600000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1029",
+      "customer": {
+        "name": "Rana",
+        "phone": "01601701050",
+        "address": "গুলিস্তান মোড়, আনন্দ বাজার থেকে ভেতরে, মাওনা, গাজীপুর",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "475",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳475",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳600"
+      },
+      "metadata": {
+        "date": "13/5/2026, 12:00:00 PM",
+        "timestamp": 1778652000000,
+        "status": "Cancelled"
+      }
+    },
+    {
+      "key": "1030",
+      "customer": {
+        "name": "হৃদয়",
+        "phone": "01613740544",
+        "address": "জমচড়া, রংপুর",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "425",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳425",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳550"
+      },
+      "metadata": {
+        "date": "13/5/2026, 12:00:00 PM",
+        "timestamp": 1778652000000,
+        "status": "Returned"
+      }
+    },
+    {
+      "key": "1031",
+      "customer": {
+        "name": "ঝরনা",
+        "phone": "01320716918",
+        "address": "জগদল, সুনামগঞ্জ",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "475",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳475",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳600"
+      },
+      "metadata": {
+        "date": "13/5/2026, 12:00:00 PM",
+        "timestamp": 1778652000000,
+        "status": "Returned"
+      }
+    },
+    {
+      "key": "1032",
+      "customer": {
+        "name": "মোহাম্মদ আব্দুল আহাদ",
+        "phone": "01760461772",
+        "address": "খড়ারিয়া মাদ্রাসা, সিলাম, দক্ষিণ সুরমা, সিলেট",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "425",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳425",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳550"
+      },
+      "metadata": {
+        "date": "13/5/2026, 12:00:00 PM",
+        "timestamp": 1778652000000,
+        "status": "Returned"
+      }
+    },
+    {
+      "key": "1033",
+      "customer": {
+        "name": "Abdur Rob hasan",
+        "phone": "01581131431",
+        "address": "চবইহট্টা, ভেলাবাড়ি, সারিয়াকান্দি, বগুড়া",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Chaina)",
+            "qty": 1,
+            "price": "735",
+            "edition": "China Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_china_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Chaina) (1 Pcs)",
+        "quantity": 1,
+        "variation": "China Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳735",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳860"
+      },
+      "metadata": {
+        "date": "14/5/2026, 12:00:00 PM",
+        "timestamp": 1778738400000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1034",
+      "customer": {
+        "name": "মো: মামুন আলী",
+        "phone": "01345205885",
+        "address": "৪ নং রাস্তা, মিরপুর, মৌলভীবাজার",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Chaina)",
+            "qty": 1,
+            "price": "265",
+            "edition": "China Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_china_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Chaina) (1 Pcs)",
+        "quantity": 1,
+        "variation": "China Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳265",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳390"
+      },
+      "metadata": {
+        "date": "14/5/2026, 12:00:00 PM",
+        "timestamp": 1778738400000,
+        "status": "Completed"
+      }
+    },
+    {
+      "key": "1035",
+      "customer": {
+        "name": "সাকিব",
+        "phone": "01868085939",
+        "address": "নোয়াপাড়া, রাউজান, চট্টগ্রাম",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "475",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳475",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳600"
+      },
+      "metadata": {
+        "date": "14/5/2026, 12:00:00 PM",
+        "timestamp": 1778738400000,
+        "status": "Shipped"
+      }
+    },
+    {
+      "key": "1036",
+      "customer": {
+        "name": "আরমান",
+        "phone": "01994039216",
+        "address": "হাটমাগোড়া, মাদারগঞ্জ, জামালপুর",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Chaina)",
+            "qty": 2,
+            "price": "675",
+            "edition": "China Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_china_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Chaina) (2 Pcs)",
+        "quantity": 2,
+        "variation": "China Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳1350",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳800"
+      },
+      "metadata": {
+        "date": "15/5/2026, 12:00:00 PM",
+        "timestamp": 1778824800000,
+        "status": "Shipped"
+      }
+    },
+    {
+      "key": "1037",
+      "customer": {
+        "name": "ইমন",
+        "phone": "০১৩৪০৮৫৯২৯৭",
+        "address": "আরানী, বাঘা, রাজশাহী",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai), AirPods Covor",
+            "qty": 1,
+            "price": "725",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai), AirPods Covor (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳725",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳850"
+      },
+      "metadata": {
+        "date": "18/5/2026, 12:00:00 PM",
+        "timestamp": 1779084000000,
+        "status": "Shipped"
+      }
+    },
+    {
+      "key": "1038",
+      "customer": {
+        "name": "মোহাম্মদ রাসেল আহমেদ",
+        "phone": "01965537543",
+        "address": "বাইতুল কুরবান জামে মসজিদ, ফতুল্লা, নারায়ণগঞ্জ",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Chaina)",
+            "qty": 2,
+            "price": "675",
+            "edition": "China Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_china_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Chaina) (2 Pcs)",
+        "quantity": 2,
+        "variation": "China Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳1350",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳800"
+      },
+      "metadata": {
+        "date": "18/5/2026, 12:00:00 PM",
+        "timestamp": 1779084000000,
+        "status": "Shipped"
+      }
+    },
+    {
+      "key": "1039",
+      "customer": {
+        "name": "রিয়াদ",
+        "phone": "01733010054",
+        "address": "মন্ডল মোড়, আটঘরিয়া, পাবনা",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Chaina)",
+            "qty": 2,
+            "price": "595",
+            "edition": "China Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_china_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Chaina) (2 Pcs)",
+        "quantity": 2,
+        "variation": "China Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳1190",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳720"
+      },
+      "metadata": {
+        "date": "18/5/2026, 12:00:00 PM",
+        "timestamp": 1779084000000,
+        "status": "Confirmed"
+      }
+    },
+    {
+      "key": "1040",
+      "customer": {
+        "name": "আমির",
+        "phone": "01771575911",
+        "address": "আমান বাজার, চট্টগ্রাম",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "475",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳475",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳600"
+      },
+      "metadata": {
+        "date": "18/5/2026, 12:00:00 PM",
+        "timestamp": 1779084000000,
+        "status": "Confirmed"
+      }
+    },
+    {
+      "key": "1041",
+      "customer": {
+        "name": "সাইদ",
+        "phone": "01310308886",
+        "address": "বতিহালা বাজার, ধোবাউড়া, ময়মনসিংহ",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "445",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳445",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳570"
+      },
+      "metadata": {
+        "date": "18/5/2026, 12:00:00 PM",
+        "timestamp": 1779084000000,
+        "status": "Confirmed"
+      }
+    },
+    {
+      "key": "1042",
+      "customer": {
+        "name": "মিলন শেখ",
+        "phone": "01991929065",
+        "address": "স্কয়ার মাস্টার বাড়ি, আমতলী বসুভিটা, ভালুকা, ময়মনসিংহ",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "445",
+            "edition": "Dubai Edition",
+            "color": "Classic Black",
+            "image": "assets/airpod_pro_2nd_generation_dubai_black.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic Black",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳445",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳570"
+      },
+      "metadata": {
+        "date": "18/5/2026, 12:00:00 PM",
+        "timestamp": 1779084000000,
+        "status": "Confirmed"
+      }
+    },
+    {
+      "key": "1043",
+      "customer": {
+        "name": "মোঃ হেলাল হোসাইন",
+        "phone": "01317999703",
+        "address": "চাটমোহর, পাবনা",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "405",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳405",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳530"
+      },
+      "metadata": {
+        "date": "18/5/2026, 12:00:00 PM",
+        "timestamp": 1779084000000,
+        "status": "Confirmed"
+      }
+    },
+    {
+      "key": "1044",
+      "customer": {
+        "name": "মিঠুন",
+        "phone": "01818841037",
+        "address": "জয় কালিবাজার, আনোয়ারা, চট্টগ্রাম",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "425",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳425",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳550"
+      },
+      "metadata": {
+        "date": "18/5/2026, 12:00:00 PM",
+        "timestamp": 1779084000000,
+        "status": "Confirmed"
+      }
+    },
+    {
+      "key": "1045",
+      "customer": {
+        "name": "আব্দুল্লাহ",
+        "phone": "01636444516",
+        "address": "ডুমনি বাজার, খিলক্ষেত, ঢাকা",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "475",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Inside Dhaka",
+        "district": "Dhaka",
+        "thana": "",
+        "subtotal": "৳475",
+        "shipping_cost": "৳65",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳540"
+      },
+      "metadata": {
+        "date": "18/5/2026, 12:00:00 PM",
+        "timestamp": 1779084000000,
+        "status": "Confirmed"
+      }
+    },
+    {
+      "key": "1046",
+      "customer": {
+        "name": "নুরুল ইসলাম",
+        "phone": "01708329517",
+        "address": "ডৌবাড়ী ইউনিয়ন, গোয়াইনঘাট, সিলেট",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "425",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳425",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳550"
+      },
+      "metadata": {
+        "date": "18/5/2026, 12:00:00 PM",
+        "timestamp": 1779084000000,
+        "status": "Confirmed"
+      }
+    },
+    {
+      "key": "1047",
+      "customer": {
+        "name": "মোঃ আব্দুল্লাহ",
+        "phone": "01787961278",
+        "address": "চকচকা কলা বাগান, ফুলবাড়ী, দিনাজপুর",
+        "note": "",
+        "email": ""
+      },
+      "order": {
+        "items": [
+          {
+            "title": "AirPods Pro 2nd Generation (Dubai)",
+            "qty": 1,
+            "price": "425",
+            "edition": "Dubai Edition",
+            "color": "Classic White",
+            "image": "assets/airpod_pro_2nd_generation_dubai_white.png"
+          }
+        ],
+        "product": "AirPods Pro 2nd Generation (Dubai) (1 Pcs)",
+        "quantity": 1,
+        "variation": "Dubai Edition",
+        "color": "Classic White",
+        "shipping_area": "Outside Dhaka",
+        "district": "Outside Dhaka",
+        "thana": "",
+        "subtotal": "৳425",
+        "shipping_cost": "৳125",
+        "discount": "৳0",
+        "promo_code": "",
+        "promo_title": "",
+        "total_price": "৳550"
+      },
+      "metadata": {
+        "date": "18/5/2026, 12:00:00 PM",
+        "timestamp": 1779084000000,
+        "status": "Confirmed"
+      }
+    }
+  ]
+}
