@@ -632,7 +632,9 @@
   <!-- Google Auth Overlay -->
   <div id="login-overlay">
     <div style="background: white; padding: 40px; border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); width: 100%; max-width: 380px; text-align: center; border: 1px solid #f1f5f9;">
-      <div style="font-size: 3rem; margin-bottom: 15px;">🔐</div>
+      <div style="color: var(--accent); display: flex; justify-content: center; margin-bottom: 15px;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      </div>
       <h2 style="font-weight: 900; margin-bottom: 10px; color: #1e293b; font-family: 'Outfit', sans-serif;">Earphone BD</h2>
       <p style="color: #64748b; margin-bottom: 30px; font-size: 0.95rem; font-family: 'Outfit', sans-serif;">Secure Analytics Portal</p>
       
@@ -992,7 +994,9 @@
     <div class="table-card" style="margin-top: 30px; grid-column: span 2;">
       <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 12px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
         <div style="display: flex; align-items: center; gap: 10px;">
-          <span style="font-size: 1.6rem;">🔮</span>
+          <span style="color: var(--accent); display: flex; align-items: center;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h20v14H2z"></path><path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M17 8l-4 4-2-2-3 3"></path></svg>
+          </span>
           <div>
             <h4 style="margin: 0; font-size: 1.25rem; font-weight: 900; color: var(--text-main); border: none; padding: 0;">বুদ্ধিমান স্টক প্রজেকশন ও ক্রয় প্ল্যানার (Predictive Stock Planner)</h4>
             <p style="margin: 4px 0 0 0; font-size: 0.82rem; color: var(--text-muted); font-weight: 600;">বিগত বিক্রয়ের গতিবেগ (Sales Velocity) বিশ্লেষণ করে আগামী দিনের প্রয়োজনীয় স্টকের এ্যাকুরেট অনুমান</p>
@@ -1737,13 +1741,15 @@
             const avgSales = mod.count > 0 ? Math.round(mod.revenue / mod.count) : 0;
             
             // Icon helper: globe for organic checkout, user for moderator
-            const icon = mod.name === 'Organic Website Checkout' ? '🌐' : '👤';
+            const iconSvg = mod.name === 'Organic Website Checkout' 
+              ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>`
+              : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`;
             const displayName = mod.name === 'Organic Website Checkout' ? 'Organic Website Checkout (ওয়েবসাইট সরাসরি ক্রয়)' : `${mod.name} (Moderator)`;
             
             const tr = document.createElement('tr');
             tr.innerHTML = `
               <td>
-                <span style="font-size: 1.1rem; margin-right: 6px;">${icon}</span>
+                ${iconSvg}
                 <span style="font-weight: 800; color: var(--text-main);">${escapeHTML(displayName)}</span>
               </td>
               <td style="text-align: center; font-weight: 700;">${mod.count} টি</td>

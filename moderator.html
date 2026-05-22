@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>⚡ Rapid Moderator Workspace | Earphone BD</title>
+  <title>Rapid Moderator Workspace | Earphone BD</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -870,6 +870,140 @@
     .google-signin-btn:active {
       transform: translateY(0);
     }
+
+    /* --- Premium Profile Dropdown Menu & Tabs Styles --- */
+    .mod-greet-container {
+      position: relative;
+    }
+
+    .mod-profile-trigger {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 6px 14px;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+      user-select: none;
+      border: 1px solid transparent;
+    }
+
+    .mod-profile-trigger:hover {
+      background: var(--accent-light);
+      border-color: rgba(37, 99, 235, 0.1);
+    }
+
+    .profile-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      margin-top: 10px;
+      width: 290px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+      z-index: 10000;
+      padding: 16px;
+      box-sizing: border-box;
+      display: none;
+      animation: fadeInSection 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .dropdown-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 6px;
+    }
+
+    .dropdown-header img {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent-light);
+    }
+
+    .dropdown-user-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow: hidden;
+    }
+
+    .dropdown-user-info h4 {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-main);
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .dropdown-user-info p {
+      margin: 0;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .dropdown-divider {
+      border: 0;
+      height: 1px;
+      background: var(--border-color);
+      margin: 12px 0;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      transition: all 0.15s;
+    }
+
+    .dropdown-item:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    .dropdown-item.active {
+      background: var(--accent);
+      color: white !important;
+    }
+
+    .dropdown-item.text-danger {
+      color: var(--danger);
+    }
+
+    .dropdown-item.text-danger:hover {
+      background: rgba(239, 68, 68, 0.08);
+      color: var(--danger);
+    }
+
+
+
+    /* Dashboard Section Transitions */
+    @keyframes fadeInSection {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .dashboard-section {
+      animation: fadeInSection 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
   </style>
 </head>
 <body>
@@ -883,14 +1017,49 @@
   <div class="wrapper">
     
     <!-- Top Greeting Status Strip (Shown when logged-in) -->
-    <div id="status-bar" class="top-status-bar" style="display: none;">
-      <div class="mod-greet" style="display: flex; align-items: center; gap: 10px;">
-        <img id="bar-mod-avatar" src="" alt="Avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-light); display: none;">
-        <span>👋 Hello, <strong id="bar-mod-name" style="color: var(--accent);">-</strong><span id="bar-mod-badge" class="badge" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.25); font-size: 0.72rem; padding: 2px 8px; border-radius: 6px; font-weight: 800; display: none; margin-left: 6px; vertical-align: middle;">Staff</span></span>
-        <button onclick="signOutModerator()" class="btn-edit-name" style="background: var(--danger); color: white; border-color: rgba(239, 68, 68, 0.15); display: flex; align-items: center; gap: 4px;">
-          <span>🚪 Sign Out</span>
-        </button>
+    <div id="status-bar" class="top-status-bar" style="display: none; position: relative;">
+      <div class="mod-greet-container">
+        <div class="mod-profile-trigger" onclick="toggleProfileDropdown(event)">
+          <img id="bar-mod-avatar" src="" alt="Avatar" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-light); display: none;">
+          <span>Hello, <strong id="bar-mod-name" style="color: var(--accent);">-</strong><span id="bar-mod-badge" class="badge" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.25); font-size: 0.72rem; padding: 2px 8px; border-radius: 6px; font-weight: 800; display: none; margin-left: 6px; vertical-align: middle;">Staff</span></span>
+          <span style="font-size: 0.7rem; color: var(--text-muted); transition: transform 0.2s;" id="profile-dropdown-arrow">▼</span>
+        </div>
+
+        <!-- Glassmorphic Floating Dropdown Menu -->
+        <div id="profile-dropdown" class="profile-dropdown-menu">
+          <div class="dropdown-header">
+            <img id="dropdown-avatar" src="" alt="Avatar">
+            <div class="dropdown-user-info">
+              <h4 id="dropdown-name">-</h4>
+              <p id="dropdown-email">-</p>
+              <span id="dropdown-badge" class="badge" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.25); font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; font-weight: 800; display: none; width: fit-content;">Staff</span>
+            </div>
+          </div>
+          <hr class="dropdown-divider">
+          <a href="#" class="dropdown-item active" onclick="switchSection('order-entry', event)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            <span>Order Entry (অর্ডার এন্ট্রি)</span>
+          </a>
+          <a href="#" class="dropdown-item" onclick="switchSection('payments', event)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+            <span>Payments & bKash (পেমেন্ট ও বিকাশ)</span>
+          </a>
+          <a href="#" class="dropdown-item" onclick="switchSection('orders-history', event)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            <span>Order History (অর্ডারের তালিকা)</span>
+          </a>
+          <a href="#" class="dropdown-item" onclick="switchSection('profile-details', event)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span>My Profile (আমার প্রোফাইল)</span>
+          </a>
+          <hr class="dropdown-divider">
+          <a href="#" class="dropdown-item text-danger" onclick="signOutModerator(); toggleProfileDropdown(event);">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            <span>Sign Out (লগ আউট)</span>
+          </a>
+        </div>
       </div>
+      
       <div class="session-stats-bar">
         <span>Today: <strong id="stat-count">0</strong> Orders</span>
         <span>Sales: <strong id="stat-sales" style="color: var(--success);">৳0</strong></span>
@@ -899,7 +1068,9 @@
 
     <!-- Identity Config Prompt (Shown only when NO profile is set) -->
     <div id="identity-prompt" class="identity-prompt-bar" style="display: none; background: #ffffff; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04); border-radius: 24px; padding: 30px 20px; text-align: center; flex-direction: column; align-items: center; justify-content: center; gap: 20px; box-sizing: border-box; width: 100%;">
-      <div style="font-size: 3rem; margin-bottom: 5px;">🎙️</div>
+      <div style="color: var(--accent); display: flex; justify-content: center; margin-bottom: 5px;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 4px 6px rgba(37,99,235,0.15));"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      </div>
       <h3 style="margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--text-main);">Welcome to Moderator Workspace</h3>
       <p style="margin: 0; color: var(--text-muted); font-size: 0.88rem; max-width: 340px; line-height: 1.5; font-weight: 500;">Sign in with your Google Account to automatically sync orders, calculate earnings, and manage your payments.</p>
       
@@ -916,13 +1087,149 @@
 
     <!-- Workspace Container (Shown when logged-in) -->
     <div id="workspace-container" style="display: none;">
-      <!-- Collapsible Moderator Payout and Performance Accounts -->
-      <div class="collapsible-container" style="margin-top: 0; margin-bottom: 15px;">
-        <button class="collapsible-trigger" onclick="togglePayoutAccount()">
-          <span>💰 আমার অ্যাকাউন্ট ও পেমেন্ট হিসেব (My Payout Account)</span>
-          <span id="payout-arrow-icon">▼</span>
-        </button>
-        <div id="payout-account-content" class="collapsible-content">
+      
+
+
+      <!-- SECTION 1: Order Entry -->
+      <div id="section-order-entry" class="dashboard-section">
+        <div class="form-card">
+          <div class="card-header">
+            <div>
+              <h2>Rapid Order Entry</h2>
+              <p>Ultra-Fast Customer Sheet • Phone Order Mode</p>
+            </div>
+            <div style="color: var(--accent); display: flex; align-items: center;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
+          </div>
+
+          <form id="order-form" autocomplete="off">
+            
+            <!-- SECTION 1: Customer Details -->
+            <div class="form-section-title" style="display: flex; align-items: center; gap: 8px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span>Customer Information</span>
+            </div>
+            
+            <div class="grid-2">
+              <div class="input-group">
+                <label class="input-label" for="cust-name">Customer Name *</label>
+                <input type="text" id="cust-name" class="input-field" placeholder="কাস্টমারের নাম" required autofocus>
+              </div>
+              <div class="input-group">
+                <label class="input-label" for="cust-phone">Phone Number *</label>
+                <input type="tel" id="cust-phone" class="input-field" placeholder="01XXXXXXXXX" required inputmode="tel">
+              </div>
+            </div>
+
+            <!-- SECTION 2: Shipping Destination -->
+            <div class="form-section-title" style="display: flex; align-items: center; gap: 8px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+              <span>Delivery Destination</span>
+            </div>
+            
+            <div class="grid-2 grid-2-preserve">
+              <div class="input-group">
+                <label class="input-label" for="delivery-district">Select District *</label>
+                <input type="text" id="delivery-district" list="districts" class="input-field" placeholder="যেমন: ঢাকা বা dhaka..." required>
+                <datalist id="districts"></datalist>
+              </div>
+              <div class="input-group">
+                <label class="input-label" for="delivery-thana">Select Thana/Upazila *</label>
+                <input type="text" id="delivery-thana" list="thanas" class="input-field" placeholder="থানা/উপজেলা..." required>
+                <datalist id="thanas"></datalist>
+              </div>
+            </div>
+
+            <div class="grid-2-address-shipping">
+              <div class="input-group">
+                <label class="input-label" for="cust-address">Detailed Shipping Address *</label>
+                <input type="text" id="cust-address" class="input-field" placeholder="গ্রাম, রোড, বাসা নং, ইউনিয়ন..." required>
+              </div>
+              <div class="input-group">
+                <label class="input-label" for="shipping-cost">Delivery Charge (৳) *</label>
+                <input type="number" id="shipping-cost" class="input-field" value="0" min="0" required inputmode="numeric">
+              </div>
+            </div>
+
+            <!-- Hidden elements for compatibility -->
+            <input type="hidden" id="shipping-area" value="outside_dhaka">
+
+            <!-- SECTION 3: Product Info -->
+            <div class="form-section-title" style="display: flex; align-items: center; gap: 8px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+              <span>Product Quick Selector</span>
+            </div>
+            
+            <!-- visual grid selector instead of boring dropdown -->
+            <div id="product-grid" class="product-grid"></div>
+
+            <div class="grid-preserve-qty">
+              <div class="input-group">
+                <label class="input-label" for="prod-price">Selling Unit Price (৳) *</label>
+                <input type="number" id="prod-price" class="input-field" required inputmode="numeric">
+              </div>
+              <div class="input-group qty-row">
+                <label class="input-label">Quantity Ordered *</label>
+                <div class="qty-counter">
+                  <button type="button" class="qty-btn" onclick="adjustQty(-1)">−</button>
+                  <input type="number" id="prod-qty" class="qty-val-input" value="1" min="1" readonly>
+                  <button type="button" class="qty-btn" onclick="adjustQty(1)">+</button>
+                </div>
+                <div class="qty-presets">
+                  <button type="button" class="preset-pill active" onclick="setQtyPreset(1)">1 Pcs</button>
+                  <button type="button" class="preset-pill" onclick="setQtyPreset(2)">2 Pcs</button>
+                  <button type="button" class="preset-pill" onclick="setQtyPreset(3)">3 Pcs</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label class="input-label" for="order-note">Order Notes / Instructions (Optional)</label>
+              <input type="text" id="order-note" class="input-field" placeholder="Notes......">
+            </div>
+
+            <!-- Live Billing Summary -->
+            <div class="billing-summary">
+              <div class="bill-row">
+                <span>Subtotal:</span>
+                <span id="summary-subtotal">৳0</span>
+              </div>
+              <div class="bill-row">
+                <span>Shipping Cost (<span id="shipping-zone-label">Outside Dhaka</span>):</span>
+                <span id="summary-shipping">৳0</span>
+              </div>
+              <div class="bill-row total">
+                <span>Grand Total:</span>
+                <span id="summary-total">৳0</span>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="submit-action-container">
+              <button type="submit" class="btn-submit">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                <span>Confirm & Save Order (৳<span id="btn-total-val">0</span>)</span>
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <!-- SECTION 2: Payments -->
+      <div id="section-payments" class="dashboard-section" style="display: none;">
+        <div class="form-card" style="margin-bottom: 20px;">
+          <div class="card-header">
+            <div>
+              <h2>আমার অ্যাকাউন্ট ও পেমেন্ট হিসেব</h2>
+              <p>My Payout Account • Payment Ledger & Commission Stats</p>
+            </div>
+            <div style="color: var(--success); display: flex; align-items: center;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+            </div>
+          </div>
+          
           <!-- Account statistics summary -->
           <div class="payout-summary-card" style="padding: 15px; border-bottom: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; background: #ffffff;">
             <div class="grid-2 grid-2-preserve" style="gap: 10px; margin-bottom: 0;">
@@ -949,144 +1256,86 @@
           </div>
           
           <!-- Transaction ledger head -->
-          <div style="padding: 10px 18px; background: #f1f5f9; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
+          <div style="padding: 10px 18px; background: #f1f5f9; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); border-radius: 8px 8px 0 0; margin-top: 15px;">
             <span style="font-weight: 800; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">পেমেন্ট হিসেব খাতা (Payment Ledger History)</span>
             <span id="payout-ledger-count" class="badge" style="font-size: 0.62rem; padding: 2px 8px; border-radius: 6px; font-weight: 800; background: var(--success-light); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.15);">0 Payments</span>
           </div>
           
           <!-- Ledger list -->
-          <div id="payout-ledger-container" class="history-list">
+          <div id="payout-ledger-container" class="history-list" style="max-height: 250px; overflow-y: auto;">
             <p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 20px 0; margin: 0;">কোনো পেমেন্ট হিসেব পাওয়া যায়নি।</p>
           </div>
         </div>
-      </div>
 
-      <!-- Collapsible Recent Orders History -->
-      <div class="collapsible-container" style="margin-bottom: 15px;">
-        <button class="collapsible-trigger" onclick="toggleHistory()">
-          <span>📋 Show/Hide Today's Entries (আজকের অর্ডারের তালিকা)</span>
-          <span id="arrow-icon">▼</span>
-        </button>
-        <div id="history-content" class="collapsible-content">
-          <div id="orders-history-container" class="history-list">
-            <p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 20px 0; margin: 0;">প্রোফাইল সেট করে অর্ডার সেভ করলেই এখানে তালিকা চলে আসবে।</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Main Order Entry Card -->
-      <div class="form-card">
-      <div class="card-header">
-        <div>
-          <h2>⚡ Rapid Order Entry</h2>
-          <p>Ultra-Fast Customer Sheet • Phone Order Mode</p>
-        </div>
-        <div style="font-size: 1.8rem;">🎙️</div>
-      </div>
-
-      <form id="order-form" autocomplete="off">
-        
-        <!-- SECTION 1: Customer Details -->
-        <div class="form-section-title">👤 Customer Information</div>
-        
-        <div class="grid-2">
-          <div class="input-group">
-            <label class="input-label" for="cust-name">Customer Name *</label>
-            <input type="text" id="cust-name" class="input-field" placeholder="কাস্টমারের নাম" required autofocus>
-          </div>
-          <div class="input-group">
-            <label class="input-label" for="cust-phone">Phone Number *</label>
-            <input type="tel" id="cust-phone" class="input-field" placeholder="01XXXXXXXXX" required inputmode="tel">
-          </div>
-        </div>
-
-        <!-- SECTION 2: Shipping Destination -->
-        <div class="form-section-title">🚚 Delivery Destination</div>
-        
-        <div class="grid-2 grid-2-preserve">
-          <div class="input-group">
-            <label class="input-label" for="delivery-district">Select District *</label>
-            <input type="text" id="delivery-district" list="districts" class="input-field" placeholder="যেমন: ঢাকা বা dhaka..." required>
-            <datalist id="districts"></datalist>
-          </div>
-          <div class="input-group">
-            <label class="input-label" for="delivery-thana">Select Thana/Upazila *</label>
-            <input type="text" id="delivery-thana" list="thanas" class="input-field" placeholder="থানা/উপজেলা..." required>
-            <datalist id="thanas"></datalist>
-          </div>
-        </div>
-
-        <div class="grid-2-address-shipping">
-          <div class="input-group">
-            <label class="input-label" for="cust-address">Detailed Shipping Address *</label>
-            <input type="text" id="cust-address" class="input-field" placeholder="গ্রাম, রোড, বাসা নং, ইউনিয়ন..." required>
-          </div>
-          <div class="input-group">
-            <label class="input-label" for="shipping-cost">Delivery Charge (৳) *</label>
-            <input type="number" id="shipping-cost" class="input-field" value="0" min="0" required inputmode="numeric">
-          </div>
-        </div>
-
-        <!-- Hidden elements for compatibility -->
-        <input type="hidden" id="shipping-area" value="outside_dhaka">
-
-        <!-- SECTION 3: Product Info -->
-        <div class="form-section-title">🛍️ Product Quick Selector</div>
-        
-        <!-- visual grid selector instead of boring dropdown -->
-        <div id="product-grid" class="product-grid"></div>
-
-        <div class="grid-preserve-qty">
-          <div class="input-group">
-            <label class="input-label" for="prod-price">Selling Unit Price (৳) *</label>
-            <input type="number" id="prod-price" class="input-field" required inputmode="numeric">
-          </div>
-          <div class="input-group qty-row">
-            <label class="input-label">Quantity Ordered *</label>
-            <div class="qty-counter">
-              <button type="button" class="qty-btn" onclick="adjustQty(-1)">−</button>
-              <input type="number" id="prod-qty" class="qty-val-input" value="1" min="1" readonly>
-              <button type="button" class="qty-btn" onclick="adjustQty(1)">+</button>
+        <!-- NEW: bKash Payout Settings Card -->
+        <div class="form-card">
+          <div class="card-header">
+            <div>
+              <h2>bKash Payout Settings</h2>
+              <p>পেমেন্ট গ্রহণের জন্য বিকাশ নম্বর সেট করুন (Payment by bKash)</p>
             </div>
-            <div class="qty-presets">
-              <button type="button" class="preset-pill active" onclick="setQtyPreset(1)">1 Pcs</button>
-              <button type="button" class="preset-pill" onclick="setQtyPreset(2)">2 Pcs</button>
-              <button type="button" class="preset-pill" onclick="setQtyPreset(3)">3 Pcs</button>
+            <div style="font-size: 1.8rem; color: #e2136e; font-weight: 800; display: flex; align-items: center;">৳</div>
+          </div>
+          <form id="bkash-setup-form" autocomplete="off">
+            <div class="input-group" style="margin-bottom: 18px;">
+              <label class="input-label" for="bkash-number">bKash Mobile Number *</label>
+              <input type="tel" id="bkash-number" class="input-field" placeholder="01XXXXXXXXX" required pattern="^01[3-9]\d{8}$" inputmode="tel">
+            </div>
+            <div class="input-group" style="margin-bottom: 22px;">
+              <label class="input-label" for="bkash-acc-type">Account Type *</label>
+              <select id="bkash-acc-type" class="input-field" style="appearance: none; background: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E') no-repeat right 16px center/10px auto; background-color: #ffffff; padding-right: 40px;" required>
+                <option value="Personal">Personal (ব্যক্তিগত)</option>
+                <option value="Agent">Agent (এজেন্ট)</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-submit" style="background: #e2136e; box-shadow: 0 4px 15px rgba(226, 19, 110, 0.2); position: static;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2%202%200%200%201-2-2V5a2%202%200%200%201%202-2h11l5%205v11a2%202%200%200%201-2%202z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+              <span>Save bKash Settings (সেভ করুন)</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- SECTION 3: Order History -->
+      <div id="section-orders-history" class="dashboard-section" style="display: none;">
+        <div class="form-card">
+          <div class="card-header">
+            <div>
+              <h2>আজকের অর্ডারের তালিকা</h2>
+              <p>Today's Logged Order Entries • Live Feed</p>
+            </div>
+            <div style="color: var(--accent); display: flex; align-items: center;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><polygon points="12 22.08 12 12 3 6.81 3 16.92 12 22.08"></polygon><polygon points="12 22.08 21 16.92 21 6.81 12 12 12 22.08"></polygon><polygon points="12 12 21 6.81 12 1.62 3 6.81 12 12"></polygon></svg>
             </div>
           </div>
-        </div>
-
-        <div class="input-group">
-          <label class="input-label" for="order-note">Order Notes / Instructions (Optional)</label>
-          <input type="text" id="order-note" class="input-field" placeholder="ডেলিভারি সংক্রান্ত নির্দেশনা, IMO, Messenger...">
-        </div>
-
-        <!-- Live Billing Summary -->
-        <div class="billing-summary">
-          <div class="bill-row">
-            <span>Subtotal:</span>
-            <span id="summary-subtotal">৳0</span>
-          </div>
-          <div class="bill-row">
-            <span>Shipping Cost (<span id="shipping-zone-label">Outside Dhaka</span>):</span>
-            <span id="summary-shipping">৳0</span>
-          </div>
-          <div class="bill-row total">
-            <span>Grand Total:</span>
-            <span id="summary-total">৳0</span>
+          <div id="orders-history-container" class="history-list" style="max-height: 450px; overflow-y: auto;">
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 20px 0; margin: 0;">কোনো অর্ডার হিসেব পাওয়া যায়নি।</p>
           </div>
         </div>
+      </div>
 
-        <!-- Submit Button -->
-        <div class="submit-action-container">
-          <button type="submit" class="btn-submit">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-            <span>Confirm & Save Order (৳<span id="btn-total-val">0</span>)</span>
-          </button>
+      <!-- SECTION 4: Profile Details -->
+      <div id="section-profile-details" class="dashboard-section" style="display: none;">
+        <div class="form-card" style="text-align: center; padding: 40px 20px;">
+          <div style="position: relative; display: inline-block; margin-bottom: 22px;">
+            <img id="profile-avatar-big" src="" alt="Avatar" style="width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--accent-light); box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15); object-fit: cover;">
+            <span id="profile-role-badge" class="badge" style="position: absolute; bottom: 0; right: 0; background: #8b5cf6; color: white; padding: 4px 10px; border-radius: 12px; font-weight: 800; font-size: 0.72rem; border: 2px solid white; display: inline-block;">Affiliate</span>
+          </div>
+          <h2 id="profile-name-display" style="margin: 0 0 8px 0; font-size: 1.6rem; font-weight: 800;">-</h2>
+          <p id="profile-email-display" style="margin: 0 0 30px 0; color: var(--text-muted); font-weight: 600; font-size: 0.95rem;">-</p>
+          
+          <div style="display: flex; flex-direction: column; gap: 14px; max-width: 320px; margin: 0 auto;">
+            <button onclick="switchSection('payments')" class="btn-submit" style="background: var(--accent); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.15); position: static; display: flex; align-items: center; justify-content: center; gap: 8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+              <span>Set up Payout bKash</span>
+            </button>
+            <button onclick="signOutModerator()" class="btn-submit" style="background: var(--danger); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.15); position: static; display: flex; align-items: center; justify-content: center; gap: 8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+              <span>Sign Out (লগ আউট)</span>
+            </button>
+          </div>
         </div>
-
-      </form>
-    </div>
+      </div>
 
     </div>
 
@@ -1260,9 +1509,196 @@
       document.getElementById("delivery-district").addEventListener("input", handleDistrictChange);
       document.getElementById("delivery-district").addEventListener("change", handleDistrictChange);
 
+      // bKash payout setup form submit listener
+      const bkashForm = document.getElementById("bkash-setup-form");
+      if (bkashForm) {
+        bkashForm.addEventListener("submit", saveBkashSettings);
+      }
+
+      // Close profile dropdown when clicking outside
+      document.addEventListener("click", (event) => {
+        const dropdown = document.getElementById("profile-dropdown");
+        const trigger = document.querySelector(".mod-profile-trigger");
+        if (dropdown && trigger && getComputedStyle(dropdown).display !== "none") {
+          if (!trigger.contains(event.target) && !dropdown.contains(event.target)) {
+            dropdown.style.display = "none";
+            const arrow = document.getElementById("profile-dropdown-arrow");
+            if (arrow) {
+              arrow.style.transform = "rotate(0deg)";
+            }
+          }
+        }
+      });
+
       // Track Authentication
       initAuthTracking();
     });
+
+    // Profile Dropdown Toggle Logic
+    window.toggleProfileDropdown = (event) => {
+      if (event) event.stopPropagation();
+      const dropdown = document.getElementById("profile-dropdown");
+      const arrow = document.getElementById("profile-dropdown-arrow");
+      if (!dropdown) return;
+      
+      const isHidden = getComputedStyle(dropdown).display === "none";
+      if (isHidden) {
+        dropdown.style.display = "block";
+        if (arrow) {
+          arrow.style.display = "inline-block";
+          arrow.style.transform = "rotate(180deg)";
+        }
+      } else {
+        dropdown.style.display = "none";
+        if (arrow) {
+          arrow.style.display = "inline-block";
+          arrow.style.transform = "rotate(0deg)";
+        }
+      }
+    };
+
+    // Dashboard Section Swapping Logic
+    window.switchSection = (sectionId, event) => {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      // Hide all sections, show active section
+      const sections = ['order-entry', 'payments', 'orders-history', 'profile-details'];
+      sections.forEach(id => {
+        const secEl = document.getElementById(`section-${id}`);
+        if (secEl) {
+          secEl.style.display = (id === sectionId) ? 'block' : 'none';
+        }
+      });
+
+
+
+      // Update active state in dropdown items
+      const dropdownItems = document.querySelectorAll(".profile-dropdown-menu .dropdown-item");
+      dropdownItems.forEach(item => {
+        const onClickAttr = item.getAttribute("onclick") || "";
+        if (onClickAttr.includes(`'${sectionId}'`) || onClickAttr.includes(`"${sectionId}"`)) {
+          item.classList.add("active");
+        } else {
+          item.classList.remove("active");
+        }
+      });
+
+      // Automatically focus on cust-name when switching to order-entry
+      if (sectionId === 'order-entry') {
+        const custNameInput = document.getElementById("cust-name");
+        if (custNameInput) custNameInput.focus();
+      }
+
+      // Close dropdown if it is open
+      const dropdown = document.getElementById("profile-dropdown");
+      if (dropdown) {
+        dropdown.style.display = "none";
+        const arrow = document.getElementById("profile-dropdown-arrow");
+        if (arrow) {
+          arrow.style.transform = "rotate(0deg)";
+        }
+      }
+    };
+
+    // Firebase Auth State Tracking
+    function initAuthTracking() {
+      const loadingOverlay = document.getElementById("auth-loading-overlay");
+      
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          currentModeratorName = user.displayName || user.email.split('@')[0];
+          
+          // Save profile details to LocalStorage for consistency with other parts of the site
+          const userData = {
+            name: currentModeratorName,
+            email: user.email,
+            phone: user.phoneNumber || "",
+            photo: user.photoURL
+          };
+          localStorage.setItem("earphone_bd_user", JSON.stringify(userData));
+          
+          // Populate status bar UI
+          document.getElementById("bar-mod-name").textContent = currentModeratorName;
+          
+          const photoUrl = user.photoURL || "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y";
+          
+          const avatarImg = document.getElementById("bar-mod-avatar");
+          if (avatarImg) {
+            avatarImg.src = photoUrl;
+            avatarImg.style.display = "block";
+          }
+          
+          // Populate floating dropdown user info
+          const dropAvatar = document.getElementById("dropdown-avatar");
+          if (dropAvatar) dropAvatar.src = photoUrl;
+          const dropName = document.getElementById("dropdown-name");
+          if (dropName) dropName.textContent = currentModeratorName;
+          const dropEmail = document.getElementById("dropdown-email");
+          if (dropEmail) dropEmail.textContent = user.email;
+
+          // Populate Big Profile Details Section
+          const profAvatar = document.getElementById("profile-avatar-big");
+          if (profAvatar) profAvatar.src = photoUrl;
+          const profName = document.getElementById("profile-name-display");
+          if (profName) profName.textContent = currentModeratorName;
+          const profEmail = document.getElementById("profile-email-display");
+          if (profEmail) profEmail.textContent = user.email;
+          
+          // Toggle interface components
+          document.getElementById("status-bar").style.display = "flex";
+          document.getElementById("identity-prompt").style.display = "none";
+          document.getElementById("workspace-container").style.display = "block";
+          
+          // Load specific metrics & databases for this moderator
+          loadSessionData();
+        } else {
+          currentModeratorName = "";
+          localStorage.removeItem("earphone_bd_user");
+          
+          // Reset UI elements
+          document.getElementById("status-bar").style.display = "none";
+          document.getElementById("identity-prompt").style.display = "flex";
+          document.getElementById("workspace-container").style.display = "none";
+          
+          const dropAvatar = document.getElementById("dropdown-avatar");
+          if (dropAvatar) dropAvatar.src = "";
+          const dropName = document.getElementById("dropdown-name");
+          if (dropName) dropName.textContent = "-";
+          const dropEmail = document.getElementById("dropdown-email");
+          if (dropEmail) dropEmail.textContent = "-";
+
+          const profAvatar = document.getElementById("profile-avatar-big");
+          if (profAvatar) profAvatar.src = "";
+          const profName = document.getElementById("profile-name-display");
+          if (profName) profName.textContent = "-";
+          const profEmail = document.getElementById("profile-email-display");
+          if (profEmail) profEmail.textContent = "-";
+          
+          // Unsubscribe current database listeners
+          if (unsubscribeOrders) { unsubscribeOrders(); unsubscribeOrders = null; }
+          if (unsubscribePayouts) { unsubscribePayouts(); unsubscribePayouts = null; }
+          if (unsubscribeConfig) { unsubscribeConfig(); unsubscribeConfig = null; }
+          isExcludedFromPayout = false;
+          cachedCompletedProductsCount = 0;
+          
+          const badge = document.getElementById("bar-mod-badge");
+          if (badge) badge.style.display = "none";
+          const dropBadge = document.getElementById("dropdown-badge");
+          if (dropBadge) dropBadge.style.display = "none";
+        }
+        
+        // Hide loading state overlay nicely
+        if (loadingOverlay) {
+          loadingOverlay.style.opacity = "0";
+          setTimeout(() => {
+            loadingOverlay.style.display = "none";
+          }, 400);
+        }
+      });
+    }
 
     // Render interactive product tiles
     function renderProductGrid() {
@@ -1326,118 +1762,40 @@
       }
     }
 
-    // Firebase Auth State Tracking
-    function initAuthTracking() {
-      const loadingOverlay = document.getElementById("auth-loading-overlay");
+    // Save bKash Payout settings to Firebase RTDB
+    function saveBkashSettings(e) {
+      if (e) e.preventDefault();
       
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          currentModeratorName = user.displayName || user.email.split('@')[0];
-          
-          // Save profile details to LocalStorage for consistency with other parts of the site
-          const userData = {
-            name: currentModeratorName,
-            email: user.email,
-            phone: user.phoneNumber || "",
-            photo: user.photoURL
-          };
-          localStorage.setItem("earphone_bd_user", JSON.stringify(userData));
-          
-          // Populate status bar UI
-          document.getElementById("bar-mod-name").textContent = currentModeratorName;
-          
-          const avatarImg = document.getElementById("bar-mod-avatar");
-          if (avatarImg && user.photoURL) {
-            avatarImg.src = user.photoURL;
-            avatarImg.style.display = "block";
-          } else if (avatarImg) {
-            avatarImg.style.display = "none";
-          }
-          
-          // Toggle interface components
-          document.getElementById("status-bar").style.display = "flex";
-          document.getElementById("identity-prompt").style.display = "none";
-          document.getElementById("workspace-container").style.display = "block";
-          
-          // Load specific metrics & databases for this moderator
-          loadSessionData();
-        } else {
-          currentModeratorName = "";
-          localStorage.removeItem("earphone_bd_user");
-          
-          // Reset UI elements
-          document.getElementById("status-bar").style.display = "none";
-          document.getElementById("identity-prompt").style.display = "flex";
-          document.getElementById("workspace-container").style.display = "none";
-          
-          // Unsubscribe current database listeners
-          if (unsubscribeOrders) { unsubscribeOrders(); unsubscribeOrders = null; }
-          if (unsubscribePayouts) { unsubscribePayouts(); unsubscribePayouts = null; }
-          if (unsubscribeConfig) { unsubscribeConfig(); unsubscribeConfig = null; }
-          isExcludedFromPayout = false;
-          cachedCompletedProductsCount = 0;
-          
-          const badge = document.getElementById("bar-mod-badge");
-          if (badge) badge.style.display = "none";
+      if (!currentModeratorName) {
+        alert("দয়া করে প্রথমে লগ ইন করুন!");
+        return;
+      }
+      
+      const bkashNumber = document.getElementById("bkash-number").value.trim();
+      const bkashAccType = document.getElementById("bkash-acc-type").value.trim();
+      
+      // Validate bKash mobile number format (standard 11 digits starting with 01)
+      const phoneRegex = /^01[3-9]\d{8}$/;
+      if (!phoneRegex.test(bkashNumber)) {
+        alert("দয়া করে একটি সঠিক ১১ ডিজিটের বিকাশ নম্বর দিন! (যেমন: 017XXXXXXXX)");
+        document.getElementById("bkash-number").focus();
+        return;
+      }
+      
+      const configRef = ref(db, `moderator_configs/${currentModeratorName}`);
+      update(configRef, {
+        payment_details: {
+          bkash_number: bkashNumber,
+          bkash_acc_type: bkashAccType
         }
-        
-        // Hide loading state overlay nicely
-        if (loadingOverlay) {
-          loadingOverlay.style.opacity = "0";
-          setTimeout(() => {
-            loadingOverlay.style.display = "none";
-          }, 400);
-        }
+      })
+      .then(() => {
+        showNotification("bKash details saved successfully! (বিকাশ নম্বর সেভ হয়েছে)");
+      })
+      .catch((err) => {
+        alert("বিকাশ নম্বর সেভ করতে সমস্যা হয়েছে: " + err.message);
       });
     }
-
-    // Google Sign-In Action
-    window.signInWithGoogle = () => {
-      const loadingOverlay = document.getElementById("auth-loading-overlay");
-      if (loadingOverlay) {
-        loadingOverlay.style.display = "flex";
-        loadingOverlay.style.opacity = "1";
-      }
-      
-      signInWithPopup(auth, provider)
-        .then(() => {
-          showNotification("Successfully authenticated!");
-        })
-        .catch((error) => {
-          console.error("Authentication Error:", error);
-          alert("Authentication failed: " + error.message);
-          if (loadingOverlay) {
-            loadingOverlay.style.opacity = "0";
-            setTimeout(() => {
-              loadingOverlay.style.display = "none";
-            }, 400);
-          }
-        });
-    };
-
-    // Google Sign-Out Action
-    window.signOutModerator = () => {
-      const loadingOverlay = document.getElementById("auth-loading-overlay");
-      if (loadingOverlay) {
-        loadingOverlay.style.display = "flex";
-        loadingOverlay.style.opacity = "1";
-      }
-      
-      signOut(auth)
-        .then(() => {
-          showNotification("Signed out successfully!");
-        })
-        .catch((error) => {
-          console.error("Sign Out Error:", error);
-          alert("Sign out failed: " + error.message);
-          if (loadingOverlay) {
-            loadingOverlay.style.opacity = "0";
-            setTimeout(() => {
-              loadingOverlay.style.display = "none";
-            }, 400);
-          }
-        });
-    };
 
     // Smart Location Autocomplete & Price Syncing
     function handleDistrictChange() {
@@ -1611,9 +1969,49 @@
         const configVal = snapshot.val();
         isExcludedFromPayout = (configVal && configVal.excludeFromPayout) ? true : false;
         
+        // Dynamic Role labeling & styling
+        const roleText = isExcludedFromPayout ? "Staff" : "Affiliate";
+        const badgeBg = isExcludedFromPayout ? "rgba(139, 92, 246, 0.15)" : "rgba(16, 185, 129, 0.15)";
+        const badgeColor = isExcludedFromPayout ? "#8b5cf6" : "#10b981";
+        const badgeBorder = isExcludedFromPayout ? "1px solid rgba(139, 92, 246, 0.25)" : "1px solid rgba(16, 185, 129, 0.25)";
+        const profBadgeBg = isExcludedFromPayout ? "#8b5cf6" : "#10b981";
+
         const badge = document.getElementById("bar-mod-badge");
         if (badge) {
-          badge.style.display = isExcludedFromPayout ? "inline-block" : "none";
+          badge.textContent = roleText;
+          badge.style.background = badgeBg;
+          badge.style.color = badgeColor;
+          badge.style.border = badgeBorder;
+          badge.style.display = "inline-block";
+        }
+        
+        const dropBadge = document.getElementById("dropdown-badge");
+        if (dropBadge) {
+          dropBadge.textContent = roleText;
+          dropBadge.style.background = badgeBg;
+          dropBadge.style.color = badgeColor;
+          dropBadge.style.border = badgeBorder;
+          dropBadge.style.display = "inline-block";
+        }
+
+        const profBadge = document.getElementById("profile-role-badge");
+        if (profBadge) {
+          profBadge.textContent = roleText;
+          profBadge.style.background = profBadgeBg;
+        }
+
+        // Retrieve bKash payment details if they exist in DB
+        const bkashNumField = document.getElementById("bkash-number");
+        const bkashTypeField = document.getElementById("bkash-acc-type");
+        
+        if (configVal && configVal.payment_details) {
+          const pd = configVal.payment_details;
+          if (bkashNumField) bkashNumField.value = pd.bkash_number || "";
+          if (bkashTypeField) bkashTypeField.value = pd.bkash_acc_type || "Personal";
+        } else {
+          // Reset to defaults if no details exist
+          if (bkashNumField) bkashNumField.value = "";
+          if (bkashTypeField) bkashTypeField.value = "Personal";
         }
         
         loadPayoutsAndRender(cachedCompletedProductsCount);
@@ -1744,7 +2142,7 @@
             balanceCard.style.borderColor = "rgba(139, 92, 246, 0.2)";
           }
           if (balanceLabel) {
-            balanceLabel.textContent = "Staff (No Payouts)";
+            balanceLabel.textContent = "Staff";
           }
           if (balanceField) {
             balanceField.style.color = "#8b5cf6";
@@ -1814,8 +2212,15 @@
           div.innerHTML = `
             <div class="history-meta">
               <h5 style="margin: 0; font-size: 0.82rem; font-weight: 800; color: var(--text-main);">৳${pAmount.toLocaleString()}</h5>
-              <p style="margin: 2px 0 0 0; color: var(--text-muted); font-size: 0.72rem; font-weight: 600;">🗓️ Paid: ${escapeHTML(pDate)}</p>
-              ${pNote ? `<p style="margin: 2px 0 0 0; color: var(--text-muted); font-style: italic; font-size: 0.7rem; font-weight: 500; max-width: 250px; word-break: break-word;">📝 ${escapeHTML(pNote)}</p>` : ""}
+              <p style="margin: 2px 0 0 0; color: var(--text-muted); font-size: 0.72rem; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.7;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                Paid: ${escapeHTML(pDate)}
+              </p>
+              ${pNote ? `
+                <p style="margin: 2px 0 0 0; color: var(--text-muted); font-style: italic; font-size: 0.7rem; font-weight: 500; max-width: 250px; word-break: break-word; display: flex; align-items: center; gap: 4px;">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.7;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4z"></path></svg>
+                  ${escapeHTML(pNote)}
+                </p>` : ""}
             </div>
             <div>
               <span class="badge badge-paid" style="font-size: 0.65rem; border-radius: 6px; padding: 2px 8px; font-weight: 800; background: var(--success-light); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.15); display: inline-block;">Received</span>

@@ -603,7 +603,9 @@
 
   <div id="login-overlay">
     <div style="background: white; padding: 40px; border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); width: 100%; max-width: 380px; text-align: center; border: 1px solid #f1f5f9;">
-      <div style="font-size: 3rem; margin-bottom: 15px;">🔐</div>
+      <div style="color: var(--accent); display: flex; justify-content: center; margin-bottom: 15px;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      </div>
       <h2 style="font-weight: 900; margin-bottom: 10px; color: #1e293b; font-family: 'Outfit', sans-serif;">Earphone BD</h2>
       <p style="color: #64748b; margin-bottom: 30px; font-size: 0.95rem; font-family: 'Outfit', sans-serif;">Secure Admin Portal</p>
       
@@ -724,7 +726,7 @@
         <!-- Moderator Filter Dropdown -->
         <div style="display: flex; align-items: center; gap: 10px;">
           <div class="filter-label" style="font-size: 0.85rem; color: #64748b;">
-            👤 Moderator:
+            Moderator:
           </div>
           <select id="moderator-filter" onchange="window.setModeratorFilter(this.value)">
             <option value="all">All (সবাই)</option>
@@ -807,14 +809,11 @@
 
   <!-- Manual Order Entry Modal -->
   <div id="manual-order-modal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(4px); padding: 20px; overflow-y: auto;">
-    <div style="background: white; width: 100%; max-width: 600px; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); display: flex; flex-direction: column; overflow: hidden; max-height: 90vh; border: 1px solid #e2e8f0; animation: modalAppear 0.3s cubic-bezier(0.4, 0, 0.2, 1); margin: auto;">
+    <div style="background: white; width: 100%; max-width: 600px; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); display: flex; flex-direction: column; overflow: hidden; max-height: 92vh; border: 1px solid #e2e8f0; margin: auto;">
       <!-- Modal Header -->
-      <div style="padding: 20px 24px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
-        <div>
-          <h3 style="margin: 0; font-size: 1.25rem; font-weight: 800; color: #1e293b; display: flex; align-items: center; gap: 8px;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-            ম্যানুয়ালি নতুন অর্ডার এন্ট্রি করুন
-          </h3>
+      <div style="padding: 20px 24px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; gap: 16px;">
+        <div style="text-align: left;">
+          <h3 style="margin: 0; font-size: 1.25rem; font-weight: 850; color: #1e293b;">Manual Order Entry</h3>
           <p style="margin: 4px 0 0 0; font-size: 0.8rem; color: #64748b; font-weight: 500;">Messenger/WhatsApp বা ফোনের অর্ডার এড করুন</p>
         </div>
         <button onclick="window.closeManualOrderModal()" style="background: none; border: none; font-size: 1.5rem; font-weight: 700; color: #94a3b8; cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; border-radius: 50%; width: 32px; height: 32px; transition: all 0.2s; border: 1px solid transparent;" onmouseover="this.style.background='#f1f5f9'; this.style.color='#475569'" onmouseout="this.style.background='transparent'; this.style.color='#94a3b8'">&times;</button>
@@ -825,7 +824,10 @@
         
         <!-- Customer Info Section -->
         <div>
-          <div style="font-size: 0.75rem; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; border-bottom: 2px solid #eff6ff; padding-bottom: 4px;">👤 ক্রেতার তথ্য (Customer Info)</div>
+          <div style="font-size: 0.75rem; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; border-bottom: 2px solid #eff6ff; padding-bottom: 4px; display: inline-flex; align-items: center; gap: 6px; width: 100%;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span>ক্রেতার তথ্য (Customer Info)</span>
+          </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
             <div>
               <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 6px;">কাস্টমারের নাম *</label>
@@ -848,7 +850,10 @@
 
         <!-- Shipping & Location Section -->
         <div>
-          <div style="font-size: 0.75rem; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; border-bottom: 2px solid #eff6ff; padding-bottom: 4px;">🚚 জেলা ও থানা (Delivery Location)</div>
+          <div style="font-size: 0.75rem; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; border-bottom: 2px solid #eff6ff; padding-bottom: 4px; display: inline-flex; align-items: center; gap: 6px; width: 100%;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            <span>জেলা ও থানা (Delivery Location)</span>
+          </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
             <div>
               <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 6px;">জেলা নির্বাচন করুন *</label>
@@ -880,7 +885,10 @@
 
         <!-- Product Selection Section -->
         <div>
-          <div style="font-size: 0.75rem; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; border-bottom: 2px solid #eff6ff; padding-bottom: 4px;">🛍️ প্রোডাক্ট নির্বাচন (Product Selection)</div>
+          <div style="font-size: 0.75rem; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; border-bottom: 2px solid #eff6ff; padding-bottom: 4px; display: inline-flex; align-items: center; gap: 6px; width: 100%;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            <span>প্রোডাক্ট নির্বাচন (Product Selection)</span>
+          </div>
           <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 10px; margin-bottom: 12px; align-items: flex-end;">
             <div>
               <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 6px;">প্রোডাক্ট মডেল *</label>
@@ -1727,7 +1735,7 @@
           pCard.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #cbd5e1; padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
               <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 1.5rem;">🛒</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                 <div>
                   <h3 style="margin: 0; font-size: 1.15rem; font-weight: 900; color: #1e293b; font-family: inherit;">ক্রয় ও প্যাকিং তালিকা সামারি (Consolidated Procurement)</h3>
                   <p style="margin: 3px 0 0 0; font-size: 0.82rem; color: #64748b; font-weight: 700;">স্ট্যাটাস: <span class="badge" style="background: var(--accent); color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 800; display: inline-block;">${translatedStatus}</span></p>
@@ -1749,7 +1757,7 @@
                       <div style="font-weight: 800; font-size: 0.95rem; color: #1e293b;">${escapeHTML(item.title)}</div>
                       <div style="font-size: 0.75rem; color: #64748b; margin-top: 5px; display: flex; gap: 6px; flex-wrap: wrap;">
                         <span class="badge ${editionBadgeClass}" style="padding: 1px 6px; font-size: 0.65rem; border-radius: 4px;">${escapeHTML(item.edition || 'N/A')}</span>
-                        <span class="badge badge-color" style="padding: 1px 6px; font-size: 0.65rem; border-radius: 4px;">🎨 ${escapeHTML(item.color || 'N/A')}</span>
+                        <span class="badge badge-color" style="padding: 1px 6px; font-size: 0.65rem; border-radius: 4px;">Color: ${escapeHTML(item.color || 'N/A')}</span>
                       </div>
                     </div>
                     <div style="background: #eff6ff; color: var(--accent); font-size: 1.15rem; font-weight: 900; width: 50px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 10px; border: 2px solid #dbeafe;">
@@ -1903,12 +1911,13 @@
                   ${escapeHTML(currentStatus)}
                 </span>
                 ${isDuplicate ? `
-                  <span class="badge" style="background: #fef2f2; color: #ef4444; border: 1px solid #fca5a5; padding: 2px 8px; font-size: 0.65rem; font-weight: 800; border-radius: 6px; display: inline-block; animation: pulse 2s infinite;">
-                    ⚠️ Duplicate (ডুপ্লিকেট)
+                  <span class="badge" style="background: #fef2f2; color: #ef4444; border: 1px solid #fca5a5; padding: 2px 8px; font-size: 0.65rem; font-weight: 800; border-radius: 6px; display: inline-flex; align-items: center; gap: 4px; animation: pulse 2s infinite;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    Duplicate (ডুপ্লিকেট)
                   </span>
                 ` : ''}
               </div>
-              <p>📞 ${escapeHTML(o.customer ? o.customer.phone : 'N/A')}</p>
+              <p>Phone: ${escapeHTML(o.customer ? o.customer.phone : 'N/A')}</p>
             </div>
             <div style="display:flex; align-items:center; gap:20px;">
               <div style="text-align:right;">
@@ -1939,7 +1948,7 @@
                             <div class="order-product-name">${escapeHTML(item.title)}</div>
                             <div class="order-product-meta">
                               <span class="badge ${item.edition && item.edition.includes('USA') ? 'badge-usa' : (item.edition && item.edition.includes('Dubai') ? 'badge-dubai' : 'badge-china')}" style="padding: 1px 6px; font-size: 0.65rem; border-radius: 4px;">${escapeHTML(item.edition || 'N/A')}</span>
-                              <span class="badge badge-color" style="padding: 1px 6px; font-size: 0.65rem; border-radius: 4px;">🎨 ${escapeHTML(getStandardColor(item.color))}</span>
+                              <span class="badge badge-color" style="padding: 1px 6px; font-size: 0.65rem; border-radius: 4px;">Color: ${escapeHTML(getStandardColor(item.color))}</span>
                             </div>
                             <div class="order-product-price">Qty: <b>${parseInt(item.qty) || 1}</b> • Price: ৳${escapeHTML(item.price)}</div>
                           </div>
@@ -1951,7 +1960,7 @@
                             <div class="order-product-name">${escapeHTML(o.order ? o.order.product : 'N/A')}</div>
                             <div class="order-product-meta" style="margin-top: 6px;">
                               <span class="badge ${varClass}" style="padding: 1px 6px; font-size: 0.65rem; border-radius: 4px;">${escapeHTML(o.order ? o.order.variation : 'Standard')}</span>
-                              <span class="badge badge-color" style="padding: 1px 6px; font-size: 0.65rem; border-radius: 4px; margin-left: 4px;">🎨 ${escapeHTML(getStandardColor(o.order ? o.order.color : ''))}</span>
+                              <span class="badge badge-color" style="padding: 1px 6px; font-size: 0.65rem; border-radius: 4px; margin-left: 4px;">Color: ${escapeHTML(getStandardColor(o.order ? o.order.color : ''))}</span>
                             </div>
                             <div class="order-product-price" style="margin-top: 6px;">Qty: <b>${o.order ? (parseInt(o.order.quantity) || 1) : 1}</b> • Price: ${escapeHTML(o.order ? o.order.subtotal : 'N/A')}</div>
                           </div>
@@ -1992,7 +2001,7 @@
                 <!-- Customer Admin Note Box -->
                 ${(o.customer && o.customer.note && o.customer.note.trim() !== '' && o.customer.note.toLowerCase() !== 'test') ? `
                   <div class="note-box">
-                    <span style="font-size: 1.1rem; line-height: 1;">📝</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #64748b; flex-shrink: 0; margin-top: 2px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                     <div>
                       <div style="font-weight: 800; font-size: 0.78rem; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 0.5px;">Customer Note:</div>
                       <div>${escapeHTML(o.customer.note)}</div>
@@ -2013,7 +2022,7 @@
                   </div>
                   
                   <div class="delivery-field">
-                    <div class="delivery-label">👤 Customer Name</div>
+                    <div class="delivery-label">Customer Name</div>
                     <div class="delivery-val-wrap">
                       <div class="delivery-value" id="text-name-${id}">${escapeHTML(o.customer ? o.customer.name : 'N/A')}</div>
                       <button class="copy-icon-btn" id="copy-name-${id}" onclick="window.copyToClipboard('${escapeAttr(o.customer ? o.customer.name : '')}', 'copy-name-${id}')" title="Copy Name">
@@ -2023,7 +2032,7 @@
                   </div>
                   
                   <div class="delivery-field">
-                    <div class="delivery-label">📞 Phone Number</div>
+                    <div class="delivery-label">Phone Number</div>
                     <div class="delivery-val-wrap">
                       <div class="delivery-value" id="text-phone-${id}" style="color: var(--accent);">${escapeHTML(o.customer ? o.customer.phone : 'N/A')}</div>
                       <button class="copy-icon-btn" id="copy-phone-${id}" onclick="window.copyToClipboard('${escapeAttr(o.customer ? o.customer.phone : '')}', 'copy-phone-${id}')" title="Copy Phone">
@@ -2034,7 +2043,7 @@
                   
                   ${o.customer && o.customer.email ? `
                     <div class="delivery-field">
-                      <div class="delivery-label">✉️ Email Address</div>
+                      <div class="delivery-label">Email Address</div>
                       <div class="delivery-val-wrap">
                         <div class="delivery-value" id="text-email-${id}" style="font-size: 0.85rem; word-break: break-all;">${escapeHTML(o.customer.email)}</div>
                         <button class="copy-icon-btn" id="copy-email-${id}" onclick="window.copyToClipboard('${escapeAttr(o.customer.email)}', 'copy-email-${id}')" title="Copy Email">
@@ -2045,7 +2054,7 @@
                   ` : ''}
                   
                   <div class="delivery-field">
-                    <div class="delivery-label">📍 Full Address</div>
+                    <div class="delivery-label">Full Address</div>
                     <div class="delivery-val-wrap" style="align-items: flex-start;">
                       <div class="delivery-value" style="font-size: 0.9rem;">
                         ${escapeHTML(o.customer ? o.customer.address : 'N/A')}
@@ -2058,20 +2067,20 @@
                   </div>
                   
                   <div class="delivery-field">
-                    <div class="delivery-label">🚚 Shipping Zone</div>
+                    <div class="delivery-label">Shipping Zone</div>
                     <div class="delivery-value" style="font-size: 0.88rem;">${escapeHTML(o.order ? o.order.shipping_area : '-')}</div>
                   </div>
                   
                   <div class="delivery-field">
-                    <div class="delivery-label">🗓️ Ordered At</div>
+                    <div class="delivery-label">Ordered At</div>
                     <div class="delivery-value" style="font-size: 0.85rem; color: #475569;">${escapeHTML(o.metadata ? o.metadata.date : '')}</div>
                   </div>
                   
                   ${(o.metadata && o.metadata.entryBy) ? `
                     <div class="delivery-field" style="background: #eff6ff; border: 1px dashed rgba(37, 99, 235, 0.25); padding: 10px; border-radius: 8px; margin-top: 8px;">
-                      <div class="delivery-label" style="color: var(--accent); font-weight: 800;">👤 Order Entered By</div>
+                      <div class="delivery-label" style="color: var(--accent); font-weight: 800;">Order Entered By</div>
                       <div class="delivery-value" style="font-size: 0.9rem; color: var(--accent); font-weight: 850; display: flex; align-items: center; gap: 4px; margin-top: 2px;">
-                        ✍️ ${escapeHTML(o.metadata.entryBy)} ${o.metadata.source ? `<span class="badge badge-dubai" style="padding: 1px 6px; font-size: 0.62rem; margin-left: 4px; display: inline-block;">${escapeHTML(o.metadata.source)}</span>` : ''}
+                        ${escapeHTML(o.metadata.entryBy)} ${o.metadata.source ? `<span class="badge badge-dubai" style="padding: 1px 6px; font-size: 0.62rem; margin-left: 4px; display: inline-block;">${escapeHTML(o.metadata.source)}</span>` : ''}
                       </div>
                     </div>
                   ` : ''}
@@ -2089,13 +2098,13 @@
                     Order Status Fulfillment
                   </div>
                   <select onchange="window.updateOrderStatus('${id}', this.value)" style="width: 100%; padding: 10px 14px; border: 2px solid #e2e8f0; border-radius: 10px; background: #ffffff; color: #1e293b; font-weight: 800; font-size: 0.88rem; cursor: pointer; outline: none; transition: all 0.2s;">
-                    <option value="New Order" ${currentStatus === 'New Order' ? 'selected' : ''}>⏳ New Order</option>
-                    <option value="Confirmed" ${currentStatus === 'Confirmed' ? 'selected' : ''}>✅ Confirmed</option>
-                    <option value="Packaging" ${currentStatus === 'Packaging' ? 'selected' : ''}>📦 Packaging</option>
-                    <option value="Shipped" ${currentStatus === 'Shipped' ? 'selected' : ''}>🚚 Shipped</option>
-                    <option value="Completed" ${currentStatus === 'Completed' ? 'selected' : ''}>🎉 Completed</option>
-                    <option value="Cancelled" ${currentStatus === 'Cancelled' ? 'selected' : ''}>❌ Cancelled</option>
-                    <option value="Returned" ${currentStatus === 'Returned' ? 'selected' : ''}>🔄 Returned</option>
+                    <option value="New Order" ${currentStatus === 'New Order' ? 'selected' : ''}>New Order</option>
+                    <option value="Confirmed" ${currentStatus === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+                    <option value="Packaging" ${currentStatus === 'Packaging' ? 'selected' : ''}>Packaging</option>
+                    <option value="Shipped" ${currentStatus === 'Shipped' ? 'selected' : ''}>Shipped</option>
+                    <option value="Completed" ${currentStatus === 'Completed' ? 'selected' : ''}>Completed</option>
+                    <option value="Cancelled" ${currentStatus === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                    <option value="Returned" ${currentStatus === 'Returned' ? 'selected' : ''}>Returned</option>
                   </select>
                 </div>
                 
