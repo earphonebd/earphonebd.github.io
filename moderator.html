@@ -1294,6 +1294,29 @@
             </button>
           </form>
         </div>
+
+        <!-- Emergency Cash Out Notice (Moved to Footer) -->
+        <div style="background: rgba(37, 99, 235, 0.03); border: 1px dashed rgba(37, 99, 235, 0.25); border-radius: 14px; padding: 14px 16px; margin-top: 20px; display: flex; align-items: flex-start; gap: 12px; transition: all 0.3s ease;">
+          <div style="color: #25D366; background: rgba(37, 211, 102, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; flex-shrink: 0; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.15);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.864-9.858.002-2.634-1.02-5.111-2.884-6.978C16.527 1.944 14.053.92 11.419.92c-5.442 0-9.866 4.418-9.87 9.856-.002 1.72.451 3.4 1.311 4.887L1.83 20.25l4.817-1.096zM17.472 14.382c-.32-.16-1.89-.933-2.185-1.043-.294-.11-.508-.16-.723.16-.215.32-.83.104-1.017.32-.188.215-.376.24-.696.08-.32-.16-1.353-.499-2.577-1.59-.953-.85-1.597-1.9-1.785-2.22-.188-.32-.02-.493.14-.653.144-.144.32-.376.48-.564.16-.188.213-.32.32-.533.11-.215.053-.4-.027-.56-.08-.16-.723-1.74-.99-2.388-.262-.63-.527-.54-.723-.55-.188-.01-.403-.01-.617-.01-.215 0-.563.08-.857.4-.294.32-1.123 1.1-1.123 2.68s1.152 3.11 1.312 3.32c.16.215 2.268 3.46 5.49 4.854.766.331 1.365.528 1.83.676.77.244 1.47.21 2.022.128.615-.093 1.89-.773 2.157-1.48.268-.707.268-1.313.188-1.439-.08-.125-.295-.2-.615-.36z"/>
+            </svg>
+          </div>
+          <div style="flex-grow: 1;">
+            <h4 style="margin: 0 0 6px 0; font-size: 0.85rem; font-weight: 850; color: var(--text-main); display: flex; align-items: center; gap: 6px; letter-spacing: 0.3px;">
+              ইমারজেন্সি ব্যালেন্স ক্যাশ আউট (Emergency Cash Out)
+            </h4>
+            <p style="margin: 0; font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; font-weight: 600;">
+              জরুরি ব্যালেন্স উত্তোলনের জন্য সরাসরি আমাদের অফিসিয়াল WhatsApp-এ যোগাযোগ করুন:
+            </p>
+            <a href="https://wa.me/8801788163380" target="_blank" 
+               onmouseover="this.style.background='rgba(37, 211, 102, 0.15)'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(37, 211, 102, 0.1)';" 
+               onmouseout="this.style.background='rgba(37, 211, 102, 0.08)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';"
+               style="color: #25D366; font-weight: 850; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; background: rgba(37, 211, 102, 0.08); padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(37, 211, 102, 0.25); font-size: 0.8rem; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: none; cursor: pointer;">
+              📲 +880 1788-163380
+            </a>
+          </div>
+        </div>
       </div>
 
       <!-- SECTION 3: Order History -->
@@ -1954,6 +1977,12 @@
 
     let unsubscribeOrders = null;
     let unsubscribePayouts = null;
+    let currentModeratorRole = 'moderator';
+    let currentCommissionRate = 20;
+    let currentAffiliateRate = 10;
+    let unsubscribeGlobalConfig = null;
+    let cachedCompletedProductsCount = 0;
+    let cachedCompletedRevenue = 0;
 
     // Load metrics and active entries
     function loadSessionData() {
@@ -1962,19 +1991,51 @@
       if (unsubscribeOrders) unsubscribeOrders();
       if (unsubscribePayouts) unsubscribePayouts();
       if (unsubscribeConfig) unsubscribeConfig();
+      if (unsubscribeGlobalConfig) unsubscribeGlobalConfig();
+
+      // Subscribe to global configurations in real-time
+      const globalConfigsRef = ref(db, 'global_configs');
+      unsubscribeGlobalConfig = onValue(globalConfigsRef, (snapshot) => {
+        const val = snapshot.val() || {};
+        currentCommissionRate = val.commission_rate !== undefined ? val.commission_rate : 20;
+        currentAffiliateRate = val.affiliate_rate !== undefined ? val.affiliate_rate : 10;
+        // Trigger recalculation if stats exist
+        if (cachedCompletedProductsCount !== undefined && cachedCompletedRevenue !== undefined) {
+          loadPayoutsAndRender(cachedCompletedProductsCount, cachedCompletedRevenue);
+        }
+      });
 
       // Subscribe to exclusion configs in real-time
       const configRef = ref(db, `moderator_configs/${currentModeratorName}`);
       unsubscribeConfig = onValue(configRef, (snapshot) => {
-        const configVal = snapshot.val();
-        isExcludedFromPayout = (configVal && configVal.excludeFromPayout) ? true : false;
+        const configVal = snapshot.val() || {};
+        let role = configVal.role;
+        if (!role) {
+          role = configVal.excludeFromPayout ? 'staff' : 'moderator';
+        }
+        isExcludedFromPayout = (role === 'staff');
+        currentModeratorRole = role;
         
         // Dynamic Role labeling & styling
-        const roleText = isExcludedFromPayout ? "Staff" : "Affiliate";
-        const badgeBg = isExcludedFromPayout ? "rgba(139, 92, 246, 0.15)" : "rgba(16, 185, 129, 0.15)";
-        const badgeColor = isExcludedFromPayout ? "#8b5cf6" : "#10b981";
-        const badgeBorder = isExcludedFromPayout ? "1px solid rgba(139, 92, 246, 0.25)" : "1px solid rgba(16, 185, 129, 0.25)";
-        const profBadgeBg = isExcludedFromPayout ? "#8b5cf6" : "#10b981";
+        let roleText = "Moderator";
+        let badgeBg = "rgba(59, 130, 246, 0.15)";
+        let badgeColor = "#2563eb";
+        let badgeBorder = "1px solid rgba(59, 130, 246, 0.25)";
+        let profBadgeBg = "#2563eb";
+
+        if (role === 'staff') {
+          roleText = "Staff";
+          badgeBg = "rgba(139, 92, 246, 0.15)";
+          badgeColor = "#8b5cf6";
+          badgeBorder = "1px solid rgba(139, 92, 246, 0.25)";
+          profBadgeBg = "#8b5cf6";
+        } else if (role === 'affiliate') {
+          roleText = "Affiliate";
+          badgeBg = "rgba(16, 185, 129, 0.15)";
+          badgeColor = "#10b981";
+          badgeBorder = "1px solid rgba(16, 185, 129, 0.25)";
+          profBadgeBg = "#10b981";
+        }
 
         const badge = document.getElementById("bar-mod-badge");
         if (badge) {
@@ -2014,7 +2075,7 @@
           if (bkashTypeField) bkashTypeField.value = "Personal";
         }
         
-        loadPayoutsAndRender(cachedCompletedProductsCount);
+        loadPayoutsAndRender(cachedCompletedProductsCount, cachedCompletedRevenue);
       });
 
       const ordersRef = ref(db, 'orders');
@@ -2031,6 +2092,7 @@
         let salesToday = 0;
         let completedOrdersCount = 0;
         let completedProductsCount = 0;
+        let completedRevenue = 0;
         const historyData = [];
 
         Object.keys(val).forEach(id => {
@@ -2060,6 +2122,9 @@
                 }
               }
               completedProductsCount += itemQty;
+              const totalBillVal = o.order ? o.order.total_price : '0';
+              const billAmount = parseInt(String(totalBillVal).replace(/[^\d]/g, '')) || 0;
+              completedRevenue += billAmount;
             }
 
             const ts = o.metadata ? (o.metadata.timestamp || 0) : 0;
@@ -2083,11 +2148,12 @@
 
         // Load payouts and render
         cachedCompletedProductsCount = completedProductsCount;
-        loadPayoutsAndRender(completedProductsCount);
+        cachedCompletedRevenue = completedRevenue;
+        loadPayoutsAndRender(completedProductsCount, completedRevenue);
       });
     }
 
-    function loadPayoutsAndRender(completedProductsCount) {
+    function loadPayoutsAndRender(completedProductsCount, completedRevenue = 0) {
       if (!currentModeratorName) return;
 
       if (unsubscribePayouts) unsubscribePayouts();
@@ -2106,10 +2172,16 @@
           });
         }
 
-        // Calculate values based on 20 TK per sale
-        const COMMISSION_RATE = 20;
-        const earned = isExcludedFromPayout ? 0 : (completedProductsCount * COMMISSION_RATE);
-        const outstanding = isExcludedFromPayout ? 0 : (earned - totalPaid);
+        // Calculate values based on active role
+        let earned = 0;
+        if (currentModeratorRole === 'staff') {
+          earned = 0;
+        } else if (currentModeratorRole === 'affiliate') {
+          earned = completedRevenue * (currentAffiliateRate / 100);
+        } else {
+          earned = completedProductsCount * currentCommissionRate;
+        }
+        const outstanding = (currentModeratorRole === 'staff') ? 0 : (earned - totalPaid);
 
         // Render to UI elements
         document.getElementById("payout-stat-delivered").textContent = completedProductsCount;
@@ -2125,7 +2197,7 @@
         const balanceCard = document.getElementById("payout-stat-balance-card");
         const balanceLabel = document.getElementById("payout-stat-balance-label");
 
-        if (isExcludedFromPayout) {
+        if (currentModeratorRole === 'staff') {
           // Purple glassmorphic styling for Staff
           if (earnedCard) {
             earnedCard.style.background = "rgba(139, 92, 246, 0.08)";
@@ -2147,14 +2219,43 @@
           if (balanceField) {
             balanceField.style.color = "#8b5cf6";
           }
+        } else if (currentModeratorRole === 'affiliate') {
+          // Light Blue/Teal styling for Affiliate
+          if (earnedCard) {
+            earnedCard.style.background = "rgba(37, 99, 235, 0.06)";
+            earnedCard.style.borderColor = "rgba(37, 99, 235, 0.15)";
+          }
+          if (earnedLabel) {
+            earnedLabel.textContent = `Earned Affiliate Commission (${currentAffiliateRate}%)`;
+          }
+          if (earnedField) {
+            earnedField.style.color = "var(--accent)";
+          }
+          if (balanceLabel) {
+            balanceLabel.textContent = "Pending Affiliate Balance";
+          }
+
+          if (outstanding <= 0) {
+            balanceField.style.color = "var(--success)";
+            if (balanceCard) {
+              balanceCard.style.background = "var(--success-light)";
+              balanceCard.style.borderColor = "rgba(16, 185, 129, 0.15)";
+            }
+          } else {
+            balanceField.style.color = "var(--warning)";
+            if (balanceCard) {
+              balanceCard.style.background = "var(--warning-light)";
+              balanceCard.style.borderColor = "rgba(245, 158, 11, 0.15)";
+            }
+          }
         } else {
-          // Standard styling
+          // Standard styling for Moderator
           if (earnedCard) {
             earnedCard.style.background = "var(--success-light)";
             earnedCard.style.borderColor = "rgba(16, 185, 129, 0.15)";
           }
           if (earnedLabel) {
-            earnedLabel.textContent = "Earned Commission";
+            earnedLabel.textContent = "Earned Moderator Commission";
           }
           if (earnedField) {
             earnedField.style.color = "var(--success)";

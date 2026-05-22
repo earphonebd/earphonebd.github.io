@@ -3,6 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function() {
+      if (sessionStorage.getItem('admin_authenticated') === 'true') return;
+      const urlParams = new URLSearchParams(window.location.search);
+      const sec = urlParams.get('sec');
+      function hash(s) {
+        let h = 0;
+        for (let i = 0; i < s.length; i++) {
+          h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
+        }
+        return h;
+      }
+      if (!sec || hash(sec) !== -333185469) {
+        window.location.replace('index.html');
+      }
+    })();
+  </script>
   <title>Moderator Performance & Payouts | Earphone BD Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -326,6 +343,7 @@
     .badge-partial { background: var(--warning-light); color: var(--warning); border-color: rgba(245, 158, 11, 0.15); }
     .badge-unpaid { background: var(--danger-light); color: var(--danger); border-color: rgba(239, 68, 68, 0.15); }
     .badge-staff { background: var(--purple-light); color: var(--purple); border-color: rgba(139, 92, 246, 0.15); }
+    .badge-affiliate { background: #eff6ff; color: #2563eb; border-color: rgba(37, 99, 235, 0.15); }
 
     .select-wrapper {
       border: 1.5px solid transparent;
@@ -915,6 +933,8 @@
           <select id="status-filter" onchange="calculateAndRender()" style="border: none; background: transparent; outline: none; font-family: inherit; font-size: 0.88rem; font-weight: 750; color: var(--text-main); cursor: pointer; padding: 4px 0;">
             <option value="all">All Statuses (সব)</option>
             <option value="active">Active (সক্রিয় মডারেটর)</option>
+            <option value="moderator">Moderators (মডারেটর)</option>
+            <option value="affiliate">Affiliates (অ্যাফিলিয়েট)</option>
             <option value="unpaid">Unpaid (অ পরিশোধিত)</option>
             <option value="partial">Partially Paid (আংশিক পরিশোধিত)</option>
             <option value="paid">Paid (পরিশোধিত)</option>
@@ -939,6 +959,10 @@
         <div class="config-box">
           <label for="commission-rate">৳ Commission Rate / Product Pcs:</label>
           <input type="number" id="commission-rate" value="20" min="0" oninput="changeCommissionRate(this.value)">
+        </div>
+        <div class="config-box">
+          <label for="affiliate-rate">% Affiliate Rate (Percentage):</label>
+          <input type="number" id="affiliate-rate" value="10" min="0" max="100" oninput="changeAffiliateRate(this.value)">
         </div>
       </div>
 
@@ -1118,6 +1142,7 @@
     let cachedPayouts = {};
     let cachedConfigs = {};
     let currentCommissionRate = 20;
+    let currentAffiliateRate = 10;
 
     // Date filter state
     let currentDateFilter = 'all';
@@ -1381,15 +1406,34 @@
         cachedConfigs = snapshot.val() || {};
         calculateAndRender();
       });
+
+      // Listen to global configurations
+      const globalConfigsRef = ref(db, 'global_configs');
+      onValue(globalConfigsRef, (snapshot) => {
+        const val = snapshot.val() || {};
+        if (val.commission_rate !== undefined) {
+          currentCommissionRate = parseFloat(val.commission_rate) || 20;
+          const commEl = document.getElementById('commission-rate');
+          if (commEl) commEl.value = currentCommissionRate;
+        }
+        if (val.affiliate_rate !== undefined) {
+          currentAffiliateRate = parseFloat(val.affiliate_rate) || 10;
+          const affEl = document.getElementById('affiliate-rate');
+          if (affEl) affEl.value = currentAffiliateRate;
+        }
+        calculateAndRender();
+      });
     }
 
-    // --- Toggle Moderator Exclusion ---
-    window.toggleModeratorExclusion = (name, isExcluded) => {
+    // --- Change Moderator Role ---
+    window.changeModeratorRole = (name, role) => {
+      const isExcluded = (role === 'staff');
       update(ref(db, `moderator_configs/${name}`), {
+        role: role,
         excludeFromPayout: isExcluded
       })
       .catch(err => {
-        alert('Failed to update moderator configs: ' + err.message);
+        alert('Failed to update moderator role: ' + err.message);
       });
     };
 
@@ -1399,6 +1443,27 @@
       if (isNaN(rate) || rate < 0) return;
       currentCommissionRate = rate;
       localStorage.setItem('global_commission_rate', rate);
+      update(ref(db, 'global_configs'), {
+        commission_rate: rate
+      })
+      .catch(err => {
+        console.error('Failed to sync commission rate to database: ', err);
+      });
+      calculateAndRender();
+    };
+
+    // --- Change affiliate rate dynamically ---
+    window.changeAffiliateRate = (val) => {
+      const rate = parseFloat(val);
+      if (isNaN(rate) || rate < 0 || rate > 100) return;
+      currentAffiliateRate = rate;
+      localStorage.setItem('global_affiliate_rate', rate);
+      update(ref(db, 'global_configs'), {
+        affiliate_rate: rate
+      })
+      .catch(err => {
+        console.error('Failed to sync affiliate rate to database: ', err);
+      });
       calculateAndRender();
     };
 
@@ -1527,21 +1592,26 @@
         });
 
         // Config checks
-        const excludeFromPayout = (cachedConfigs[modName] && cachedConfigs[modName].excludeFromPayout) ? true : false;
+        const config = cachedConfigs[modName] || {};
+        let role = config.role;
+        if (!role) {
+          role = config.excludeFromPayout ? 'staff' : 'moderator';
+        }
+        const excludeFromPayout = (role === 'staff');
 
         // Calculations
         const successDenominator = stats.totalSaved - stats.cancelled - stats.returned;
         const successRate = successDenominator > 0 ? (stats.completed / successDenominator) * 100 : 0;
         
-        const earned = excludeFromPayout ? 0 : (stats.completedProducts * currentCommissionRate);
-        const balance = excludeFromPayout ? 0 : (earned - paidAmount);
+        const earned = (role === 'staff') ? 0 : ((role === 'affiliate') ? (stats.revenue * (currentAffiliateRate / 100)) : (stats.completedProducts * currentCommissionRate));
+        const balance = (role === 'staff') ? 0 : (earned - paidAmount);
 
-        if (!excludeFromPayout) {
+        if (role !== 'staff') {
           totalOrders += stats.totalSaved;
           totalCompleted += stats.completed;
         }
         globalEarned += earned;
-        globalPaid += excludeFromPayout ? 0 : paidAmount;
+        globalPaid += (role === 'staff') ? 0 : paidAmount;
         globalOutstanding += balance;
 
         moderatorsList.push({
@@ -1555,6 +1625,7 @@
           paid: paidAmount,
           balance: balance,
           excludeFromPayout: excludeFromPayout,
+          role: role,
           ordersList: stats.ordersList
         });
       });
@@ -1597,6 +1668,10 @@
           return true;
         } else if (statusFilter === 'active') {
           return !m.excludeFromPayout;
+        } else if (statusFilter === 'moderator') {
+          return m.role === 'moderator';
+        } else if (statusFilter === 'affiliate') {
+          return m.role === 'affiliate';
         } else if (statusFilter === 'staff') {
           return m.excludeFromPayout;
         } else if (statusFilter === 'paid') {
@@ -1684,10 +1759,14 @@
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 <span>${escapeHTML(m.name)}</span>
               </div>
-              <label style="display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--text-muted); cursor: pointer; margin-top: 4px; user-select: none; font-weight: 700;">
-                <input type="checkbox" onchange="toggleModeratorExclusion('${escapeAttr(m.name)}', this.checked)" ${m.excludeFromPayout ? 'checked' : ''} style="cursor: pointer; width: 14px; height: 14px; accent-color: var(--purple); margin: 0;">
-                Staff
-              </label>
+              <div style="display: flex; align-items: center; gap: 6px; margin-top: 4px;">
+                <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 800;">Role:</span>
+                <select onchange="changeModeratorRole('${escapeAttr(m.name)}', this.value)" style="padding: 2px 6px; border-radius: 6px; border: 1.5px solid #cbd5e1; font-size: 0.75rem; font-weight: 800; color: var(--text-main); background: #f8fafc; cursor: pointer; outline: none; transition: all 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='#cbd5e1'">
+                  <option value="moderator" ${m.role === 'moderator' ? 'selected' : ''}>Moderator</option>
+                  <option value="affiliate" ${m.role === 'affiliate' ? 'selected' : ''}>Affiliate</option>
+                  <option value="staff" ${m.role === 'staff' ? 'selected' : ''}>Staff</option>
+                </select>
+              </div>
               ${bkashBadgeHTML}
             </div>
           </td>
@@ -1702,7 +1781,13 @@
           </td>
           <td><b>৳${m.revenue.toLocaleString()}</b></td>
           <td style="color: var(--accent); font-weight:800;">
-            ${m.excludeFromPayout ? '<span style="color: var(--text-muted); font-size: 0.82rem; font-weight: 700; text-decoration: line-through;">৳' + (m.completedProducts * currentCommissionRate).toLocaleString() + '</span> <span style="font-size:0.85rem; color:var(--purple);">৳0</span>' : '৳' + m.earned.toLocaleString(undefined, { maximumFractionDigits: 1 })}
+            ${m.role === 'staff' ? 
+              `<span style="color: var(--text-muted); font-size: 0.82rem; font-weight: 700; text-decoration: line-through;">৳${(m.completedProducts * currentCommissionRate).toLocaleString(undefined, {maximumFractionDigits: 1})}</span> <span style="font-size:0.85rem; color:var(--purple);">৳0</span>` : 
+              (m.role === 'affiliate' ? 
+                `৳${m.earned.toLocaleString(undefined, {maximumFractionDigits: 1})} <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; margin-top: 2px;">(${currentAffiliateRate}% of Sales)</div>` : 
+                `৳${m.earned.toLocaleString(undefined, {maximumFractionDigits: 1})} <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; margin-top: 2px;">(৳${currentCommissionRate}/pcs)</div>`
+              )
+            }
           </td>
           <td style="color: var(--success); font-weight:800;">৳${m.paid.toLocaleString(undefined, { maximumFractionDigits: 1 })}</td>
           <td style="color: ${m.excludeFromPayout ? 'var(--text-muted)' : (m.balance > 0 ? 'var(--warning)' : 'var(--text-muted)')}; font-weight:900; font-size:1.05rem;">
@@ -1807,17 +1892,28 @@
           }
         });
 
-        const excludeFromPayout = (cachedConfigs[name] && cachedConfigs[name].excludeFromPayout) ? true : false;
+        const config = cachedConfigs[name] || {};
+        let role = config.role;
+        if (!role) {
+          role = config.excludeFromPayout ? 'staff' : 'moderator';
+        }
+        const excludeFromPayout = (role === 'staff');
 
         const successDenominator = stats.total - stats.cancelled - stats.returned;
         const successRate = successDenominator > 0 ? (stats.completed / successDenominator) * 100 : 0;
-        const earned = excludeFromPayout ? 0 : (stats.completedProducts * currentCommissionRate);
-        const balance = excludeFromPayout ? 0 : (earned - paid);
+        const earned = (role === 'staff') ? 0 : ((role === 'affiliate') ? (stats.revenue * (currentAffiliateRate / 100)) : (stats.completedProducts * currentCommissionRate));
+        const balance = (role === 'staff') ? 0 : (earned - paid);
 
         let statusText = 'UNPAID';
-        if (excludeFromPayout) statusText = 'STAFF (NO COMMISSION)';
-        else if (balance <= 0) statusText = 'PAID';
-        else if (paid > 0) statusText = 'PARTIALLY PAID';
+        if (role === 'staff') statusText = 'STAFF (NO COMMISSION)';
+        else if (role === 'affiliate') {
+          if (balance <= 0) statusText = `PAID (AFFILIATE ${currentAffiliateRate}%)`;
+          else if (paid > 0) statusText = `PARTIALLY PAID (AFFILIATE ${currentAffiliateRate}%)`;
+          else statusText = `UNPAID (AFFILIATE ${currentAffiliateRate}%)`;
+        } else {
+          if (balance <= 0) statusText = 'PAID';
+          else if (paid > 0) statusText = 'PARTIALLY PAID';
+        }
 
         csv += `"${name.replace(/"/g, '""')}",${stats.total},${stats.completed},${stats.completedProducts},${stats.cancelled},${stats.returned},${successRate.toFixed(1)}%,${stats.revenue},${earned},${paid},${balance},"${statusText}"\n`;
       });

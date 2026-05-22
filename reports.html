@@ -3,6 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function() {
+      if (sessionStorage.getItem('admin_authenticated') === 'true') return;
+      const urlParams = new URLSearchParams(window.location.search);
+      const sec = urlParams.get('sec');
+      function hash(s) {
+        let h = 0;
+        for (let i = 0; i < s.length; i++) {
+          h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
+        }
+        return h;
+      }
+      if (!sec || hash(sec) !== -333185469) {
+        window.location.replace('index.html');
+      }
+    })();
+  </script>
   <title>Reports & Analytics | Earphone BD Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
