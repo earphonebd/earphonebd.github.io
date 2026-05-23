@@ -1290,7 +1290,7 @@
               </select>
             </div>
             <button type="submit" class="btn-submit" style="background: #e2136e; box-shadow: 0 4px 15px rgba(226, 19, 110, 0.2); position: static;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2%202%200%200%201-2-2V5a2%202%200%200%201%202-2h11l5%205v11a2%202%200%200%201-2%202z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
               <span>Save bKash Settings (সেভ করুন)</span>
             </button>
           </form>
@@ -1516,6 +1516,27 @@
 
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
+
+    // Expose authentication actions globally for button clicks
+    window.signInWithGoogle = () => {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          showNotification("Successfully logged in!");
+        })
+        .catch(err => {
+          alert("Login error: " + err.message);
+        });
+    };
+
+    window.signOutModerator = () => {
+      signOut(auth)
+        .then(() => {
+          showNotification("Successfully signed out!");
+        })
+        .catch(err => {
+          alert("Logout error: " + err.message);
+        });
+    };
 
     // 2. Initialize Page
     document.addEventListener("DOMContentLoaded", () => {
@@ -1982,7 +2003,7 @@
     let currentCommissionRate = 20;
     let currentAffiliateRate = 10;
     let unsubscribeGlobalConfig = null;
-    let cachedCompletedProductsCount = 0;
+    cachedCompletedProductsCount = 0;
     let cachedCompletedRevenue = 0;
 
     // Load metrics and active entries
@@ -2004,15 +2025,22 @@
         if (cachedCompletedProductsCount !== undefined && cachedCompletedRevenue !== undefined) {
           loadPayoutsAndRender(cachedCompletedProductsCount, cachedCompletedRevenue);
         }
+      }, (err) => {
+        console.warn("Permission denied reading global_configs:", err);
       });
 
       // Subscribe to exclusion configs in real-time
       const configRef = ref(db, `moderator_configs/${currentModeratorName}`);
       unsubscribeConfig = onValue(configRef, (snapshot) => {
-        const configVal = snapshot.val() || {};
-        let role = configVal.role;
+        const configVal = snapshot.val();
+        
+        // Anyone who successfully signs in via Google can work as a moderator by default.
+        // Specific roles (staff, affiliate, etc.) can still be configured in the database.
+
+        const activeConfig = configVal || {};
+        let role = activeConfig.role;
         if (!role) {
-          role = configVal.excludeFromPayout ? 'staff' : 'moderator';
+          role = activeConfig.excludeFromPayout ? 'staff' : 'moderator';
         }
         isExcludedFromPayout = (role === 'staff');
         currentModeratorRole = role;
@@ -2077,6 +2105,8 @@
         }
         
         loadPayoutsAndRender(cachedCompletedProductsCount, cachedCompletedRevenue);
+      }, (err) => {
+        console.warn("Permission denied reading moderator configs:", err);
       });
 
       const ordersRef = ref(db, 'orders');
@@ -2151,6 +2181,8 @@
         cachedCompletedProductsCount = completedProductsCount;
         cachedCompletedRevenue = completedRevenue;
         loadPayoutsAndRender(completedProductsCount, completedRevenue);
+      }, (err) => {
+        console.warn("Permission denied reading orders:", err);
       });
     }
 

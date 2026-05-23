@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function() {
+      if (sessionStorage.getItem('admin_authenticated') === 'true') return;
+      const urlParams = new URLSearchParams(window.location.search);
+      const sec = urlParams.get('sec');
+      function hash(s) {
+        let h = 0;
+        for (let i = 0; i < s.length; i++) {
+          h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
+        }
+        return h;
+      }
+      if (!sec || hash(sec) !== -333185469) {
+        window.location.replace('index.html');
+      }
+    })();
+  </script>
+  <title>Manage Products | Earphone BD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent: #2563eb;
+      --accent-light: #eff6ff;
+      --accent-hover: #1d4ed8;
+      --success: #10b981;
+      --success-light: #ecfdf5;
+      --warning: #f59e0b;
+      --warning-light: #fffbeb;
+      --danger: #ef4444;
+      --danger-light: #fef2f2;
+      --purple: #8b5cf6;
+      --purple-light: #f5f3ff;
+      --border-color: #e2e8f0;
+      --border-focus: #3b82f6;
+    }
+    body {
+      background: var(--bg);
+      background-image: radial-gradient(circle at top right, rgba(37, 99, 235, 0.03), transparent 450px),
+                        radial-gradient(circle at bottom left, rgba(124, 58, 237, 0.02), transparent 450px);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    h1, h2, h3, h4, .font-heading { font-family: 'Outfit', sans-serif; }
+    .admin-container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+    .header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px; }
+    .nav-tabs {
+      display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid var(--border-color);
+      padding-bottom: 12px; flex-wrap: wrap;
+    }
+    .nav-tab {
+      text-decoration: none; font-weight: 700; font-size: 0.95rem; color: var(--text-muted);
+      padding: 10px 20px; border-radius: 12px; display: flex; align-items: center; gap: 8px; transition: all 0.2s;
+    }
+    .nav-tab:hover { color: var(--accent); background: var(--accent-light); }
+    .nav-tab.active { font-weight: 800; color: var(--accent); background: var(--accent-light); }
+    
+    #login-overlay {
+      position: fixed; inset: 0; background: #fff; z-index: 10000; display: flex;
+      align-items: center; justify-content: center; background-image: radial-gradient(circle at center, rgba(37, 99, 235, 0.04), transparent 500px);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.03), 0 0 0 1px rgba(15, 23, 42, 0.04);
+      border: 1px solid rgba(241, 245, 249, 0.8);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.05); }
+
+    .product-img {
+      width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 15px; border: 1px solid #e2e8f0; background: #f8fafc;
+    }
+    .product-title { font-size: 1.25rem; font-weight: 800; margin: 0 0 5px 0; color: var(--text-main); }
+    .product-price { font-size: 1.1rem; color: var(--accent); font-weight: 700; margin: 0 0 10px 0; }
+    
+    .badge {
+      display: inline-block; padding: 4px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: 700;
+      background: var(--accent-light); color: var(--accent); margin-right: 5px; margin-bottom: 10px;
+    }
+
+    .btn {
+      padding: 10px 16px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; border: none; cursor: pointer; transition: all 0.2s;
+      display: inline-flex; align-items: center; gap: 8px; font-family: inherit;
+    }
+    .btn-primary { background: var(--accent); color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15); }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-outline { background: white; border: 1px solid #e2e8f0; color: var(--text-main); }
+    .btn-outline:hover { border-color: #cbd5e1; background: #f8fafc; }
+    .btn-danger { background: var(--danger-light); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.15); }
+    .btn-danger:hover { background: var(--danger); color: white; }
+
+    /* Modal Styles */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); z-index: 10000;
+      align-items: center; justify-content: center; backdrop-filter: blur(4px); padding: 20px; overflow-y: auto;
+    }
+    .modal-content {
+      background: white; width: 100%; max-width: 600px; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      display: flex; flex-direction: column; overflow: hidden; margin: auto;
+    }
+    .modal-header { padding: 20px 24px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; }
+    .modal-body { padding: 24px; overflow-y: auto; max-height: 70vh; }
+    .modal-footer { padding: 16px 24px; border-top: 1px solid #f1f5f9; background: #f8fafc; display: flex; justify-content: flex-end; gap: 12px; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; }
+    .form-control {
+      width: 100%; padding: 12px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 0.95rem;
+      font-weight: 500; font-family: inherit; color: var(--text-main); box-sizing: border-box; transition: all 0.2s;
+    }
+    .form-control:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+  </style>
+</head>
+<body>
+  <div id="login-overlay">
+    <div style="background: white; padding: 40px; border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); width: 100%; max-width: 380px; text-align: center; border: 1px solid #f1f5f9;">
+      <h2 style="font-weight: 900; margin-bottom: 10px; color: #1e293b;">Earphone BD</h2>
+      <p style="color: #64748b; margin-bottom: 30px; font-size: 0.95rem;">Secure Admin Portal</p>
+      <div id="admin-login-error" style="display: none; background: #fef2f2; color: #ef4444; border: 1px solid #fca5a5; padding: 12px; border-radius: 12px; font-size: 0.88rem; font-weight: 600; margin-bottom: 20px;">
+        Access Denied.
+      </div>
+      <button onclick="window.signInWithGoogle()" style="display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; background: white; color: #1e293b; border: 2px solid #e2e8f0; padding: 15px; border-radius: 15px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+        Sign in with Google
+      </button>
+    </div>
+  </div>
+
+  <div class="admin-container">
+    <div class="header-flex">
+      <div>
+        <h1 style="font-weight: 900; font-size: 2rem; margin: 0; color: #1e293b;">Manage <span style="color: var(--accent);">Products</span></h1>
+        <p style="color: #94a3b8; font-weight: 600; margin-top: 5px;">Add, edit and manage website products</p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button onclick="window.openProductModal()" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          Add New Product
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs" id="admin-nav-tabs">
+      <a href="admin.html" class="nav-tab">Orders Dashboard</a>
+      <a href="reports.html" class="nav-tab">Reports & Analytics</a>
+      <a href="cashbook.html" class="nav-tab">Cash Book</a>
+      <a href="moderators.html" class="nav-tab">Manage Payouts</a>
+      <a href="admin-products.html" class="nav-tab active">Manage Products</a>
+      <button onclick="window.adminSignOut()" class="nav-tab" style="background: none; border: none; color: #ef4444; margin-left: auto; cursor: pointer;">Sign Out</button>
+    </div>
+
+    <div id="seed-container" style="display: none; background: #fffbeb; border: 1px solid #fcd34d; padding: 20px; border-radius: 16px; margin-bottom: 25px; text-align: center;">
+      <h3 style="color: #b45309; margin: 0 0 10px 0;">No Products Found!</h3>
+      <p style="color: #92400e; margin: 0 0 15px 0;">It looks like the product database is empty. Would you like to seed it with the default products from script.js?</p>
+      <button onclick="window.seedInitialProducts()" class="btn btn-primary">Seed Database</button>
+    </div>
+
+    <div id="products-list" class="product-grid">
+      <p style="text-align: center; color: #64748b; padding: 40px; grid-column: 1 / -1;">Loading products...</p>
+    </div>
+  </div>
+
+  <!-- Product Modal -->
+  <div id="product-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="product-modal-title" style="margin: 0; font-size: 1.25rem; font-weight: 850; color: #1e293b;">Add Product</h3>
+        <button onclick="window.closeProductModal()" style="background: none; border: none; font-size: 1.5rem; color: #94a3b8; cursor: pointer;">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="product-form" onsubmit="window.saveProduct(event)">
+          <!-- We use originalId to track renames of the key -->
+          <input type="hidden" id="original-product-id">
+          
+          <div class="form-group">
+            <label>Product ID (e.g. p1_white, p5_black) *</label>
+            <input type="text" id="product-id" class="form-control" required placeholder="Must be unique">
+          </div>
+          
+          <div class="form-group">
+            <label>Title *</label>
+            <input type="text" id="product-title" class="form-control" required placeholder="e.g. AirPods Pro 2nd">
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div class="form-group">
+              <label>Sale Price (e.g. 550 TK) *</label>
+              <input type="text" id="product-price" class="form-control" required placeholder="550 TK">
+            </div>
+            <div class="form-group">
+              <label>Regular Price (e.g. 950 TK)</label>
+              <input type="text" id="product-regular-price" class="form-control" placeholder="950 TK">
+            </div>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div class="form-group">
+              <label>Discount Tag (e.g. 42% OFF)</label>
+              <input type="text" id="product-discount" class="form-control" placeholder="42% OFF">
+            </div>
+            <div class="form-group">
+              <label>Image URL *</label>
+              <input type="text" id="product-image" class="form-control" required placeholder="assets/image.png">
+            </div>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div class="form-group">
+              <label>Edition</label>
+              <input type="text" id="product-edition" class="form-control" placeholder="Dubai Edition">
+            </div>
+            <div class="form-group">
+              <label>Color</label>
+              <input type="text" id="product-color" class="form-control" placeholder="Classic White">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Features (comma separated)</label>
+            <textarea id="product-features" class="form-control" rows="3" placeholder="Feature 1, Feature 2, Feature 3"></textarea>
+          </div>
+          
+          <button type="submit" id="hidden-submit" style="display:none"></button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="window.closeProductModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('hidden-submit').click()">Save Product</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+    import { getDatabase, ref, onValue, set, remove, get } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAdE8jMo0ZNqkK-JSERuY88i0cxAOlkA3w",
+      authDomain: "earphone-bd.firebaseapp.com",
+      projectId: "earphone-bd",
+      storageBucket: "earphone-bd.firebasestorage.app",
+      messagingSenderId: "561559779888",
+      appId: "1:561559779888:web:e135f613c914ad4ac4cbf5",
+      databaseURL: "https://earphone-bd-default-rtdb.asia-southeast1.firebasedatabase.app"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth(app);
+    
+    let currentProducts = {};
+
+    window.signInWithGoogle = () => {
+      signInWithPopup(auth, new GoogleAuthProvider()).catch(err => {
+        const errDiv = document.getElementById('admin-login-error');
+        errDiv.innerText = err.message;
+        errDiv.style.display = 'block';
+      });
+    };
+
+    window.adminSignOut = () => {
+      signOut(auth).then(() => {
+        sessionStorage.removeItem('admin_authenticated');
+        window.location.reload();
+      });
+    };
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Simple authorization check based on admin emails if available, else just login
+        sessionStorage.setItem('admin_authenticated', 'true');
+        document.getElementById('login-overlay').style.display = 'none';
+        loadProducts();
+      } else {
+        document.getElementById('login-overlay').style.display = 'flex';
+      }
+    });
+
+    const escapeHTML = (str) => {
+      if (str === null || str === undefined) return '';
+      if (typeof str !== 'string') return String(str);
+      return str.replace(/[&<>"']/g, (match) => {
+        const entityMap = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#x27;' };
+        return entityMap[match];
+      });
+    };
+
+    function loadProducts() {
+      const productsRef = ref(db, 'products');
+      onValue(productsRef, (snapshot) => {
+        const data = snapshot.val();
+        const container = document.getElementById('products-list');
+        const seedContainer = document.getElementById('seed-container');
+        
+        container.innerHTML = '';
+        currentProducts = data || {};
+        
+        if (!data || Object.keys(data).length === 0) {
+          seedContainer.style.display = 'block';
+          container.innerHTML = '<p style="text-align: center; color: #64748b; padding: 40px; grid-column: 1 / -1;">No products found.</p>';
+          return;
+        } else {
+          seedContainer.style.display = 'none';
+        }
+
+        for (const [id, prod] of Object.entries(data)) {
+          container.innerHTML += `
+            <div class="product-card">
+              <img src="${escapeHTML(prod.image)}" class="product-img" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+              <h3 class="product-title">${escapeHTML(prod.title)}</h3>
+              <p class="product-price">${escapeHTML(prod.price)} <span style="font-size: 0.8rem; color: var(--text-muted); text-decoration: line-through;">${escapeHTML(prod.regularPrice || '')}</span></p>
+              <div>
+                <span class="badge">${escapeHTML(prod.edition || 'No Edition')}</span>
+                <span class="badge" style="background: var(--purple-light); color: var(--purple);">${escapeHTML(prod.color || 'No Color')}</span>
+                <span class="badge" style="background: var(--warning-light); color: var(--warning);">${escapeHTML(id)}</span>
+              </div>
+              <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button onclick="window.editProduct('${escapeHTML(id)}')" class="btn btn-outline" style="flex: 1; justify-content: center;">Edit</button>
+                <button onclick="window.deleteProduct('${escapeHTML(id)}')" class="btn btn-danger" style="justify-content: center;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                </button>
+              </div>
+            </div>
+          `;
+        }
+      });
+    }
+
+    window.seedInitialProducts = () => {
+      if(!confirm("This will write the hardcoded products into Firebase. Are you sure?")) return;
+      
+      const initialProducts = {
+        'p1_white': { title: 'AirPods Pro 2nd', price: '550 TK', regularPrice: '950 TK', discount: '42% OFF', image: 'assets/airpod_pro_2nd_generation_dubai_white.png', edition: 'Dubai Edition', color: 'Classic White', features: ['এডিশন: দুবাই', 'কালার: ক্লাসিক হোয়াইট', 'টাচ কন্ট্রোল ও প্রিমিয়াম লুক', 'দারুণ সাউন্ড কোয়ালিটি', 'ক্লিয়ার মাইক ও হাই বেস', 'ব্যাটারি: 3.5-4 ঘণ্টা', 'কেস চার্জ: 4 বার'] },
+        'p1_black': { title: 'AirPods Pro 2nd', price: '600 TK', regularPrice: '1,050 TK', discount: '43% OFF', image: 'assets/airpod_pro_2nd_generation_dubai_black.png', edition: 'Dubai Edition', color: 'Classic Black', features: ['এডিশন: দুবাই', 'কালার: ম্যাট ব্ল্যাক', 'টাচ কন্ট্রোল ও প্রিমিয়াম লুক', 'দারুণ সাউন্ড কোয়ালিটি', 'ক্লিয়ার মাইক ও হাই বেস', 'ব্যাটারি: 3.5-4 ঘণ্টা', 'কেস চার্জ: 4 বার'] },
+        'p2_white': { title: 'AirPods Pro 2nd', price: '400 TK', regularPrice: '650 TK', discount: '38% OFF', image: 'assets/airpod_pro_2nd_generation_china_white.png', edition: 'China Edition', color: 'Classic White', features: ['এডিশন: চায়না', 'কালার: ক্লাসিক হোয়াইট', 'টাচ কন্ট্রোল ও স্টাইলিশ লুক', 'ভালো সাউন্ড ও বাজেট ফ্রেন্ডলি', 'ব্যাটারি: 2.5-3 ঘণ্টা', 'কেস চার্জ: 4 বার'] },
+        'p2_black': { title: 'AirPods Pro 2nd', price: '450 TK', regularPrice: '750 TK', discount: '40% OFF', image: 'assets/airpod_pro_2nd_generation_china_black.png', edition: 'China Edition', color: 'Classic Black', features: ['এডিশন: চায়না', 'কালার: ম্যাট ব্ল্যাক', 'টাচ কন্ট্রোল ও স্টাইলিশ লুক', 'ভালো সাউন্ড ও বাজেট ফ্রেন্ডলি', 'ব্যাটারি: 2.5-3 ঘণ্টা', 'কেস চার্জ: 4 বার'] },
+        'p3': { title: 'AirPods Pro 2nd ANC', price: '1,200 TK', regularPrice: '1,850 TK', discount: '35% OFF', image: 'assets/airpod_pro_2nd_generation_premium_anc.png', edition: 'USA Premium ANC', color: 'Classic White', features: ['এডিশন: USA', 'কালার: ক্লাসিক হোয়াইট', 'নয়েজ ক্যান্সেলেশন (ANC)', 'টাচ কন্ট্রোল ও হাই বেস', 'বেটার মাইক ও ডিপ বেস', 'ব্যাটারি: 4-5 ঘণ্টা', 'কেস চার্জ: 4 বার', '1 বছরের সার্ভিস ওয়ারেন্টি'] },
+        'p4': { title: 'AirPods Pro 3rd ANC', price: '2,000 TK', regularPrice: '2,950 TK', discount: '32% OFF', image: 'assets/airpod_pro_3rd_generation_premium_anc.png', edition: 'Dubai Premium ANC', color: 'Classic White', features: ['এডিশন: দুবাই', 'কালার: ক্লাসিক হোয়াইট', 'নয়েজ ক্যান্সেলেশন (ANC)', 'টাচ কন্ট্রোল ও হাই বেস', 'বেস্ট কল কোয়ালিটি ও ডিপ বেস', 'ব্যাটারি: 5-6 ঘণ্টা', 'কেস চার্জ: 4 বার', '1 বছরের সার্ভিস ওয়ারেন্টি'] }
+      };
+
+      set(ref(db, 'products'), initialProducts)
+        .then(() => alert("Products successfully seeded!"))
+        .catch(err => alert("Error: " + err.message));
+    };
+
+    window.openProductModal = () => {
+      document.getElementById('product-form').reset();
+      document.getElementById('original-product-id').value = '';
+      document.getElementById('product-modal-title').innerText = 'Add New Product';
+      document.getElementById('product-modal').style.display = 'flex';
+    };
+
+    window.closeProductModal = () => {
+      document.getElementById('product-modal').style.display = 'none';
+    };
+
+    window.editProduct = (id) => {
+      const prod = currentProducts[id];
+      if (!prod) return;
+      
+      document.getElementById('product-modal-title').innerText = 'Edit Product';
+      document.getElementById('original-product-id').value = id;
+      document.getElementById('product-id').value = id;
+      document.getElementById('product-title').value = prod.title || '';
+      document.getElementById('product-price').value = prod.price || '';
+      document.getElementById('product-regular-price').value = prod.regularPrice || '';
+      document.getElementById('product-discount').value = prod.discount || '';
+      document.getElementById('product-image').value = prod.image || '';
+      document.getElementById('product-edition').value = prod.edition || '';
+      document.getElementById('product-color').value = prod.color || '';
+      
+      let featuresStr = '';
+      if (Array.isArray(prod.features)) featuresStr = prod.features.join(', ');
+      document.getElementById('product-features').value = featuresStr;
+
+      document.getElementById('product-modal').style.display = 'flex';
+    };
+
+    window.saveProduct = (e) => {
+      e.preventDefault();
+      
+      const id = document.getElementById('product-id').value.trim();
+      const originalId = document.getElementById('original-product-id').value;
+      
+      if (!id) return alert("Product ID is required");
+
+      const featuresArr = document.getElementById('product-features').value.split(',')
+        .map(f => f.trim())
+        .filter(f => f.length > 0);
+
+      const prodData = {
+        title: document.getElementById('product-title').value.trim(),
+        price: document.getElementById('product-price').value.trim(),
+        regularPrice: document.getElementById('product-regular-price').value.trim(),
+        discount: document.getElementById('product-discount').value.trim(),
+        image: document.getElementById('product-image').value.trim(),
+        edition: document.getElementById('product-edition').value.trim(),
+        color: document.getElementById('product-color').value.trim(),
+        features: featuresArr
+      };
+
+      // Retain existing reviews if any
+      if (originalId && currentProducts[originalId] && currentProducts[originalId].reviews) {
+        prodData.reviews = currentProducts[originalId].reviews;
+      }
+
+      if (originalId && originalId !== id) {
+        // ID changed, remove old
+        remove(ref(db, `products/${originalId}`));
+      }
+
+      set(ref(db, `products/${id}`), prodData)
+        .then(() => {
+          window.closeProductModal();
+        })
+        .catch(err => alert("Error saving product: " + err.message));
+    };
+
+    window.deleteProduct = (id) => {
+      if (confirm(`Are you sure you want to delete product "${id}"? This cannot be undone.`)) {
+        remove(ref(db, `products/${id}`))
+          .catch(err => alert("Error deleting product: " + err.message));
+      }
+    };
+  </script>
+</body>
+</html>
