@@ -180,7 +180,67 @@ async function initEarphoneBDSite() {
     const pTitle = document.getElementById('product-title');
     if (pTitle) {
       pTitle.textContent = product.title;
-      document.getElementById('product-img').src = product.image;
+      
+      const pImg = document.getElementById('product-img');
+      if (pImg) {
+        pImg.src = product.image;
+        
+        // Handle multiple images (main + 3 additional thumbnails)
+        let productImages = [];
+        if (Array.isArray(product.images) && product.images.length > 0) {
+          productImages = product.images;
+        } else {
+          const mainImg = product.image;
+          productImages.push(mainImg);
+          
+          const lastDot = mainImg.lastIndexOf('.');
+          if (lastDot !== -1) {
+            const basePath = mainImg.substring(0, lastDot);
+            const ext = mainImg.substring(lastDot);
+            productImages.push(`${basePath}1${ext}`);
+            productImages.push(`${basePath}2${ext}`);
+            productImages.push(`${basePath}3${ext}`);
+          } else {
+            productImages.push(`${mainImg}1`);
+            productImages.push(`${mainImg}2`);
+            productImages.push(`${mainImg}3`);
+          }
+        }
+        
+        // Render Thumbnails with smooth transitions
+        const thumbnailsContainer = document.getElementById('product-thumbnails');
+        if (thumbnailsContainer) {
+          thumbnailsContainer.innerHTML = '';
+          productImages.forEach((imgSrc, idx) => {
+            const thumb = document.createElement('div');
+            thumb.className = `thumbnail-item${idx === 0 ? ' active' : ''}`;
+            thumb.innerHTML = `<img src="${escapeHTML(imgSrc)}" alt="Thumbnail ${idx + 1}" onerror="this.src='https://via.placeholder.com/80x80?text=No+Image'">`;
+            
+            thumb.addEventListener('click', () => {
+              // Smooth transition fade & zoom effect
+              pImg.style.opacity = '0.3';
+              pImg.style.transform = 'scale(0.95)';
+              
+              setTimeout(() => {
+                pImg.src = imgSrc;
+                pImg.style.opacity = '1';
+                pImg.style.transform = 'scale(1.04) rotate(1deg)';
+                
+                // Clear scale transition after anim finishes
+                setTimeout(() => {
+                  pImg.style.transform = '';
+                }, 400);
+              }, 150);
+              
+              document.querySelectorAll('.thumbnail-item').forEach(el => el.classList.remove('active'));
+              thumb.classList.add('active');
+            });
+            
+            thumbnailsContainer.appendChild(thumb);
+          });
+        }
+      }
+
       document.getElementById('product-price').textContent = product.price;
       
       const regularPriceEl = document.getElementById('product-regular-price');
@@ -1091,13 +1151,20 @@ async function initEarphoneBDSite() {
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
+      const href = this.getAttribute('href');
+      if (!href || href === '#' || href === '#!') return; // Do not try to query single '#'
+      
+      try {
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      } catch (err) {
+        console.warn("Invalid smooth scroll selector:", href, err);
       }
     });
   });
@@ -1495,7 +1562,30 @@ async function initEarphoneBDSite() {
     if (!listContainer) return;
 
     try {
-      const res = await fetch('https://earphone-bd-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json');
+      const userStr = localStorage.getItem('earphone_bd_user');
+      let token = "";
+      if (userStr) {
+        try {
+          const userObj = JSON.parse(userStr);
+          token = userObj.token || "";
+        } catch (jsonErr) {
+          console.warn("Failed to parse user data from localStorage:", jsonErr);
+        }
+      }
+
+      let url = 'https://earphone-bd-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json';
+      if (token) {
+        url += `?auth=${token}`;
+      }
+
+      const res = await fetch(url);
+      if (!res.ok) {
+        if (res.status === 401) {
+          listContainer.innerHTML = '<div class="empty-orders">লগইন করুন অথবা অর্ডার হিস্টোরি দেখতে এডমিন পারমিশন লাগবে।</div>';
+          return;
+        }
+        throw new Error(`HTTP Error ${res.status}`);
+      }
       const allOrders = await res.json();
 
       if (!allOrders) {

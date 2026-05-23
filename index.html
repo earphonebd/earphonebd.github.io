@@ -292,6 +292,12 @@
         <div class="review-slide">
           <img src="assets/review3.jpg" alt="Customer Review 3" class="review-img" loading="lazy">
         </div>
+        <div class="review-slide">
+          <img src="assets/review4.jpg" alt="Customer Review 4" class="review-img" loading="lazy">
+        </div>
+        <div class="review-slide">
+          <img src="assets/review5.jpg" alt="Customer Review 5" class="review-img" loading="lazy">
+        </div>
       </div>
 
       <!-- Slide navigation buttons -->
@@ -311,6 +317,8 @@
       <!-- Indicator dots -->
       <div class="review-slider-dots" id="review-dots">
         <span class="review-dot active"></span>
+        <span class="review-dot"></span>
+        <span class="review-dot"></span>
         <span class="review-dot"></span>
         <span class="review-dot"></span>
       </div>
@@ -485,16 +493,29 @@
     const provider = new GoogleAuthProvider();
 
     // Listen to Firebase persistent Auth State changes (Source of Truth)
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
         console.log("Firebase Auth State: Logged In", user);
-        const userData = {
-          name: user.displayName,
-          email: user.email,
-          phone: user.phoneNumber || "",
-          photo: user.photoURL
-        };
-        localStorage.setItem('earphone_bd_user', JSON.stringify(userData));
+        try {
+          const token = await user.getIdToken();
+          const userData = {
+            name: user.displayName,
+            email: user.email,
+            phone: user.phoneNumber || "",
+            photo: user.photoURL,
+            token: token
+          };
+          localStorage.setItem('earphone_bd_user', JSON.stringify(userData));
+        } catch (tokenErr) {
+          console.warn("Failed to get ID token:", tokenErr);
+          const userData = {
+            name: user.displayName,
+            email: user.email,
+            phone: user.phoneNumber || "",
+            photo: user.photoURL
+          };
+          localStorage.setItem('earphone_bd_user', JSON.stringify(userData));
+        }
       } else {
         console.log("Firebase Auth State: Logged Out");
         localStorage.removeItem('earphone_bd_user');
@@ -502,6 +523,10 @@
       // Instantly trigger re-render of Account UI across pages
       if (window.updateAccountUI) {
         window.updateAccountUI();
+      }
+      // Re-fetch user orders with the fresh authenticated token
+      if (user && window.fetchUserOrders) {
+        window.fetchUserOrders(user.email, user.phoneNumber || "");
       }
     });
 
