@@ -1044,33 +1044,6 @@
       "হবিগঞ্জ": ["আজমিরীগঞ্জ", "চুনারুঘাট", "নবীগঞ্জ", "বানিয়াচং", "বাহুবল", "মাধবপুর", "লাখাই", "শায়েস্তাগঞ্জ", "হবিগঞ্জ সদর"]
     };
 
-    // Realtime manual product select populator to dynamically fetch products from Firebase DB
-    const productsRef = ref(db, 'products');
-    onValue(productsRef, (snapshot) => {
-      const data = snapshot.val();
-      const select = document.getElementById('manual-prod-select');
-      if (select && data) {
-        // Clear previous options
-        select.innerHTML = '';
-        Object.entries(data).forEach(([id, prod]) => {
-          const cleanPrice = parseInt(String(prod.price || 0).replace(/[^\d]/g, '')) || 0;
-          const opt = document.createElement('option');
-          opt.value = id;
-          opt.setAttribute('data-title', prod.title || '');
-          opt.setAttribute('data-edition', prod.edition || '');
-          opt.setAttribute('data-color', prod.color || '');
-          opt.setAttribute('data-price', cleanPrice);
-          opt.setAttribute('data-img', prod.image || '');
-          
-          const label = `${prod.title || ''} (${prod.edition || ''} ${prod.color || ''}) - ৳${cleanPrice}`;
-          opt.textContent = label;
-          select.appendChild(opt);
-        });
-        // Prefill pricing for the first product
-        window.handleManualProductChange();
-      }
-    });
-
     // --- Manual Order Modal Helpers ---
     window.openManualOrderModal = () => {
       const modal = document.getElementById('manual-order-modal');
@@ -1254,6 +1227,34 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
+
+    // Realtime manual product select populator to dynamically fetch products from Firebase DB
+    const productsRef = ref(db, 'products');
+    onValue(productsRef, (snapshot) => {
+      const data = snapshot.val();
+      const select = document.getElementById('manual-prod-select');
+      if (select && data) {
+        // Clear previous options
+        select.innerHTML = '';
+        Object.entries(data).forEach(([id, prod]) => {
+          const cleanPrice = parseInt(String(prod.price || 0).replace(/[^\d]/g, '')) || 0;
+          const opt = document.createElement('option');
+          opt.value = id;
+          opt.setAttribute('data-title', prod.title || '');
+          opt.setAttribute('data-edition', prod.edition || '');
+          opt.setAttribute('data-color', prod.color || '');
+          opt.setAttribute('data-price', cleanPrice);
+          opt.setAttribute('data-img', prod.image || '');
+          
+          const label = `${prod.title || ''} (${prod.edition || ''} ${prod.color || ''}) - ৳${cleanPrice}`;
+          opt.textContent = label;
+          select.appendChild(opt);
+        });
+        // Prefill pricing for the first product
+        window.handleManualProductChange();
+      }
+    });
+
     let cachedPromoCodes = {};
 
     const normalizePromoCode = (code) => String(code || '').trim().toUpperCase().replace(/[^A-Z0-9_-]/g, '');
