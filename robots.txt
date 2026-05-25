@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /product.html
+Disallow: /order.html
+Disallow: /admin.html
+Disallow: /admin-products.html
+Disallow: /cashbook.html
+Disallow: /reports.html
+Disallow: /moderators.html
+Disallow: /moderator.html
+Disallow: /moderator/
+
+Sitemap: https://earphonebd.com/sitemap.xml

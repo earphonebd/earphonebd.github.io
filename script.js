@@ -317,6 +317,50 @@ async function initEarphoneBDSite() {
           warrantyBadge.style.display = 'none';
         }
       }
+
+      // Dynamic JSON-LD Product Schema for Google Search Rich Snippets
+      try {
+        let schemaScript = document.getElementById('product-schema-jsonld');
+        if (!schemaScript) {
+          schemaScript = document.createElement('script');
+          schemaScript.id = 'product-schema-jsonld';
+          schemaScript.type = 'application/ld+json';
+          document.head.appendChild(schemaScript);
+        }
+        
+        // Clean numeric price
+        const numericPrice = parseInt(String(product.price).replace(/[^\d]/g, '')) || 0;
+        
+        const schemaData = {
+          "@context": "https://schema.org/",
+          "@type": "Product",
+          "name": product.title,
+          "image": [
+            window.location.origin + '/' + product.image
+          ],
+          "description": product.features ? product.features.join('. ') : "Premium sound quality and comfortable fit gadgets from Earphone BD.",
+          "brand": {
+            "@type": "Brand",
+            "name": "Earphone BD"
+          },
+          "offers": {
+            "@type": "Offer",
+            "url": window.location.href,
+            "priceCurrency": "BDT",
+            "price": numericPrice,
+            "priceValidUntil": "2027-12-31",
+            "itemCondition": "https://schema.org/NewCondition",
+            "availability": "https://schema.org/InStock",
+            "seller": {
+              "@type": "Organization",
+              "name": "Earphone BD"
+            }
+          }
+        };
+        schemaScript.textContent = JSON.stringify(schemaData);
+      } catch (schemaErr) {
+        console.error("Failed to generate Product JSON-LD schema:", schemaErr);
+      }
     }
   }
 
@@ -1174,9 +1218,9 @@ async function initEarphoneBDSite() {
   if (notification) {
     const names = ["ঢাকা থেকে আবির", "চট্টগ্রাম থেকে সজীব", "সিলেট থেকে মিতু", "রাজশাহী থেকে কামাল", "খুলনা থেকে সুমন", "বরিশাল থেকে রিফাত", "গাজীপুর থেকে নাসির", "কুমিল্লা থেকে তানিয়া"];
     const salesProducts = [
-      { title: "AirPods Pro 2nd", img: "assets/airpod_pro_2nd_generation_dubai_white.png" },
-      { title: "AirPods Pro 2nd", img: "assets/airpod_pro_2nd_generation_dubai_black.png" },
-      { title: "AirPods Pro 3rd", img: "assets/airpod_pro_3rd_generation_premium_anc.png" }
+      { title: "AirPods Pro 2nd", img: "assets/airpod_pro_2nd_generation_dubai_white.webp" },
+      { title: "AirPods Pro 2nd", img: "assets/airpod_pro_2nd_generation_dubai_black.webp" },
+      { title: "AirPods Pro 3rd", img: "assets/airpod_pro_3rd_generation_premium_anc.webp" }
     ];
 
     function showNotification() {
