@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#071426"><meta name="description" content="Earphone BD কর্মী আবেদন ও Employee Login">
+  <title>Earphone BD Employee Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="employee.css">
+</head>
+<body>
+<header class="employee-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-mark">E</span><span><strong>Earphone BD</strong><small>EMPLOYEE PORTAL</small></span></a><a class="header-link" href="index.html">স্টোরে ফিরুন</a></div></header>
+<main class="employee-main">
+  <section class="hero"><span class="eyebrow">Join Earphone BD Team</span><h1>আগে আবেদন করুন, approval পাওয়ার পর কাজ শুরু করুন।</h1><p>কেউ সরাসরি অ্যাফিলিয়েট, মডারেটর বা অন্য কর্মী প্যানেলে প্রবেশ করতে পারবেন না। আবেদন যাচাই করে Admin role ও Employee ID দিলে তবেই লগইন করা যাবে।</p><div class="steps"><div class="step"><strong>১. আবেদন</strong><span>নিজের তথ্য দিয়ে ফর্ম পূরণ করুন</span></div><div class="step"><strong>২. Admin Review</strong><span>কাজ অনুযায়ী role নির্ধারণ হবে</span></div><div class="step"><strong>৩. Employee Login</strong><span>ID ও password দিয়ে dashboard খুলুন</span></div></div></section>
+  <section class="portal-card">
+    <div class="tabs" id="employeeTabs"><button class="tab active" data-tab="apply">কর্মী হিসেবে আবেদন</button><button class="tab" data-tab="status">আবেদনের অবস্থা</button><button class="tab" data-tab="login">Employee Login</button></div>
+    <section class="tab-panel active" data-panel="apply">
+      <div class="panel-head"><span class="eyebrow">Application</span><h2>কর্মী নিবন্ধন ফর্ম</h2><p>সঠিক তথ্য দিন। একই মোবাইল নম্বর দিয়ে একাধিক আবেদন করা যাবে না।</p></div>
+      <form id="employeeApplicationForm" class="form-grid">
+        <label class="field"><span>পূর্ণ নাম *</span><input name="name" required maxlength="80" autocomplete="name"></label>
+        <label class="field"><span>মোবাইল নম্বর *</span><input name="phone" required inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX" autocomplete="tel"></label>
+        <label class="field"><span>WhatsApp নম্বর</span><input name="whatsapp" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX"></label>
+        <label class="field"><span>ইমেইল</span><input name="email" type="email" autocomplete="email" placeholder="ঐচ্ছিক"></label>
+        <label class="field"><span>জেলা *</span><select name="district" id="applicationDistrict" required><option value="">জেলা নির্বাচন করুন</option></select></label>
+        <label class="field"><span>উপজেলা *</span><select name="upazila" id="applicationUpazila" required disabled><option value="">আগে জেলা নির্বাচন করুন</option></select></label>
+        <label class="field"><span>কোন কাজে আগ্রহী? *</span><select name="preferredRole" required><option value="">নির্বাচন করুন</option><option value="affiliate">অ্যাফিলিয়েট মার্কেটিং</option><option value="moderator">মডারেটর / অর্ডার সংগ্রহ</option><option value="support">কাস্টমার সাপোর্ট</option><option value="order_manager">অর্ডার ম্যানেজমেন্ট</option><option value="accounts">অ্যাকাউন্টস / পেআউট</option><option value="other">অন্যান্য</option></select></label>
+        <label class="field"><span>অভিজ্ঞতা</span><input name="experience" maxlength="120" placeholder="যেমন: Facebook sales ১ বছর"></label>
+        <label class="field full"><span>Facebook Profile / Page Link</span><input name="facebook" type="url" placeholder="https://facebook.com/..."></label>
+        <label class="field full"><span>আপনার সম্পর্কে বা কেন কাজ করতে চান *</span><textarea name="note" rows="4" required maxlength="700"></textarea></label>
+        <label class="field full"><span>বর্তমান ঠিকানা *</span><textarea name="address" rows="3" required maxlength="300"></textarea></label>
+        <p class="message full" id="applicationMessage"></p>
+        <button class="primary full" type="submit">আবেদন জমা দিন</button>
+      </form>
+      <div class="result-card hidden" id="applicationResult"></div>
+    </section>
+    <section class="tab-panel" data-panel="status">
+      <div class="panel-head"><span class="eyebrow">Application Status</span><h2>আবেদনের অবস্থা দেখুন</h2><p>Application ID ও মোবাইল নম্বর দিয়ে বর্তমান status দেখুন।</p></div>
+      <form id="applicationStatusForm" class="form-grid login-box">
+        <label class="field full"><span>Application ID</span><input name="applicationId" required placeholder="APP-XXXXXXXX"></label>
+        <label class="field full"><span>মোবাইল নম্বর</span><input name="phone" required inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX"></label>
+        <p class="message full" id="statusMessage"></p><button class="primary full">Status দেখুন</button>
+      </form><div class="result-card hidden login-box" id="statusResult"></div>
+    </section>
+    <section class="tab-panel" data-panel="login">
+      <div class="panel-head login-box"><span class="eyebrow">Secure Employee Access</span><h2>Employee Login</h2><p>Admin approval-এর পরে পাওয়া Employee ID ও password ব্যবহার করুন। আপনার role অনুযায়ী dashboard নিজে থেকেই খুলবে।</p></div>
+      <form id="employeeLoginForm" class="form-grid login-box">
+        <label class="field full"><span>Employee ID</span><input name="employeeId" required autocomplete="username" placeholder="EBD-AF-001"></label>
+        <label class="field full"><span>Password</span><input name="password" type="password" required autocomplete="current-password"></label>
+        <p class="message error full" id="loginMessage"></p><button class="primary full">লগইন করুন</button>
+      </form>
+      <div class="notice login-box">Approval না পেলে login হবে না। Employee ID বা password হারালে Earphone BD Admin-এর সঙ্গে যোগাযোগ করুন।</div>
+      <p class="security-note login-box">এই HTML prototype একই browser-এর LocalStorage ব্যবহার করে। live deployment-এ server-side authentication, encrypted password এবং database প্রয়োজন।</p>
+    </section>
+  </section>
+</main>
+<script src="store-data.js"></script><script src="bangladesh-locations.js"></script><script src="employee.js"></script>
+</body></html>

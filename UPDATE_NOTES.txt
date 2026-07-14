@@ -1,0 +1,22 @@
+Earphone BD Admin and Payout Update
+
+Updated files:
+- admin.html
+- admin.js
+- admin.css
+- affiliate.html
+- moderator.html
+- partner.js
+- payouts.js
+
+Changes:
+1. Added a polished Admin UI refresh with improved cards, navigation, tables and responsive payout views.
+2. Fixed Payout Control navigation by opening it in the current authenticated admin tab.
+3. Added an integrated "Payout Requests" section inside Admin Panel with pending count, metrics, employee payment account and Paid/Reject actions.
+4. Added Source / Employee information to Admin Orders, including employee name, Employee ID, role and commission in order details.
+5. Employee payout method and bKash/Nagad/account number now persist per Employee ID in localStorage and employee data.
+6. Payout requests remain visible in both the employee panel and Admin Panel.
+
+Validation completed:
+- JavaScript syntax checks passed for modified JavaScript files.
+- HTML IDs checked for duplicates and required payout elements verified.

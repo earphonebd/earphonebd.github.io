@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const CATALOG_VERSION = 7;
+  const CATALOG_VERSION = 8;
 
   function escapeSvgText(value) {
     return String(value || "")
@@ -721,7 +721,8 @@
     products: "earphoneBdProducts", coupons: "earphoneBdCoupons", settings: "earphoneBdSettings",
     orders: "earphoneBdOrders", subscribers: "earphoneBdSubscribers", cart: "earphoneBdCart",
     wishlist: "earphoneBdWishlist", promo: "earphoneBdPromo", version: "earphoneBdCatalogVersion",
-    attribution: "earphoneBdAttribution", partners: "earphoneBdPartners", payouts: "earphoneBdPayouts"
+    attribution: "earphoneBdAttribution", partners: "earphoneBdPartners", payouts: "earphoneBdPayouts",
+    employeeApplications: "earphoneBdEmployeeApplications", employees: "earphoneBdEmployees"
   };
 
   function clone(value) { return JSON.parse(JSON.stringify(value)); }
@@ -767,14 +768,17 @@
   function saveOrders(value) { const normalized = Array.isArray(value) ? value : []; localStorage.setItem(STORAGE_KEYS.orders, JSON.stringify(normalized)); return normalized; }
   function getSubscribers() { const value = parseStored(STORAGE_KEYS.subscribers, []); return Array.isArray(value) ? value : []; }
   function saveSubscribers(value) { const normalized = Array.isArray(value) ? value : []; localStorage.setItem(STORAGE_KEYS.subscribers, JSON.stringify(normalized)); return normalized; }
-  const DEFAULT_PARTNERS = [
-    { id: "AFF001", role: "affiliate", name: "ডেমো অ্যাফিলিয়েট", phone: "01700000001", pin: "1234", commissionType: "flat", commissionValue: 50, active: true, joinedAt: new Date().toISOString() },
-    { id: "MOD001", role: "moderator", name: "ডেমো মডারেটর", phone: "01700000002", pin: "1234", commissionType: "flat", commissionValue: 30, active: true, joinedAt: new Date().toISOString() }
-  ];
+  const DEFAULT_PARTNERS = [];
   function getPartners() { const value = parseStored(STORAGE_KEYS.partners, DEFAULT_PARTNERS); return Array.isArray(value) ? value : clone(DEFAULT_PARTNERS); }
   function savePartners(value) { const normalized = Array.isArray(value) ? value : []; localStorage.setItem(STORAGE_KEYS.partners, JSON.stringify(normalized)); return normalized; }
   function getPayouts() { const value = parseStored(STORAGE_KEYS.payouts, []); return Array.isArray(value) ? value : []; }
   function savePayouts(value) { const normalized = Array.isArray(value) ? value : []; localStorage.setItem(STORAGE_KEYS.payouts, JSON.stringify(normalized)); return normalized; }
+  function getEmployeeApplications() { const value = parseStored(STORAGE_KEYS.employeeApplications, []); return Array.isArray(value) ? value : []; }
+  function saveEmployeeApplications(value) { const normalized = Array.isArray(value) ? value : []; localStorage.setItem(STORAGE_KEYS.employeeApplications, JSON.stringify(normalized)); return normalized; }
+  function getEmployees() { const value = parseStored(STORAGE_KEYS.employees, []); return Array.isArray(value) ? value : []; }
+  function saveEmployees(value) { const normalized = Array.isArray(value) ? value : []; localStorage.setItem(STORAGE_KEYS.employees, JSON.stringify(normalized)); return normalized; }
+  function roleLabel(role) { return ({ affiliate: "অ্যাফিলিয়েট", moderator: "মডারেটর", admin: "অ্যাডমিন", accounts: "অ্যাকাউন্টস", support: "কাস্টমার সাপোর্ট", order_manager: "অর্ডার ম্যানেজার" })[role] || role || "কর্মী"; }
+  function employeeRoute(role) { return ({ affiliate: "affiliate.html", moderator: "moderator.html", admin: "admin.html", accounts: "payouts.html", support: "employee-dashboard.html", order_manager: "employee-dashboard.html" })[role] || "employee-dashboard.html"; }
 
   function inferCategory(slug, product) {
     if (slug.includes("neckband")) return "নেকব্যান্ড";
@@ -829,12 +833,14 @@
     if (!localStorage.getItem(STORAGE_KEYS.subscribers)) saveSubscribers([]);
     if (!localStorage.getItem(STORAGE_KEYS.partners)) savePartners(DEFAULT_PARTNERS);
     if (!localStorage.getItem(STORAGE_KEYS.payouts)) savePayouts([]);
+    if (!localStorage.getItem(STORAGE_KEYS.employeeApplications)) saveEmployeeApplications([]);
+    if (!localStorage.getItem(STORAGE_KEYS.employees)) saveEmployees([]);
     localStorage.setItem(STORAGE_KEYS.version, String(CATALOG_VERSION));
   }
-  function resetStoreData() { saveProducts(DEFAULT_PRODUCTS); saveCoupons(DEFAULT_COUPONS); saveSettings(DEFAULT_SETTINGS); saveOrders([]); saveSubscribers([]); savePartners(DEFAULT_PARTNERS); savePayouts([]); localStorage.removeItem(STORAGE_KEYS.cart); localStorage.removeItem(STORAGE_KEYS.wishlist); localStorage.removeItem(STORAGE_KEYS.promo); localStorage.removeItem(STORAGE_KEYS.attribution); localStorage.setItem(STORAGE_KEYS.version, String(CATALOG_VERSION)); }
+  function resetStoreData() { saveProducts(DEFAULT_PRODUCTS); saveCoupons(DEFAULT_COUPONS); saveSettings(DEFAULT_SETTINGS); saveOrders([]); saveSubscribers([]); savePartners(DEFAULT_PARTNERS); savePayouts([]); saveEmployeeApplications([]); saveEmployees([]); localStorage.removeItem(STORAGE_KEYS.cart); localStorage.removeItem(STORAGE_KEYS.wishlist); localStorage.removeItem(STORAGE_KEYS.promo); localStorage.removeItem(STORAGE_KEYS.attribution); localStorage.setItem(STORAGE_KEYS.version, String(CATALOG_VERSION)); }
   function generateId(items = []) { const ids = items.map(v => Number(v.id)).filter(Number.isFinite); return (ids.length ? Math.max(...ids) : 0) + 1; }
 
   window.EarphoneBdStoreData = { CATALOG_VERSION, DEFAULT_PRODUCTS: clone(DEFAULT_PRODUCTS).map(normalizeProduct), DEFAULT_COUPONS: clone(DEFAULT_COUPONS), DEFAULT_SETTINGS: clone(DEFAULT_SETTINGS), STORAGE_KEYS,
-    getProducts, saveProducts, getCoupons, saveCoupons, getSettings, saveSettings, getOrders, saveOrders, getSubscribers, saveSubscribers, getPartners, savePartners, getPayouts, savePayouts, seedStore, resetStoreData, generateId, normalizeProduct, slugify, productArtwork, importLegacyBackup };
+    getProducts, saveProducts, getCoupons, saveCoupons, getSettings, saveSettings, getOrders, saveOrders, getSubscribers, saveSubscribers, getPartners, savePartners, getPayouts, savePayouts, getEmployeeApplications, saveEmployeeApplications, getEmployees, saveEmployees, roleLabel, employeeRoute, seedStore, resetStoreData, generateId, normalizeProduct, slugify, productArtwork, importLegacyBackup };
   seedStore();
 })();

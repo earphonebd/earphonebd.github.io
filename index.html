@@ -67,63 +67,59 @@
   </header>
 
   <main>
-    <section class="hero ad-hero motion-reveal" id="home">
+    <section class="hero ad-hero" id="home">
       <div class="hero-media" aria-hidden="true"></div><div class="hero-overlay"></div>
       <div class="container hero-content">
         <span class="eyebrow light">ক্যাশ অন ডেলিভারি • সারা বাংলাদেশ</span>
-        <h1>পছন্দের ইয়ারফোন,<br><em>সেরা দামে।</em></h1>
-        <p id="heroOffer">ফিচার দেখে বেছে নিন, ১ মিনিটে অর্ডার করুন।</p>
+        <h1>কম দামে<br><em>পছন্দের ইয়ারফোন।</em></h1>
+        <p id="heroOffer">বেস, সাউন্ড, মাইক্রোফোন বা লং ব্যাটারি—আপনার প্রয়োজন অনুযায়ী সহজে বেছে নিন।</p>
         <div class="hero-actions">
-          <a class="button button-light pulse-cta" id="heroBuyButton" href="#shop">পণ্য দেখুন</a>
-          <a class="text-link light" href="#reviews">ক্রেতার মতামত <span>&rarr;</span></a>
+          <a class="button button-light" id="heroBuyButton" href="#shop">এখনই অর্ডার করুন</a>
+          <a class="text-link light" href="#collections">কোনটি আপনার জন্য ভালো? <span>&rarr;</span></a>
         </div>
-        <div class="hero-proof compact-proof" aria-label="স্টোরের তথ্য">
-          <div><strong>COD</strong><span>হাতে পেয়ে টাকা</span></div>
+        <div class="hero-proof" aria-label="স্টোরের তথ্য">
+          <div><strong>৩,২০০+</strong><span>পণ্য বিক্রি</span></div>
           <div><strong>৳৩৯৯</strong><span>শুরু দাম</span></div>
-          <div><strong>সারা দেশ</strong><span>ডেলিভারি</span></div>
+          <div><strong>COD</strong><span>পণ্য হাতে পেয়ে টাকা</span></div>
         </div>
       </div>
     </section>
 
-    <section class="section shop-first" id="shop">
+    <section class="trust-strip" aria-label="কেনাকাটার সুবিধা">
+      <div class="container trust-grid">
+        <div class="trust-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7zM7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg><div><strong>সারা দেশে ডেলিভারি</strong><span>ঢাকা ও ঢাকার বাইরে</span></div></div>
+        <div class="trust-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg><div><strong>ক্যাশ অন ডেলিভারি</strong><span>পণ্য হাতে পেয়ে মূল্য দিন</span></div></div>
+        <div class="trust-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg><div><strong>রিপ্লেসমেন্ট সহায়তা</strong><span>পণ্যভেদে শর্ত দেখুন</span></div></div>
+        <div class="trust-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"/></svg><div><strong>সরাসরি সাপোর্ট</strong><span>অর্ডারের আগে ও পরে</span></div></div>
+      </div>
+    </section>
+
+    <section class="section section-light" id="collections">
       <div class="container">
-        <div class="mobile-shop-intro motion-reveal">
-          <div><span class="eyebrow">দ্রুত বেছে নিন</span><h2>সব ইয়ারফোন</h2></div>
-          <button class="mini-search-trigger" type="button" onclick="document.getElementById('searchToggle').click()" aria-label="পণ্য খুঁজুন">⌕ খুঁজুন</button>
+        <div class="section-heading split-heading"><div><span class="eyebrow">সহজে বেছে নিন</span><h2>কোন ফিচারটি আপনার বেশি দরকার?</h2></div><p>একই ধরনের পণ্য খুঁজতে সময় নষ্ট নয়। প্রয়োজনীয় ফিচারে চাপ দিলেই উপযুক্ত ইয়ারফোনগুলো দেখবেন।</p></div>
+        <div class="feature-finder-grid">
+          <button class="feature-finder-card" data-feature-link="বেস"><span class="feature-icon">🔊</span><strong>শক্তিশালী বেস</strong><small>গান ও মুভির জন্য</small></button>
+          <button class="feature-finder-card" data-feature-link="সাউন্ড"><span class="feature-icon">🎵</span><strong>পরিষ্কার সাউন্ড</strong><small>ডিটেইলড মিউজিক</small></button>
+          <button class="feature-finder-card" data-feature-link="ব্যাটারি"><span class="feature-icon">🔋</span><strong>লং ব্যাটারি</strong><small>ভ্রমণ ও সারাদিন ব্যবহার</small></button>
+          <button class="feature-finder-card" data-feature-link="মাইক্রোফোন"><span class="feature-icon">🎙️</span><strong>ভালো মাইক্রোফোন</strong><small>কল ও অনলাইন মিটিং</small></button>
+          <button class="feature-finder-card" data-feature-link="গেমিং"><span class="feature-icon">🎮</span><strong>গেমিং</strong><small>কম ল্যাটেন্সি</small></button>
+          <button class="feature-finder-card" data-feature-link="ANC"><span class="feature-icon">🤫</span><strong>ANC নয়েজ ক্যানসেলেশন</strong><small>বাইরের শব্দ কমাতে</small></button>
         </div>
-        <div class="category-tabs sticky-feature-tabs" id="categoryTabs" aria-label="ফিচার ফিল্টার"></div>
-        <div class="shop-toolbar"><p id="productResultText">সব পণ্য দেখানো হচ্ছে</p><label class="sort-control"><span>সাজান</span><select id="sortSelect" aria-label="পণ্য সাজান"><option value="featured">জনপ্রিয় আগে</option><option value="rating">সেরা রেটিং</option><option value="price-low">কম দাম আগে</option><option value="price-high">বেশি দাম আগে</option><option value="newest">নতুন আগে</option></select></label></div>
+      </div>
+    </section>
+
+    <section class="section" id="shop">
+      <div class="container">
+        <div class="section-heading split-heading product-heading"><div><span class="eyebrow">বর্তমান কালেকশন</span><h2>ফিচার অনুযায়ী ইয়ারফোন বেছে নিন</h2></div><div class="category-tabs" id="categoryTabs" aria-label="ফিচার ফিল্টার"></div></div>
+        <div class="shop-toolbar"><p id="productResultText">সব পণ্য দেখানো হচ্ছে</p><label class="sort-control"><span>সাজান</span><select id="sortSelect" aria-label="পণ্য সাজান"><option value="featured">প্রাধান্য অনুযায়ী</option><option value="rating">সেরা রেটিং</option><option value="price-low">কম দাম আগে</option><option value="price-high">বেশি দাম আগে</option><option value="newest">নতুন আগে</option></select></label></div>
         <div class="product-grid" id="productGrid" aria-live="polite"></div>
         <div class="empty-state hidden" id="emptyState"><h3>কোনো পণ্য পাওয়া যায়নি</h3><p>অন্য শব্দ বা ফিচার দিয়ে চেষ্টা করুন।</p><button class="button button-dark" id="clearFilters">সব দেখুন</button></div>
       </div>
     </section>
 
-    <section class="trust-strip compact-trust motion-reveal" aria-label="কেনাকাটার সুবিধা">
-      <div class="container trust-grid">
-        <div class="trust-item"><span class="trust-emoji">🚚</span><div><strong>সারা দেশে ডেলিভারি</strong><span>জেলা ও উপজেলা অনুযায়ী</span></div></div>
-        <div class="trust-item"><span class="trust-emoji">💵</span><div><strong>ক্যাশ অন ডেলিভারি</strong><span>পণ্য হাতে পেয়ে মূল্য দিন</span></div></div>
-        <div class="trust-item"><span class="trust-emoji">🔄</span><div><strong>রিপ্লেসমেন্ট সহায়তা</strong><span>পণ্যভেদে প্রযোজ্য</span></div></div>
-        <div class="trust-item"><span class="trust-emoji">💬</span><div><strong>সরাসরি সাপোর্ট</strong><span>অর্ডারের আগে ও পরে</span></div></div>
-      </div>
-    </section>
-
-    <section class="section section-light feature-guide motion-reveal" id="collections">
-      <div class="container">
-        <div class="section-heading split-heading"><div><span class="eyebrow">ফিচার গাইড</span><h2>আপনার জন্য কোনটি ভালো?</h2></div><p>প্রয়োজনীয় ফিচারে চাপ দিলে সেই ফিচারের পণ্যগুলো উপরে দেখানো হবে।</p></div>
-        <div class="feature-finder-grid">
-          <button class="feature-finder-card" data-feature-link="বেস"><span class="feature-icon">🔊</span><strong>শক্তিশালী বেস</strong><small>গান ও মুভি</small></button>
-          <button class="feature-finder-card" data-feature-link="সাউন্ড"><span class="feature-icon">🎵</span><strong>পরিষ্কার সাউন্ড</strong><small>মিউজিক ডিটেইল</small></button>
-          <button class="feature-finder-card" data-feature-link="ব্যাটারি"><span class="feature-icon">🔋</span><strong>লং ব্যাটারি</strong><small>ভ্রমণ ও সারাদিন</small></button>
-          <button class="feature-finder-card" data-feature-link="মাইক্রোফোন"><span class="feature-icon">🎙️</span><strong>ভালো মাইক্রোফোন</strong><small>কল ও মিটিং</small></button>
-          <button class="feature-finder-card" data-feature-link="গেমিং"><span class="feature-icon">🎮</span><strong>গেমিং</strong><small>কম ল্যাটেন্সি</small></button>
-          <button class="feature-finder-card" data-feature-link="ANC"><span class="feature-icon">🤫</span><strong>ANC</strong><small>বাইরের শব্দ কমায়</small></button>
-        </div>
-      </div>
-    </section>
-
-    <section class="section testimonial-section motion-reveal" id="reviews">
+    <section class="section testimonial-section" id="reviews">
       <div class="container testimonial-layout">
-        <div class="testimonial-copy"><span class="eyebrow">আসল ক্রেতার মতামত</span><h2>যারা নিয়েছেন, তারা কী বলেছেন</h2><div class="rating-row"><span>★★★★★</span><strong>পুরোনো ওয়েবসাইটের ক্রেতার রিভিউ</strong></div></div>
+        <div class="testimonial-copy"><span class="eyebrow">আসল ক্রেতার মতামত</span><h2>যারা নিয়েছেন, তারা কী বলেছেন</h2><div class="rating-row"><span>★★★★★</span><strong>ব্যাকআপে থাকা যাচাইকৃত ক্রেতার রিভিউ</strong></div></div>
         <div class="testimonial-slider" id="testimonialSlider">
           <article class="testimonial active"><p>“যেমন ভেবেছিলাম তেমনই পেয়েছি। ধন্যবাদ আপনাদের।”</p><div><strong>Abdullah</strong><span>AirPods Pro 2nd Generation</span></div></article>
           <article class="testimonial"><p>“প্রোডাক্টটা দাম অনুযায়ী অনেক ভালো। অর্ডার করার দুই দিনের ভিতরে পেয়েছি।”</p><div><strong>মেহেদী</strong><span>OnePlus Airpods Pro</span></div></article>
@@ -133,10 +129,10 @@
       </div>
     </section>
 
-    <section class="section partner-banner motion-reveal">
-      <div class="container partner-banner-card">
-        <div><span class="eyebrow light">Earphone BD Team</span><h2>অ্যাফিলিয়েট বা মডারেটর হিসেবে কাজ করেন?</h2><p>নিজের অর্ডার জমা দিন, ডেলিভারি স্ট্যাটাস দেখুন এবং কমিশন ও পেমেন্ট ট্র্যাক করুন।</p></div>
-        <div class="partner-banner-actions"><a class="button button-light" href="affiliate.html">অ্যাফিলিয়েট প্যানেল</a><a class="button button-outline-light" href="moderator.html">মডারেটর প্যানেল</a></div>
+    <section class="section campaign-section">
+      <div class="container campaign-card">
+        <div class="campaign-copy"><span class="eyebrow light">নতুন পণ্যের খবর</span><h2>নতুন ইয়ারফোন এলেই জানুন</h2><p>নতুন মডেল, স্টক আপডেট ও আসল অফারের খবর পেতে ইমেইল দিন।</p><form class="newsletter-form" id="newsletterForm"><input type="email" id="newsletterEmail" placeholder="আপনার ইমেইল" required><button class="button button-light" type="submit">সাবস্ক্রাইব</button></form><small>যেকোনো সময় বন্ধ করতে পারবেন।</small></div>
+        <div class="campaign-visual" aria-hidden="true"><div class="campaign-orb orb-one"></div><div class="campaign-orb orb-two"></div><div class="coupon-card"><span>নতুন ক্রেতা</span><strong>১০% ছাড়</strong><small>কোড: EBD10</small></div></div>
       </div>
     </section>
   </main>
@@ -146,7 +142,7 @@
       <div class="footer-brand"><a class="brand brand-light" href="#home"><span class="brand-mark">E</span><span class="brand-copy"><strong>Earphone</strong><small>BD</small></span></a><p>কম দামে TWS ইয়ারবাড, নেকব্যান্ড ও ANC ইয়ারফোন। সারা বাংলাদেশে ক্যাশ অন ডেলিভারি।</p><div class="social-row"><a id="facebookLink" href="#" aria-label="Facebook">f</a><a id="messengerLink" href="#" aria-label="Messenger">m</a><a id="whatsappLink" href="#" aria-label="WhatsApp">w</a></div></div>
       <div><h3>কেনাকাটা</h3><a href="#shop">সব পণ্য</a><a href="#shop">বেস্ট সেলার</a><a href="#collections">ফিচার অনুযায়ী</a></div>
       <div><h3>সহায়তা</h3><a href="#">অর্ডার ট্র্যাক</a><a href="#">ডেলিভারি তথ্য</a><a href="#">রিপ্লেসমেন্ট নীতি</a><a id="supportPhoneLink" href="#">কল করুন</a></div>
-      <div><h3>Earphone BD</h3><a href="#reviews">ক্রেতার মতামত</a><a href="affiliate.html">অ্যাফিলিয়েট প্যানেল</a><a href="moderator.html">মডারেটর প্যানেল</a><a href="payouts.html">পেআউট কন্ট্রোল</a><a href="admin.html">অ্যাডমিন প্যানেল</a></div>
+      <div><h3>Earphone BD</h3><a href="#reviews">ক্রেতার মতামত</a><a href="#">গোপনীয়তা নীতি</a><a href="#">শর্তাবলি</a><a href="employee.html?view=apply">কর্মী হিসেবে আবেদন</a><a href="employee.html?view=login">Employee Login</a></div>
     </div>
     <div class="container footer-bottom"><p>&copy; <span id="currentYear"></span> Earphone BD. সর্বস্বত্ব সংরক্ষিত।</p><div class="payment-pills"><span>COD</span><span>bKash</span><span>Nagad</span></div></div>
   </footer>

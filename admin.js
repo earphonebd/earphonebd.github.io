@@ -14,6 +14,7 @@
     coupons: Store.getCoupons(),
     settings: Store.getSettings(),
     subscribers: Store.getSubscribers(),
+    payouts: Store.getPayouts(),
     currentView: "dashboard",
     productSearch: "",
     productCategory: "All",
@@ -49,6 +50,10 @@
     productNavCount: document.getElementById("productNavCount"),
     orderNavCount: document.getElementById("orderNavCount"),
     customerNavCount: document.getElementById("customerNavCount"),
+    payoutNavCount: document.getElementById("payoutNavCount"),
+    adminPayoutMetrics: document.getElementById("adminPayoutMetrics"),
+    adminPayoutTableBody: document.getElementById("adminPayoutTableBody"),
+    adminPayoutEmpty: document.getElementById("adminPayoutEmpty"),
     metricRevenue: document.getElementById("metricRevenue"),
     metricRevenueNote: document.getElementById("metricRevenueNote"),
     metricProfit: document.getElementById("metricProfit"),
@@ -215,6 +220,7 @@
     state.coupons = Store.getCoupons();
     state.settings = Store.getSettings();
     state.subscribers = Store.getSubscribers();
+    state.payouts = Store.getPayouts();
     document.documentElement.style.setProperty("--accent", state.settings.accentColor || "#14c7a4");
   }
 
@@ -307,6 +313,8 @@
       products: "Products",
       orders: "Orders",
       customers: "Customers",
+      employees: "কর্মী ও আবেদন",
+      payouts: "পেআউট রিকুয়েস্ট",
       coupons: "Coupons",
       settings: "Store settings"
     };
@@ -319,6 +327,7 @@
     elements.viewTitle.textContent = titleMap[view] || "Dashboard";
     elements.sidebar.classList.remove("open");
     if (view === "dashboard") window.setTimeout(renderSalesChart, 20);
+    if (view === "payouts") renderAdminPayouts();
     if (view === "settings") populateSettingsForm();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -354,6 +363,9 @@
     elements.productNavCount.textContent = state.products.length;
     elements.orderNavCount.textContent = state.orders.length;
     elements.customerNavCount.textContent = customers.length;
+    if (elements.payoutNavCount) {
+      elements.payoutNavCount.textContent = state.payouts.filter((payout) => payout.status === "Requested").length;
+    }
   }
 
   function renderDashboard() {
@@ -872,6 +884,7 @@
         <tr data-order-id="${escapeHTML(order.id)}">
           <td><strong>${escapeHTML(order.id)}</strong><br><span class="muted-cell">${getOrderItems(order).length} line item${getOrderItems(order).length === 1 ? "" : "s"}</span></td>
           <td><strong>${escapeHTML(customer.name || "Guest")}</strong><br><span class="muted-cell">${escapeHTML(customer.phone || customer.email || "No contact")}</span></td>
+          <td>${order.partner?.id ? `<span class="employee-source"><strong>${escapeHTML(order.partner.name || Store.roleLabel(order.partner.role))}</strong><small>${escapeHTML(order.partner.id)} · ${escapeHTML(Store.roleLabel(order.partner.role))}</small></span>` : `<span class="direct-source"><strong>Direct Store</strong><small>${escapeHTML(order.source || "Website")}</small></span>`}</td>
           <td>${formatDate(order.createdAt)}<br><span class="muted-cell">${formatDate(order.createdAt, true).split(",").at(-1)?.trim() || ""}</span></td>
           <td><span class="status-pill status-${slugStatus(order.paymentStatus)}">${escapeHTML(order.paymentStatus)}</span><br><span class="muted-cell">${escapeHTML(customer.payment || "Not specified")}</span></td>
           <td><span class="status-pill status-${slugStatus(order.status)}">${escapeHTML(order.status)}</span></td>
@@ -914,7 +927,8 @@
             <div><span>Fulfillment</span><strong>${escapeHTML(order.status)}</strong></div>
             <div><span>Courier</span><strong>${escapeHTML(order.courier || "Not assigned")}</strong></div>
             <div><span>Tracking code</span><strong>${escapeHTML(order.trackingCode || "Not assigned")}</strong></div>
-            <div><span>Ad source</span><strong>${escapeHTML(order.attribution?.lastTouch?.source || order.source || "direct")}</strong></div>
+            <div><span>Order source</span><strong>${order.partner?.id ? `${escapeHTML(order.partner.name || "Employee")} · ${escapeHTML(order.partner.id)} · ${escapeHTML(Store.roleLabel(order.partner.role))}` : escapeHTML(order.attribution?.lastTouch?.source || order.source || "direct")}</strong></div>
+            <div><span>Employee commission</span><strong>${order.partner?.id ? money(order.partner.commissionAmount || 0) : "Not applicable"}</strong></div>
             <div><span>Campaign</span><strong>${escapeHTML(order.attribution?.lastTouch?.campaign || "Not available")}</strong></div>
             <div><span>Ad content</span><strong>${escapeHTML(order.attribution?.lastTouch?.content || "Not available")}</strong></div>
             <div><span>Facebook click ID</span><strong class="break-value">${escapeHTML(order.attribution?.lastTouch?.fbclid || "Not available")}</strong></div>
@@ -1148,10 +1162,14 @@
       orders: state.orders,
       coupons: state.coupons,
       settings: state.settings,
-      subscribers: state.subscribers
+      subscribers: state.subscribers,
+      employeeApplications: Store.getEmployeeApplications?.() || [],
+      employees: Store.getEmployees?.() || [],
+      partners: Store.getPartners?.() || [],
+      payouts: Store.getPayouts?.() || []
     };
     downloadFile(`earphone-bd-backup-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(payload, null, 2));
-    showToast("Backup downloaded", "Products, orders, coupons, settings, and subscribers were included.");
+    showToast("Backup downloaded", "Products, orders, employees, applications, payouts, coupons, settings, and subscribers were included.");
   }
 
 
@@ -1196,12 +1214,56 @@
   }
 
 
+  function renderAdminPayouts() {
+    if (!elements.adminPayoutTableBody || !elements.adminPayoutMetrics) return;
+    const payouts = [...state.payouts].sort((a, b) => new Date(b.requestedAt) - new Date(a.requestedAt));
+    const requested = payouts.filter((payout) => payout.status === "Requested");
+    const paid = payouts.filter((payout) => payout.status === "Paid");
+    const rejected = payouts.filter((payout) => payout.status === "Rejected");
+    const requestedAmount = requested.reduce((sum, payout) => sum + Number(payout.amount || 0), 0);
+    const paidAmount = paid.reduce((sum, payout) => sum + Number(payout.amount || 0), 0);
+
+    elements.adminPayoutMetrics.innerHTML = [
+      ["Pending requests", requested.length, money(requestedAmount)],
+      ["Paid requests", paid.length, money(paidAmount)],
+      ["Rejected", rejected.length, "Review history"],
+      ["Total requests", payouts.length, `${new Set(payouts.map((payout) => payout.partnerId).filter(Boolean)).size} employee`]
+    ].map(([label, value, note]) => `<article class="payout-admin-metric"><span>${escapeHTML(label)}</span><strong>${Number(value).toLocaleString("bn-BD")}</strong><small>${escapeHTML(note)}</small></article>`).join("");
+
+    elements.adminPayoutTableBody.innerHTML = payouts.map((payout) => `
+      <tr data-payout-id="${escapeHTML(payout.id)}">
+        <td><strong>${escapeHTML(payout.id)}</strong><br><span class="muted-cell">${formatDate(payout.requestedAt, true)}</span></td>
+        <td><strong>${escapeHTML(payout.partnerName || "Employee")}</strong><br><span class="muted-cell">${escapeHTML(payout.partnerId || "No ID")} · ${escapeHTML(Store.roleLabel(payout.role))}</span></td>
+        <td><strong>${money(payout.amount)}</strong></td>
+        <td><span class="payout-account"><strong>${escapeHTML(payout.method || "Not set")}</strong><small>${escapeHTML(payout.account || "No account")}</small></span></td>
+        <td>${Number((payout.orderIds || []).length).toLocaleString("bn-BD")}টি</td>
+        <td><span class="status-pill status-${slugStatus(payout.status)}">${escapeHTML(payout.status)}</span></td>
+        <td><div class="action-row">${payout.status === "Requested" ? `<button class="icon-action payout-paid" data-payout-action="paid">Paid</button><button class="icon-action delete" data-payout-action="reject">Reject</button>` : `<span class="muted-cell">Completed</span>`}</div></td>
+      </tr>`).join("");
+    elements.adminPayoutEmpty.classList.toggle("hidden", payouts.length > 0);
+  }
+
+  function updateAdminPayout(payoutId, nextStatus) {
+    const payouts = Store.getPayouts();
+    const payout = payouts.find((item) => item.id === payoutId);
+    if (!payout) return;
+    payout.status = nextStatus;
+    payout.updatedAt = new Date().toISOString();
+    payout.paidAt = nextStatus === "Paid" ? payout.updatedAt : "";
+    Store.savePayouts(payouts);
+    state.payouts = payouts;
+    renderNavigationCounts();
+    renderAdminPayouts();
+    showToast(nextStatus === "Paid" ? "Payout paid করা হয়েছে" : "Payout request reject করা হয়েছে", payout.id);
+  }
+
   function renderAll() {
     renderNavigationCounts();
     renderDashboard();
     renderProducts();
     renderOrders();
     renderCustomers();
+    renderAdminPayouts();
     renderCoupons();
     if (state.currentView === "settings") populateSettingsForm();
   }
@@ -1258,6 +1320,8 @@
 
     elements.logoutButton.addEventListener("click", () => {
       sessionStorage.removeItem(SESSION_KEY);
+      sessionStorage.removeItem("earphoneBdEmployeeSession");
+      sessionStorage.removeItem("earphoneBdPayoutEmployee");
       window.location.reload();
     });
 
@@ -1393,6 +1457,14 @@
         closeModals();
         deleteOrder(id);
       }
+    });
+
+    elements.adminPayoutTableBody?.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-payout-action]");
+      const row = event.target.closest("[data-payout-id]");
+      if (!button || !row) return;
+      const nextStatus = button.dataset.payoutAction === "paid" ? "Paid" : "Rejected";
+      updateAdminPayout(row.dataset.payoutId, nextStatus);
     });
 
     elements.customerSearch.addEventListener("input", () => {
