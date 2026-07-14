@@ -1232,13 +1232,13 @@
 
     elements.adminPayoutTableBody.innerHTML = payouts.map((payout) => `
       <tr data-payout-id="${escapeHTML(payout.id)}">
-        <td><strong>${escapeHTML(payout.id)}</strong><br><span class="muted-cell">${formatDate(payout.requestedAt, true)}</span></td>
-        <td><strong>${escapeHTML(payout.partnerName || "Employee")}</strong><br><span class="muted-cell">${escapeHTML(payout.partnerId || "No ID")} · ${escapeHTML(Store.roleLabel(payout.role))}</span></td>
-        <td><strong>${money(payout.amount)}</strong></td>
-        <td><span class="payout-account"><strong>${escapeHTML(payout.method || "Not set")}</strong><small>${escapeHTML(payout.account || "No account")}</small></span></td>
-        <td>${Number((payout.orderIds || []).length).toLocaleString("bn-BD")}টি</td>
-        <td><span class="status-pill status-${slugStatus(payout.status)}">${escapeHTML(payout.status)}</span></td>
-        <td><div class="action-row">${payout.status === "Requested" ? `<button class="icon-action payout-paid" data-payout-action="paid">Paid</button><button class="icon-action delete" data-payout-action="reject">Reject</button>` : `<span class="muted-cell">Completed</span>`}</div></td>
+        <td data-label="Request"><strong>${escapeHTML(payout.id)}</strong><br><span class="muted-cell">${formatDate(payout.requestedAt, true)}</span></td>
+        <td data-label="Employee"><strong>${escapeHTML(payout.partnerName || "Employee")}</strong><br><span class="muted-cell">${escapeHTML(payout.partnerId || "No ID")} · ${escapeHTML(Store.roleLabel(payout.role))}</span></td>
+        <td data-label="Amount"><strong>${money(payout.amount)}</strong></td>
+        <td data-label="Payment account"><span class="payout-account"><strong>${escapeHTML(payout.method || "Not set")}</strong><small>${escapeHTML(payout.account || "No account")}</small></span></td>
+        <td data-label="Orders">${Number((payout.orderIds || []).length).toLocaleString("bn-BD")}টি</td>
+        <td data-label="Status"><span class="status-pill status-${slugStatus(payout.status)}">${escapeHTML(payout.status)}</span></td>
+        <td data-label="Action"><div class="action-row payout-row-actions">${payout.status === "Requested" ? `<button class="icon-action payout-paid" data-payout-action="paid">Paid</button><button class="icon-action delete" data-payout-action="reject">Reject</button>` : `<span class="muted-cell">Completed</span>`}</div></td>
       </tr>`).join("");
     elements.adminPayoutEmpty.classList.toggle("hidden", payouts.length > 0);
   }

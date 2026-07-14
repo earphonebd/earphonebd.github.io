@@ -55,11 +55,45 @@
     list.innerHTML=rows.map(a=>`<article class="employee-application-card" data-application-id="${esc(a.id)}"><div class="employee-app-top"><div><h4>${esc(a.name)}</h4><p>${esc(a.id)} · ${esc(a.phone)}</p></div><span class="employee-status ${statusClass(a.status)}">${esc(a.status)}</span></div><div class="employee-app-meta"><span>আগ্রহ: ${esc(roleLabel(a.preferredRole))}</span><span>${esc(a.district||"")} · ${esc(a.upazila||"")}</span><span>${date(a.submittedAt)}</span></div><p class="employee-app-note">${esc(a.note||"কোনো অতিরিক্ত তথ্য নেই।")}</p>${a.experience?`<p class="employee-app-note"><strong>অভিজ্ঞতা:</strong> ${esc(a.experience)}</p>`:""}${a.adminNote?`<p class="employee-app-note"><strong>Admin note:</strong> ${esc(a.adminNote)}</p>`:""}<div class="employee-app-actions">${a.status==="Pending"?`<button class="primary-button small-button" data-approve-application="${esc(a.id)}">Approve ও Role দিন</button><button class="danger-button small-button" data-reject-application="${esc(a.id)}">Reject</button>`:`<button class="secondary-button small-button" data-view-application="${esc(a.id)}">Details</button>`}</div></article>`).join("");
     empty.classList.toggle("hidden",rows.length>0);
   }
+  function employeeInitials(name){
+    return String(name||"E").trim().split(/\s+/).slice(0,2).map(part=>part.charAt(0)).join("").toUpperCase()||"E";
+  }
   function renderEmployees(){
     const body=$("employeeAccountBody"), empty=$("employeeAccountEmpty"); if(!body)return;
     let rows=[...Store.getEmployees()].sort((a,b)=>new Date(b.joinedAt)-new Date(a.joinedAt));
     const q=employeeQuery.toLowerCase(); if(q)rows=rows.filter(e=>`${e.id} ${e.name} ${e.phone} ${e.role}`.toLowerCase().includes(q));
-    body.innerHTML=rows.map(e=>`<tr data-employee-id="${esc(e.id)}"><td><strong>${esc(e.name)}</strong><small class="employee-login-hint">${esc(e.id)} · ${esc(e.phone)}</small></td><td><select class="employee-role-select" data-role-select>${roleOptions.map(([v,l])=>`<option value="${v}" ${v===e.role?"selected":""}>${l}</option>`).join("")}</select></td><td><select class="employee-role-select" data-commission-type><option value="flat" ${e.commissionType!=="percent"?"selected":""}>Flat</option><option value="percent" ${e.commissionType==="percent"?"selected":""}>%</option></select> <input class="employee-commission-input" data-commission-value type="number" min="0" value="${Number(e.commissionValue)||0}" style="width:72px"></td><td><span class="employee-status ${e.active===false?"inactive":"active"}">${e.active===false?"বন্ধ":"সক্রিয়"}</span><small class="employee-login-hint">Password: ••••••••</small></td><td>${date(e.joinedAt)}</td><td><div class="row-actions"><button class="small-btn primary" data-save-employee>Save</button><button class="small-btn" data-copy-employee>Login কপি</button><button class="small-btn" data-reset-password>Password Reset</button><button class="small-btn" data-toggle-employee>${e.active===false?"চালু":"বন্ধ"}</button><button class="small-btn danger" data-delete-employee>মুছুন</button></div></td></tr>`).join("");
+    const count=$("employeeAccountCount");
+    if(count) count.textContent=`${rows.length.toLocaleString("bn-BD")} জন কর্মী`;
+    body.innerHTML=rows.map(e=>`<tr class="employee-account-row" data-employee-id="${esc(e.id)}">
+      <td data-label="কর্মী">
+        <div class="employee-person">
+          <span class="employee-avatar" aria-hidden="true">${esc(employeeInitials(e.name))}</span>
+          <div class="employee-person-copy"><strong>${esc(e.name)}</strong><small>${esc(e.id)}</small><a href="tel:${esc(e.phone)}">${esc(e.phone)}</a></div>
+        </div>
+      </td>
+      <td data-label="Role">
+        <label class="employee-inline-field"><span>Role</span><select class="employee-role-select" data-role-select aria-label="${esc(e.name)} role">${roleOptions.map(([v,l])=>`<option value="${v}" ${v===e.role?"selected":""}>${l}</option>`).join("")}</select></label>
+      </td>
+      <td data-label="Commission">
+        <div class="employee-commission-control">
+          <label class="employee-inline-field"><span>Type</span><select class="employee-role-select" data-commission-type aria-label="Commission type"><option value="flat" ${e.commissionType!=="percent"?"selected":""}>Flat</option><option value="percent" ${e.commissionType==="percent"?"selected":""}>Percentage</option></select></label>
+          <label class="employee-inline-field employee-value-field"><span>Value</span><input class="employee-commission-input" data-commission-value type="number" min="0" value="${Number(e.commissionValue)||0}" aria-label="Commission value"></label>
+        </div>
+      </td>
+      <td data-label="Account">
+        <div class="employee-account-state"><span class="employee-status ${e.active===false?"inactive":"active"}"><i></i>${e.active===false?"বন্ধ":"সক্রিয়"}</span><small>Login access ${e.active===false?"disabled":"enabled"}</small><small class="employee-password-mask">Password protected</small></div>
+      </td>
+      <td data-label="যোগদান"><div class="employee-join-date"><strong>${date(e.joinedAt)}</strong><small>Joined date</small></div></td>
+      <td data-label="Action">
+        <div class="employee-actions">
+          <button class="employee-action employee-action-save" data-save-employee title="Role ও commission save করুন"><span aria-hidden="true">✓</span><b>Save</b></button>
+          <button class="employee-action" data-copy-employee title="Employee login credential copy করুন"><span aria-hidden="true">⧉</span><b>Login কপি</b></button>
+          <button class="employee-action" data-reset-password title="নতুন password তৈরি করুন"><span aria-hidden="true">↻</span><b>Password Reset</b></button>
+          <button class="employee-action employee-action-warning" data-toggle-employee title="Account access পরিবর্তন করুন"><span aria-hidden="true">${e.active===false?"▶":"Ⅱ"}</span><b>${e.active===false?"চালু করুন":"বন্ধ করুন"}</b></button>
+          <button class="employee-action employee-action-danger" data-delete-employee title="Employee account মুছুন"><span aria-hidden="true">×</span><b>মুছুন</b></button>
+        </div>
+      </td>
+    </tr>`).join("");
     empty.classList.toggle("hidden",rows.length>0);
   }
   function render(){metrics();renderApplications();renderEmployees();}

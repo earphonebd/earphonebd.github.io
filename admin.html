@@ -332,9 +332,12 @@
             <div class="panel-heading"><div><span class="section-label">Applications</span><h3>কর্মী হিসেবে নিবন্ধন করা আবেদন</h3><p>তথ্য দেখে Approve, Reject অথবা role নির্ধারণ করুন।</p></div><div class="employee-filters"><input id="employeeApplicationSearch" type="search" placeholder="নাম, ফোন বা ID খুঁজুন"><select id="employeeApplicationStatus"><option value="all">সব status</option><option value="Pending">Pending</option><option value="Approved">Approved</option><option value="Rejected">Rejected</option></select></div></div>
             <div class="employee-application-grid" id="employeeApplicationList"></div><div class="table-empty hidden" id="employeeApplicationEmpty">কোনো আবেদন পাওয়া যায়নি।</div>
           </article>
-          <article class="panel employee-panel">
-            <div class="panel-heading"><div><span class="section-label">Approved team</span><h3>Employee Accounts</h3><p>Role, commission, account status ও login credential পরিচালনা করুন।</p></div><input id="employeeAccountSearch" class="employee-search" type="search" placeholder="Employee ID, নাম বা ফোন"></div>
-            <div class="table-wrap"><table class="data-table employee-table"><thead><tr><th>কর্মী</th><th>Role</th><th>Commission</th><th>Account</th><th>যোগদান</th><th>Action</th></tr></thead><tbody id="employeeAccountBody"></tbody></table><div class="table-empty hidden" id="employeeAccountEmpty">এখনো কোনো approved employee নেই।</div></div>
+          <article class="panel employee-panel employee-account-panel">
+            <div class="panel-heading employee-account-heading">
+              <div><span class="section-label">Approved team</span><div class="employee-title-row"><h3>Employee Accounts</h3><span class="employee-account-count" id="employeeAccountCount">০ জন কর্মী</span></div><p>Role, commission, account status ও login credential পরিচালনা করুন।</p></div>
+              <label class="employee-search-shell"><span aria-hidden="true">⌕</span><input id="employeeAccountSearch" class="employee-search" type="search" placeholder="Employee ID, নাম বা ফোন"></label>
+            </div>
+            <div class="table-wrap employee-account-wrap"><table class="data-table employee-table"><thead><tr><th>কর্মী</th><th>Role</th><th>Commission</th><th>Account</th><th>যোগদান</th><th>Action</th></tr></thead><tbody id="employeeAccountBody"></tbody></table><div class="table-empty hidden" id="employeeAccountEmpty">এখনো কোনো approved employee নেই।</div></div>
           </article>
         </section>
 

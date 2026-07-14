@@ -1,0 +1,19 @@
+Earphone BD Admin UI Polish
+Date: 2026-07-14
+
+Updated areas
+1. Employee Accounts redesigned with polished identity blocks, role and commission controls, account status, joined date and grouped actions.
+2. Missing Admin styles for small-btn, primary, danger and row-actions have been added.
+3. Employee Accounts switch from table to responsive account cards when the sidebar leaves limited width.
+4. Mobile employee actions use a clear two-column layout with full-width Save and Delete actions.
+5. Employee search field and employee count badge redesigned.
+6. Admin Payout Requests table switches to readable cards on tablet/mobile.
+7. Standalone Payout Control layout no longer squeezes large tables into a narrow two-column area.
+8. Payout Control buttons, selects, rows, scrollbars and partner cards polished.
+9. Import/settings checkboxes now follow the Admin design system.
+10. Table scrollbars, focus states and action controls made consistent.
+
+Validation
+- JavaScript syntax checked with Node.js.
+- HTML parsed successfully.
+- CSS parsed successfully with no syntax errors.
